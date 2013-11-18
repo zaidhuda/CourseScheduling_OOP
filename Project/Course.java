@@ -1,4 +1,8 @@
+import java.util.concurrent.atomic.AtomicInteger;
+
 public class Course {
+    private static AtomicInteger nextId = new AtomicInteger();
+    final int id;
 	private String code, title;
 	private int credit;
 	
@@ -6,8 +10,9 @@ public class Course {
 		setCode(code);
 		setTitle(title);
 		setCredit(credit);
+		id = nextId.incrementAndGet();
 	}
-
+	
 	// setter methods
 	public void setCode(String arg)	{ code = arg; }
 	public void setTitle(String arg){ title = arg; }

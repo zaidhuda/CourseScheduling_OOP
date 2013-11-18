@@ -1,10 +1,32 @@
+import java.util.concurrent.atomic.AtomicInteger;
+
 public class Schedule {
+    private static AtomicInteger nextId = new AtomicInteger();
+    final int id;
 	private int time;
 	private String timeRepresentation;
+	private Section section;
+	private Venue venue;
 
-	public Schedule(int arg){ setTime(arg); }
+	public Schedule(Section section, Venue venue, int time){ 
+		setSection(section);
+		setVenue(venue);
+		setTime(time);
+		id = nextId.incrementAndGet();
+		// checkAvaibility(section.getLecturer(), venue);
+	}
 
-	public String getTime(){ return Integer.toString(time); }
+	// public void checkAvaibility(Lecturer lecturer, Venue venue){
+	// 	String lecturerName = lecturer.getName();
+	// 	String venueName = venue.getName();
+	// 	time = (int) (Math.random() * 5);
+	// 	setTime(time);
+	// }
+
+	// public String getTime(){ return Integer.toString(time); }
+	public int getTime(){ return time; }
+	public Venue getVenue(){ return venue; }
+	public Section getSection(){ return section; }
 
 	public void setTime(int arg){
 		time = arg;
@@ -18,8 +40,10 @@ public class Schedule {
 			default: break;
 		}
 	}
+	public void setVenue(Venue arg){ venue = arg; }
+	public void setSection(Section arg){ section = arg; }
 
 	public String toString(){
-		return "Time: " + timeRepresentation + "\n";
+		return section + "" + venue + "" + timeRepresentation + "\n";
 	}
 }
