@@ -23,11 +23,6 @@ public class Schedule {
 	// 	setTime(time);
 	// }
 
-	// public String getTime(){ return Integer.toString(time); }
-	public int getTime(){ return time; }
-	public Venue getVenue(){ return venue; }
-	public Section getSection(){ return section; }
-
 	public void setTime(int arg){
 		time = arg;
 		switch(arg){
@@ -42,6 +37,11 @@ public class Schedule {
 	}
 	public void setVenue(Venue arg){ venue = arg; }
 	public void setSection(Section arg){ section = arg; }
+
+	// public String getTime(){ return Integer.toString(time); }
+	public int getTime(){ return time; }
+	public Venue getVenue(){ return venue; }
+	public Section getSection(){ return section; }
 
 	public String toString(){
 		return section + "" + venue + "" + timeRepresentation + "\n";

@@ -20,15 +20,15 @@ public class Section {
 		id = nextId.incrementAndGet();
 	}
 
-	public String getSectionNum(){ return Integer.toString(sectionNum); }
-	public int getStudentLimit(){ return studentLimit; }
-	public Course getCourse(){ return course; }
-	public Lecturer getLecturer(){ return lecturer; }
-
 	public void setSectionNum(int arg){ sectionNum = arg; }
 	public void setStudentLimit(int arg){ studentLimit = arg; }
 	public void setCourse(Course arg){ course = arg; }
 	public void setLecturer(Lecturer arg){ lecturer = arg; }
+
+	public String getSectionNum(){ return Integer.toString(sectionNum); }
+	public int getStudentLimit(){ return studentLimit; }
+	public Course getCourse(){ return course; }
+	public Lecturer getLecturer(){ return lecturer; }
 
 	public String toString(){
 		return course + "" + lecturer + "Student Limit: " + studentLimit + "\n";

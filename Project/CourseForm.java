@@ -22,7 +22,7 @@ public class CourseForm{
 		panel.add(credit);
 		panel.add(btnOK);
 		panel.setLayout(new GridLayout(4,1));
-		
+
 		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		frame.setContentPane(panel);
 		frame.pack();
@@ -45,7 +45,7 @@ public class CourseForm{
 				}
 			}
 			catch(Exception e){
-				JOptionPane.showMessageDialog(null, e);
+				JOptionPane.showMessageDialog(null, "Failed: " + e);
 			}
 			// frame.destroy();
 		}
