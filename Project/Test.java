@@ -38,6 +38,9 @@ public class Test {
 		System.out.println(lecturers.get(findLecturer("Dr Saremah")));
 		System.out.println(venues.get(findVenue("Lab 6")));
 		System.out.println(courses.get(findCourse("CSC1100")));
+
+		CourseForm courseform = new CourseForm(course);
+		// System.out.println(courseform.getCourse());
 	}
 
 	public static int findLecturer(String n){
