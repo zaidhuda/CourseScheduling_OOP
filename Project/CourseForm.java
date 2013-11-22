@@ -1,11 +1,11 @@
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.*;
+import java.util.*;
 import java.util.ArrayList;
 
 public class CourseForm{
 	public static ArrayList<Course> courses = new ArrayList<Course>();
-	Course course = new Course((String) null, (String) null, 0);
 	JFrame frame = new JFrame("CourseForm");
 	JPanel panel = new JPanel();
 	JButton btnOK = new JButton("OK");
@@ -21,8 +21,8 @@ public class CourseForm{
 		panel.add(title);
 		panel.add(credit);
 		panel.add(btnOK);
-
 		panel.setLayout(new GridLayout(4,1));
+		
 		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		frame.setContentPane(panel);
 		frame.pack();
@@ -35,16 +35,33 @@ public class CourseForm{
 	private class ButtonListener implements ActionListener{
 		public void actionPerformed (ActionEvent event){
 			try{
-				course.setCode(code.getText());
-				course.setTitle(title.getText());
-				course.setCredit(Integer.parseInt(credit.getText()));
-				courses.add(course);
-				JOptionPane.showMessageDialog(null, course);
+				if ( findCourse(code.getText()) == -1 ) {
+					Course course = new Course(code.getText(), title.getText(), Integer.parseInt(credit.getText()));
+					courses.add(course);
+					JOptionPane.showMessageDialog(null, "Successful");
+				}
+				else{
+					JOptionPane.showMessageDialog(null, "Exists");
+				}
 			}
 			catch(Exception e){
 				JOptionPane.showMessageDialog(null, e);
 			}
 			// frame.destroy();
 		}
+	}
+
+	public static int findCourse(String c){
+		Iterator itr = courses.iterator();
+		String code;
+		for(int i=0;itr.hasNext();++i){
+			try{
+				code = courses.get(i).getCode().toLowerCase();
+				if (code.equals(c.toLowerCase()))
+					return i;
+			}
+			catch(Exception e){break;}
+		}
+		return -1;
 	}
 }
