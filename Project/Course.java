@@ -3,7 +3,7 @@ import java.util.concurrent.atomic.AtomicInteger;
 public class Course {
     private static AtomicInteger nextId = new AtomicInteger();
     final int id;
-	private String code, title, venueType;
+	private String code, title, venueType="";
 	private int credit, requiredSections=1;
 	
 	public Course(String code, String title, int credit){
@@ -27,10 +27,21 @@ public class Course {
 	public int getCredit(){ return credit; }
 	public int getRequiredSections(){ return requiredSections; }
 
+	@Override
+	public boolean equals(Object other) {
+	    if (!(other instanceof Course))
+	        return false;
+
+	    Course that = (Course) other;
+
+	    // Custom equality check here.
+	    return this.code.equals(that.code);
+	}
+
 	public String toString(){
 		String course = "Code  : " + code +
 					  "\nTitle : " + title +
-					  "\nCredit: " + credit + "\n";
+					  "\nCredit: " + credit;
 		return course;
 	}
 }

@@ -43,7 +43,19 @@ public class Schedule {
 	public Venue getVenue(){ return venue; }
 	public Section getSection(){ return section; }
 
+	@Override
+	public boolean equals(Object other) {
+	    if (!(other instanceof Schedule))
+	        return false;
+
+	    Schedule that = (Schedule) other;
+
+	    // Custom equality check here.
+	    return this.venue.equals(that.venue)
+	    	&& this.section.equals(that.section);
+	}
+
 	public String toString(){
-		return section + "" + venue + "" + timeRepresentation + "\n";
+		return section + "" + venue + "" + timeRepresentation;
 	}
 }

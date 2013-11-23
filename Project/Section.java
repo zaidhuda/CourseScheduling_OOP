@@ -30,7 +30,20 @@ public class Section {
 	public Course getCourse(){ return course; }
 	public Lecturer getLecturer(){ return lecturer; }
 
+	@Override
+	public boolean equals(Object other) {
+	    if (!(other instanceof Section))
+	        return false;
+
+	    Section that = (Section) other;
+
+	    // Custom equality check here.
+	    return this.course.equals(that.course)
+	    	&& this.lecturer.equals(that.lecturer)
+	    	&& this.sectionNum == that.sectionNum;
+	}
+
 	public String toString(){
-		return course + "" + lecturer + "Student Limit: " + studentLimit + "\n";
+		return course + "" + lecturer + "Student Limit: " + studentLimit;
 	}
 }

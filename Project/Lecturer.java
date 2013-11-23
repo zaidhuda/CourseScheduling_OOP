@@ -3,7 +3,7 @@ import java.util.concurrent.atomic.AtomicInteger;
 public class Lecturer {
     private static AtomicInteger nextId = new AtomicInteger();
     final int id;
-	private String name, specialization;
+	private String name, specialization="";
 
 	public Lecturer(String arg){
 		setName(arg);
@@ -16,7 +16,18 @@ public class Lecturer {
 	public String getName(){ return name; }
 	public String getSpecialization(){ return specialization; }
 
+	@Override
+	public boolean equals(Object other) {
+	    if (!(other instanceof Lecturer))
+	        return false;
+
+	    Lecturer that = (Lecturer) other;
+
+	    // Custom equality check here.
+	    return this.name.equals(that.name);
+	}
+
 	public String toString(){
-		return "Lecturer: " + name + "\n";
+		return id + "\nLecturer: " + name;
 	}
 }

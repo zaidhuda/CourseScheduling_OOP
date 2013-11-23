@@ -10,25 +10,25 @@ public class Test {
 
 	public static void main(String[] args) {
 
-		// Course course;
-		// Lecturer lecturer;
-		// Venue venue;
-		// Schedule schedule;
-		// Section section;
+		Course course;
+		Lecturer lecturer;
+		Venue venue;
+		Schedule schedule;
+		Section section;
 
-		// course = new Course("CSC1100", "Elements of Programming", 3);
-		// courses.add(course);
-		// lecturer = new Lecturer("Dr Suriani");
-		// lecturers.add(lecturer);
-		// lecturer = new Lecturer("Dr Saremah");
-		// lecturers.add(lecturer);
-		// section = new Section(course, lecturers.get(0), 1, 30);
-		// sections.add(section);
-		// section = new Section(course, lecturers.get(1), 2, 30);
-		// sections.add(section);
-		// venue = new Venue("Lab 6");
-		// venues.add(venue);
-		// venues.add(new Venue("Lab 7"));
+		courses.add(new Course("CSC1100", "Elements of Programming", 3));
+		courses.add(new Course("CSC1102", "Web Programming Fundamental", 3));
+		courses.add(new Course("CSC1103", "Object Oriented Programming", 3));
+
+		lecturers.add(new Lecturer("Dr Suriani"));
+		lecturers.add(new Lecturer("Dr Amelia"));
+		lecturers.add(new Lecturer("Dr Rizal"));
+		lecturers.add(new Lecturer("Dr Azlin"));
+		lecturers.add(new Lecturer("Dr Norsaremah"));
+
+		venues.add(new Venue("Lab 3"));
+		venues.add(new Venue("Lab 6"));
+
 		// schedule = new Schedule(sections.get(0), venues.get(0), 1);
 		// schedules.add(schedule);
 		// schedule = new Schedule(sections.get(1), venues.get(1), 2);
@@ -39,9 +39,15 @@ public class Test {
 		// System.out.println(venues.get(findVenue("Lab 6")));
 		// System.out.println(courses.get(findCourse("CSC1100")));
 
-		CourseForm courseform = new CourseForm(courses);
-		MainForm mainform = new MainForm(courses);
-		// System.out.println(courseform.getCourse());
+		// CourseForm courseform = new CourseForm(courses);
+		// MainForm mainform = new MainForm(courses);
+
+		System.out.println(courses);
+		System.out.println(courses.contains(new Course("CSC1100", "Elements of Programming", 3)));
+		System.out.println(lecturers);
+		System.out.println(lecturers.contains(new Lecturer("Dr Amelia")));
+		System.out.println(venues);
+		System.out.println(venues.contains(new Venue("Lab 3")));
 	}
 
 	public static int findLecturer(String n){
