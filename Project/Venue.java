@@ -29,6 +29,6 @@ public class Venue {
 	}
 
 	public String toString(){
-		return "Venue: " + name;
+		return name;
 	}
 }

@@ -1,20 +1,23 @@
 import java.util.concurrent.atomic.AtomicInteger;
+import java.util.ArrayList;
 
 public class Lecturer {
     private static AtomicInteger nextId = new AtomicInteger();
     final int id;
-	private String name, specialization="";
+	private String name;
+	private ArrayList<String> specialization = new ArrayList<String>();
 
-	public Lecturer(String arg){
-		setName(arg);
+	public Lecturer(String name, String specialization){
+		setName(name);
+		addSpecialization(specialization);
 		id = nextId.incrementAndGet();
 	}
 
 	public void setName(String arg){ name = arg; }
-	public void setSpecialization(String arg){ specialization = arg; }
+	public void addSpecialization(String arg){ specialization.add(arg); }
 
 	public String getName(){ return name; }
-	public String getSpecialization(){ return specialization; }
+	public ArrayList<String> getSpecialization(){ return specialization; }
 
 	@Override
 	public boolean equals(Object other) {
@@ -28,6 +31,6 @@ public class Lecturer {
 	}
 
 	public String toString(){
-		return id + "\nLecturer: " + name;
+		return name;
 	}
 }

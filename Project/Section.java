@@ -10,13 +10,11 @@ public class Section {
 	public Section(
 			Course course,
 			Lecturer lecturer,
-			int sectionNum,
-			int studentLimit
+			int sectionNum
 		){
 		setCourse(course);
 		setLecturer(lecturer);
 		setSectionNum(sectionNum);
-		setStudentLimit(studentLimit);
 		id = nextId.incrementAndGet();
 	}
 
@@ -44,6 +42,6 @@ public class Section {
 	}
 
 	public String toString(){
-		return course + "" + lecturer + "Student Limit: " + studentLimit;
+		return sectionNum + ", " + course + ", " + lecturer + "\n";
 	}
 }

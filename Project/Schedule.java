@@ -56,6 +56,6 @@ public class Schedule {
 	}
 
 	public String toString(){
-		return section + "" + venue + "" + timeRepresentation;
+		return section + ", " + venue + ", " + timeRepresentation;
 	}
 }

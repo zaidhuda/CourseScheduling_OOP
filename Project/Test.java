@@ -16,18 +16,23 @@ public class Test {
 		Schedule schedule;
 		Section section;
 
-		courses.add(new Course("CSC1100", "Elements of Programming", 3));
-		courses.add(new Course("CSC1102", "Web Programming Fundamental", 3));
-		courses.add(new Course("CSC1103", "Object Oriented Programming", 3));
+		courses.add(new Course("CSC1100", "Elements of Programming", 3, 4));
+		courses.add(new Course("CSC1102", "Web Programming Fundamental", 3, 1));
+		courses.add(new Course("CSC1103", "Object Oriented Programming", 3, 3));
 
-		lecturers.add(new Lecturer("Dr Suriani"));
-		lecturers.add(new Lecturer("Dr Amelia"));
-		lecturers.add(new Lecturer("Dr Rizal"));
-		lecturers.add(new Lecturer("Dr Azlin"));
-		lecturers.add(new Lecturer("Dr Norsaremah"));
+		lecturers.add(new Lecturer("Dr Suriani", "CSC1100"));
+		lecturers.add(new Lecturer("Dr Amelia", "CSC1100"));
+		lecturers.add(new Lecturer("Dr Rizal", "CSC1102"));
+		lecturers.add(new Lecturer("Dr Azlin", "CSC1103"));
+		lecturers.add(new Lecturer("Dr Norsaremah", "CSC1103"));
 
 		venues.add(new Venue("Lab 3"));
 		venues.add(new Venue("Lab 6"));
+
+		// create sections based on specialization
+		generateSections();
+
+		System.out.println(sections);
 
 		// schedule = new Schedule(sections.get(0), venues.get(0), 1);
 		// schedules.add(schedule);
@@ -42,53 +47,35 @@ public class Test {
 		// CourseForm courseform = new CourseForm(courses);
 		// MainForm mainform = new MainForm(courses);
 
-		System.out.println(courses);
-		System.out.println(courses.contains(new Course("CSC1100", "Elements of Programming", 3)));
-		System.out.println(lecturers);
-		System.out.println(lecturers.contains(new Lecturer("Dr Amelia")));
-		System.out.println(venues);
-		System.out.println(venues.contains(new Venue("Lab 3")));
+		// System.out.println("Courses: "+courses);
+		// System.out.println("Lecturers: "+lecturers);
+		// System.out.println("Venues: "+venues);
 	}
 
-	public static int findLecturer(String n){
-		Iterator itr = lecturers.iterator();
-		String name;
-		for(int i=0;itr.hasNext();++i){
-			try{
-				name = lecturers.get(i).getName().toLowerCase();
-				if (name.equals(n.toLowerCase()))
-					return i;
-			}
-			catch(Exception e){break;}
-		}
-		return -1;
-	}
+	public static void generateSections(){
+		Course course;
+		Lecturer lecturer;
 
-	public static int findVenue(String n){
-		Iterator itr = venues.iterator();
-		String name;
-		for(int i=0;itr.hasNext();++i){
-			try{
-				name = venues.get(i).getName().toLowerCase();
-				if (name.equals(n.toLowerCase()))
-					return i;
-			}
-			catch(Exception e){break;}
-		}
-		return -1;
-	}
+		// main loop, creating sections for each course
+		for (int i=0;i<courses.size();++i) {
+			course = courses.get(i);
+			ArrayList<Lecturer> tempLecturers = new ArrayList<Lecturer>();
 
-	public static int findCourse(String c){
-		Iterator itr = courses.iterator();
-		String code;
-		for(int i=0;itr.hasNext();++i){
-			try{
-				code = courses.get(i).getCode().toLowerCase();
-				if (code.equals(c.toLowerCase()))
-					return i;
+			// add lecturers of current course to temporary list
+			for (int j=0;j<lecturers.size();++j) {
+				lecturer = lecturers.get(j);
+				if(lecturer.getSpecialization().contains(course.getCode()))
+					tempLecturers.add(lecturer);
 			}
-			catch(Exception e){break;}
+
+			int sects = courses.get(i).getRequiredSections();
+			// int sects = 10;
+			// randomly assign lecturer to sections
+			for (int j=0;j<sects;++j) {
+				lecturer = tempLecturers.get(j%tempLecturers.size());
+				sections.add(new Section(course, lecturer, j+1));
+			}
+			tempLecturers.clear();
 		}
-		return -1;
 	}
 }

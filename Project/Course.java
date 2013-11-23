@@ -4,12 +4,13 @@ public class Course {
     private static AtomicInteger nextId = new AtomicInteger();
     final int id;
 	private String code, title, venueType="";
-	private int credit, requiredSections=1;
+	private int credit, requiredSections=2;
 	
-	public Course(String code, String title, int credit){
+	public Course(String code, String title, int credit, int requiredSections){
 		setCode(code);
 		setTitle(title);
 		setCredit(credit);
+		setRequiredSections(requiredSections);
 		id = nextId.incrementAndGet();
 	}
 	
@@ -39,9 +40,7 @@ public class Course {
 	}
 
 	public String toString(){
-		String course = "Code  : " + code +
-					  "\nTitle : " + title +
-					  "\nCredit: " + credit;
+		String course = code + " " + title + " " + credit;
 		return course;
 	}
 }
