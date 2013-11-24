@@ -1,8 +1,10 @@
 import java.util.concurrent.atomic.AtomicInteger;
+import java.util.ArrayList;
 
 public class Course {
     private static AtomicInteger nextId = new AtomicInteger();
     final int id;
+    public ArrayList<Integer> availability = new ArrayList<Integer>(java.util.Arrays.asList(0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11));
 	private String code, title, venueType="";
 	private int credit, requiredSections=0;
 	

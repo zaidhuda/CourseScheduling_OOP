@@ -20,14 +20,16 @@ public class Section {
 		setSectionNum(sectionNum);
 		id = nextId.incrementAndGet();
 	}
+	public void setDay(int arg){ day = arg; }
 	public void setSectionNum(int arg){ sectionNum = arg; }
 	public void setStudentLimit(int arg){ studentLimit = arg; }
 	public void setCourse(Course arg){ course = arg; }
 	public void setLecturer(Lecturer arg){ lecturer = arg; }
 	public void setVenue(Venue arg){ venue = arg; }
 
-	public String getSectionNum(){ return Integer.toString(sectionNum); }
 	public int getTime(){ return time; }
+	public int getDay(){ return day; }
+	public String getSectionNum(){ return Integer.toString(sectionNum); }
 	public int getStudentLimit(){ return studentLimit; }
 	public Course getCourse(){ return course; }
 	public Lecturer getLecturer(){ return lecturer; }
@@ -44,32 +46,43 @@ public class Section {
 	}
 
 	public void setTime(ArrayList<Section> sections){
-		int t=0, d=0;
-		try{
-			Section current = sections.get(sections.indexOf(new Section(course, lecturer, sectionNum)));
+		int d=0, t=0, max=0;
+		boolean inC=true, inL=true, inV=true;
+		// if(max==0)
+		// 	max = course.availability.size()-1;
 
-			for (int i=0;i<sections.indexOf(current);++i) {
-				Course c = sections.get(i).getCourse();
-				Lecturer l = sections.get(i).getLecturer();
-				Venue v = sections.get(i).getVenue();
-				int t2 = sections.get(i).getTime();
-
-				if( t==t2 && ( course == c || lecturer == l || venue == v )){
-					t++;
-					if(t==6){
-						d++;
-						t=0;
-					}
-				}
-			}
+		for (Section s : sections) {
+			if(s.venue.equals(venue))
+				max++;
 		}
-		catch(Exception e){return;}
+
+		do{
+			t = (int) (Math.random() * max);
+			inC = course.availability.contains(t);
+			inL = lecturer.availability.contains(t);
+			inV = venue.availability.contains(t);
+			// System.out.println(t + " " + inC + " " + inL + " " + inV + " " + (!inC || !inL || !inV));
+		}while(!inC || !inL || !inV);
+
+		course.availability.remove(course.availability.indexOf(t));
+		lecturer.availability.remove(lecturer.availability.indexOf(t));
+		venue.availability.remove(venue.availability.indexOf(t));
+
+		if(t>5&&t<9){
+			t-=3;
+		}
+		else if((t>2&&t<6)||(t>8)){
+			d=1;
+			if(t<6) t-=3;
+			if(t>8) t-=6;
+		}
 
 		day = d;
 		time = t;
 		switch (day) {
 			case 0: dayRepresentation = "Monday/Wednesday"; break;
 			case 1: dayRepresentation = "Tuesday/Thursday"; break;
+			default: dayRepresentation = null;
 		}
 		switch(time){
 			case 0: timeRepresentation = "08:30 - 09:50"; break;
@@ -78,7 +91,7 @@ public class Section {
 			case 3: timeRepresentation = "14:00 - 15:20"; break;
 			case 4: timeRepresentation = "15:30 - 16:50"; break;
 			case 5: timeRepresentation = "17:00 - 18:20"; break;
-			default: break;
+			default: timeRepresentation = null;
 		}
 	}
 
@@ -96,6 +109,8 @@ public class Section {
 	}
 
 	public String toString(){
-		return sectionNum + ", " + course + ", " + lecturer + ", " + venue + "\n" + dayRepresentation + ", " + timeRepresentation;
+		// String rep = sectionNum + ", " + course + ", " + lecturer + ", " + venue + ", " + dayRepresentation + ", " + timeRepresentation;
+		
+		return dayRepresentation + ", " + timeRepresentation + ", " + venue;
 	}
 }
