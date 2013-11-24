@@ -24,7 +24,7 @@ public class Test {
 		lecturers.add(new Lecturer("Dr Amelia", "CSC1100"));
 		lecturers.add(new Lecturer("Dr Rizal", "CSC1102"));
 		lecturers.add(new Lecturer("Dr Azlin", "CSC1103"));
-		lecturers.add(new Lecturer("Dr Norsaremah", "CSC1103"));
+		lecturers.add(new Lecturer("Dr Norsaremah", new ArrayList<String>(java.util.Arrays.asList("CSC1100", "CSC1103"))));
 
 		venues.add(new Venue("Lab 3", "LAB"));
 		venues.add(new Venue("Lab 6", "LAB"));
@@ -39,19 +39,16 @@ public class Test {
 			s.setVenue(venues);
 			// System.out.println(s);
 		}
-		
-		// sections.get(5).setTime(sections);
 
 		for (Section s : sections) {
 			s.generateSchedule(sections);
-			System.out.println(s);
+			System.out.println(s.getVenue() + ", " + s.getDay_inWords() + ", " + s.getTime_inWords());
 		}
-		sections.get(4).generateSchedule(sections);
-		System.out.println(sections.get(4));
-		sections.get(4).generateSchedule(sections);
-		System.out.println(sections.get(4));
-		sections.get(4).generateSchedule(sections);
-		System.out.println(sections.get(4));
+
+		for (Section s : sections) {
+			if(s.getCourse().equals(new Course("csc 1102")))
+				System.out.println(s);
+		}
 
 		// System.out.println(sections);
 
