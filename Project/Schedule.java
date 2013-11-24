@@ -1,3 +1,4 @@
+// currrently unused
 import java.util.concurrent.atomic.AtomicInteger;
 
 public class Schedule {
@@ -13,15 +14,7 @@ public class Schedule {
 		setVenue(venue);
 		setTime(time);
 		id = nextId.incrementAndGet();
-		// checkAvaibility(section.getLecturer(), venue);
 	}
-
-	// public void checkAvaibility(Lecturer lecturer, Venue venue){
-	// 	String lecturerName = lecturer.getName();
-	// 	String venueName = venue.getName();
-	// 	time = (int) (Math.random() * 5);
-	// 	setTime(time);
-	// }
 
 	public void setTime(int arg){
 		time = arg;

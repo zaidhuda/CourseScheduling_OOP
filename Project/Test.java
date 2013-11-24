@@ -26,30 +26,35 @@ public class Test {
 		lecturers.add(new Lecturer("Dr Azlin", "CSC1103"));
 		lecturers.add(new Lecturer("Dr Norsaremah", "CSC1103"));
 
-		venues.add(new Venue("Lab 3"));
-		venues.add(new Venue("Lab 6"));
+		venues.add(new Venue("Lab 3", "LAB"));
+		venues.add(new Venue("Lab 6", "LAB"));
+		venues.get(0).addCourse("CSC1102");
+		venues.get(1).addCourse("CSC1100");
+		venues.get(1).addCourse("CSC1103");
 
 		// create sections based on specialization
 		generateSections();
 
-		System.out.println(sections);
-
-		// schedule = new Schedule(sections.get(0), venues.get(0), 1);
-		// schedules.add(schedule);
-		// schedule = new Schedule(sections.get(1), venues.get(1), 2);
-		// schedules.add(schedule);
+		for (Section s : sections) {
+			s.setVenue(venues);
+			// System.out.println(s);
+		}
 		
-		// System.out.println(schedules);
-		// System.out.println(lecturers.get(findLecturer("Dr Saremah")));
-		// System.out.println(venues.get(findVenue("Lab 6")));
-		// System.out.println(courses.get(findCourse("CSC1100")));
+		// sections.get(5).setTime(sections);
+
+		for (Section s : sections) {
+			s.setTime(sections);
+			System.out.println(s);
+		}
+
+		// System.out.println(sections);
 
 		// CourseForm courseform = new CourseForm(courses);
 		// MainForm mainform = new MainForm(courses);
+	}
 
-		// System.out.println("Courses: "+courses);
-		// System.out.println("Lecturers: "+lecturers);
-		// System.out.println("Venues: "+venues);
+	public static void setVenue(){
+
 	}
 
 	public static void generateSections(){
@@ -68,10 +73,8 @@ public class Test {
 					tempLecturers.add(lecturer);
 			}
 
-			int sects = courses.get(i).getRequiredSections();
-			// int sects = 10;
 			// randomly assign lecturer to sections
-			for (int j=0;j<sects;++j) {
+			for (int j=0;j<courses.get(i).getRequiredSections();++j) {
 				lecturer = tempLecturers.get(j%tempLecturers.size());
 				sections.add(new Section(course, lecturer, j+1));
 			}

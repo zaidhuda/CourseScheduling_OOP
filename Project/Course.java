@@ -4,7 +4,7 @@ public class Course {
     private static AtomicInteger nextId = new AtomicInteger();
     final int id;
 	private String code, title, venueType="";
-	private int credit, requiredSections=2;
+	private int credit, requiredSections=0;
 	
 	public Course(String code, String title, int credit, int requiredSections){
 		setCode(code);
