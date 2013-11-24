@@ -43,18 +43,20 @@ public class Test {
 		// sections.get(5).setTime(sections);
 
 		for (Section s : sections) {
-			s.setTime(sections);
+			s.generateSchedule(sections);
 			System.out.println(s);
 		}
+		sections.get(4).generateSchedule(sections);
+		System.out.println(sections.get(4));
+		sections.get(4).generateSchedule(sections);
+		System.out.println(sections.get(4));
+		sections.get(4).generateSchedule(sections);
+		System.out.println(sections.get(4));
 
 		// System.out.println(sections);
 
 		// CourseForm courseform = new CourseForm(courses);
 		// MainForm mainform = new MainForm(courses);
-	}
-
-	public static void setVenue(){
-
 	}
 
 	public static void generateSections(){

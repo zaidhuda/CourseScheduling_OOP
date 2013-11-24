@@ -17,10 +17,12 @@ public class Venue {
 	public void setName(String arg){ name = arg; }
 	public void setType(String arg){ type = arg; }
 	public void addCourse(String arg){ courses.add(arg); }
+	public void addAvailability(int arg){ availability.add(arg); }
 
 	public String getName(){ return name; }
 	public String getType(){ return type; }
 	public ArrayList<String> getCourses(){ return courses; }
+	public ArrayList<Integer> getAvailability(){ return availability; }
 
 	@Override
 	public boolean equals(Object other) {
@@ -29,7 +31,6 @@ public class Venue {
 
 	    Venue that = (Venue) other;
 
-	    // Custom equality check here.
 	    return this.name.equals(that.name)
 	    	&& this.type.equals(that.type);
 	}
