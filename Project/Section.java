@@ -25,6 +25,15 @@ public class Section {
 	public void setCourse(Course arg){ course = arg; }
 	public void setLecturer(Lecturer arg){ lecturer = arg; }
 	public void setVenue(Venue arg){ venue = arg; }
+	public void setVenue(ArrayList<Venue> venues){
+		String code = course.getCode();
+		ArrayList<String> courses = new ArrayList<String>();
+		for (Venue v : venues) {
+			courses = v.getCourses();
+			if (courses.contains(code))
+				venue = v;
+		}
+	}
 	public void setTime_inWords(int arg){
 		switch(arg){
 			case 0: time_inWords = "08:30 - 09:50"; break;
@@ -38,8 +47,8 @@ public class Section {
 	}
 	public void setDay_inWords(int arg){
 		switch(arg) {
-			case 0: day_inWords = "Monday/Wednesday"; break;
-			case 1: day_inWords = "Tuesday/Thursday"; break;
+			case 0: day_inWords = "Mon/Wed"; break;
+			case 1: day_inWords = "Tue/Thu"; break;
 			default: day_inWords = null;
 		}
 	}
@@ -53,18 +62,7 @@ public class Section {
 	public Course getCourse(){ return course; }
 	public Lecturer getLecturer(){ return lecturer; }
 	public Venue getVenue(){ return venue; }
-
-	public void setVenue(ArrayList<Venue> venues){
-		String code = course.getCode();
-		ArrayList<String> courses = new ArrayList<String>();
-		for (Venue v : venues) {
-			courses = v.getCourses();
-			if (courses.contains(code))
-				venue = v;
-		}
-	}
-
-	public void generateSchedule(ArrayList<Section> sections){
+	public boolean generateSchedule(ArrayList<Section> sections, boolean random){
 		if(!userDefined){
 			int tempDay=0, tempTime=0, max=0;
 			boolean inC=true, inL=true, inV=true;
@@ -91,22 +89,46 @@ public class Section {
 			}
 
 			if(max<3) max = 5;
-
+			int count = 0;
 			do{
-				tempTime = (int) (Math.random() * max);
+				if(random){
+					if(count<12) tempTime = (int) (Math.random() * max);
+					else if(count>11 && count<23) tempTime = count-11;
+					else if(count>22) return false;
+				}
+				else{
+					if(count<12) {
+						switch(count){
+							case 0: tempTime = 0; break;
+							case 1: tempTime = 3; break;
+							case 2: tempTime = 1; break;
+							case 3: tempTime = 4; break;
+							case 4: tempTime = 2; break;
+							case 5: tempTime = 5; break;
+							case 6: tempTime = 6; break;
+							case 7: tempTime = 9; break;
+							case 8: tempTime = 7; break;
+							case 9: tempTime = 10; break;
+							case 10: tempTime = 8; break;
+							case 11: tempTime = 11; break;
+						}
+					}
+					else if(count>11) return false;
+				}
+
 				inC = course.getAvailability().contains(tempTime);
 				inL = lecturer.getAvailability().contains(tempTime);
 				inV = venue.getAvailability().contains(tempTime);
-				// System.out.println(tempTime + " " + inC + " " + inL + " " + inV + " " + (!inC || !inL || !inV));
+				count++;
+				// System.out.println(tempTime + " " + (!inC || !inL || !inV) + " " + (count++));
 			}while(!inC || !inL || !inV);
 
 			course.getAvailability().remove(new Integer(tempTime));
 			lecturer.getAvailability().remove(new Integer(tempTime));
 			venue.getAvailability().remove(new Integer(tempTime));
 
-			if(tempTime>5&&tempTime<9){
+			if(tempTime>5&&tempTime<9)
 				tempTime-=3;
-			}
 			else if((tempTime>2&&tempTime<6)||(tempTime>8)){
 				tempDay=1;
 				if(tempTime<6) tempTime-=3;
@@ -116,6 +138,7 @@ public class Section {
 			setDay(tempDay);
 			setTime(tempTime);
 		}
+		return true;
 	}
 
 	@Override
@@ -131,7 +154,7 @@ public class Section {
 	}
 
 	public String toString(){
-		String rep = getSectionNum() + ", " + getCourse() + ", " + getLecturer() + ", " + getVenue() + ", " + getDay_inWords() + ", " + getTime_inWords();
+		String rep = getSectionNum() + ", " + getCourse().getCode() + ", " + getLecturer().getName() + ", " + getVenue().getName() + ", " + getDay_inWords() + ", " + getTime_inWords();
 		// String rep = getSectionNum() + ", " + getDay_inWords() + ", " + getTime_inWords();
 		return rep;
 	}

@@ -9,29 +9,30 @@ public class Course {
 	private int credit=0, requiredSections=1;
 	
 	public Course(String code){
-		setCode(code);
+		constructor(code, null, 0, 1);
 		id = nextId.incrementAndGet();
 	}
 	
 	public Course(String code, String title){
-		setCode(code);
-		setTitle(title);
+		constructor(code, title, 0, 1);
 		id = nextId.incrementAndGet();
 	}
 	
 	public Course(String code, String title, int credit){
-		setCode(code);
-		setTitle(title);
-		setCredit(credit);
+		constructor(code, title, credit, 1);
 		id = nextId.incrementAndGet();
 	}
 	
 	public Course(String code, String title, int credit, int requiredSections){
+		constructor(code, title, credit, requiredSections);
+		id = nextId.incrementAndGet();
+	}
+
+	private void constructor(String code, String title, int credit, int requiredSections){
 		setCode(code);
 		setTitle(title);
 		setCredit(credit);
 		setRequiredSections(requiredSections);
-		id = nextId.incrementAndGet();
 	}
 	
 	// setter methods
@@ -43,11 +44,10 @@ public class Course {
 		if(!arg.equals(arg.split(" "))){
 			String[] split = arg.split(" ");
 			arg = "";
-			for (String str : split) {
+			for (String str : split)
 				arg+=str;
-			}
 		}
-		code = arg;
+		code = arg.toUpperCase();
 	}
 
 	// getter methods

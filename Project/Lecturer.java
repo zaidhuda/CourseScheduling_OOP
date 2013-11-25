@@ -26,8 +26,8 @@ public class Lecturer {
 	}
 
 	public void setName(String arg){ name = arg; }
-	public void addSpecialization(String arg){ specialization.add(arg); }
-	public void addSpecialization(ArrayList<String> arg){for (String a : arg) specialization.add(a); }
+	public void addSpecialization(String arg){ specialization.add(arg.toUpperCase()); }
+	public void addSpecialization(ArrayList<String> args){for (String arg : args) specialization.add(arg.toUpperCase()); }
 	public void addAvailability(int arg){ availability.add(arg); }
 
 	public String getName(){ return name; }
@@ -45,6 +45,6 @@ public class Lecturer {
 	}
 
 	public String toString(){
-		return name;
+		return getName() + ", " + getSpecialization();
 	}
 }

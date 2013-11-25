@@ -1,6 +1,5 @@
 import java.util.concurrent.atomic.AtomicInteger;
 import java.util.ArrayList;
-import java.util.List;
 
 public class Venue {
     private static AtomicInteger nextId = new AtomicInteger();
@@ -17,7 +16,8 @@ public class Venue {
 
 	public void setName(String arg){ name = arg; }
 	public void setType(String arg){ type = arg; }
-	public void addCourse(String arg){ courses.add(arg); }
+	public void addCourse(String arg){ courses.add(arg.toUpperCase()); }
+	public void addCourse(ArrayList<String> args){for (String arg : args) courses.add(arg.toUpperCase()); }
 	public void addAvailability(int arg){ availability.add(arg); }
 
 	public String getName(){ return name; }
@@ -37,6 +37,6 @@ public class Venue {
 	}
 
 	public String toString(){
-		return name;
+		return getName() + ", " + getCourses();
 	}
 }

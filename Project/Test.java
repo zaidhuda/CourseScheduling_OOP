@@ -1,4 +1,3 @@
-import java.util.*;
 import java.util.ArrayList;
 
 public class Test {
@@ -41,41 +40,31 @@ public class Test {
 		}
 
 		for (Section s : sections) {
-			s.generateSchedule(sections);
-			System.out.println(s.getVenue() + ", " + s.getDay_inWords() + ", " + s.getTime_inWords());
+			if(!s.generateSchedule(sections, true))
+				System.out.println("Failed.");
+			// System.out.println(s);
 		}
 
 		for (Section s : sections) {
-			if(s.getCourse().equals(new Course("csc 1102")))
+			if(s.getCourse().equals(new Course("csc 1 1 0 2")) || s.getLecturer().equals(new Lecturer("Dr Norsaremah")))
 				System.out.println(s);
 		}
-
-		// System.out.println(sections);
-
-		// CourseForm courseform = new CourseForm(courses);
-		// MainForm mainform = new MainForm(courses);
 	}
 
 	public static void generateSections(){
-		Course course;
-		Lecturer lecturer;
-
 		// main loop, creating sections for each course
-		for (int i=0;i<courses.size();++i) {
-			course = courses.get(i);
+		for (Course course : courses) {
 			ArrayList<Lecturer> tempLecturers = new ArrayList<Lecturer>();
 
 			// add lecturers of current course to temporary list
-			for (int j=0;j<lecturers.size();++j) {
-				lecturer = lecturers.get(j);
+			for (Lecturer lecturer : lecturers)
 				if(lecturer.getSpecialization().contains(course.getCode()))
 					tempLecturers.add(lecturer);
-			}
 
 			// randomly assign lecturer to sections
-			for (int j=0;j<courses.get(i).getRequiredSections();++j) {
-				lecturer = tempLecturers.get(j%tempLecturers.size());
-				sections.add(new Section(course, lecturer, j+1));
+			for (int i=0;i<course.getRequiredSections();++i) {
+				Lecturer lecturer = tempLecturers.get(i%tempLecturers.size());
+				sections.add(new Section(course, lecturer, i+1));
 			}
 			tempLecturers.clear();
 		}
