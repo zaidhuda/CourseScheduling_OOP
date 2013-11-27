@@ -4,7 +4,7 @@ import java.util.ArrayList;
 public class Venue {
     private static AtomicInteger nextId = new AtomicInteger();
     final int id;
-	private String name, type = null;
+	private String name, type = "";
     public ArrayList<Integer> availability = new ArrayList<Integer>(java.util.Arrays.asList(0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11));
 	private ArrayList<String> courses = new ArrayList<String>();
 

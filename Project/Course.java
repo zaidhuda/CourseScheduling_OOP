@@ -4,7 +4,7 @@ import java.util.ArrayList;
 public class Course {
     private static AtomicInteger nextId = new AtomicInteger();
     final int id;
-    private ArrayList<Integer> availability = new ArrayList<Integer>(java.util.Arrays.asList(0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11));
+    // private ArrayList<Integer> availability = new ArrayList<Integer>(java.util.Arrays.asList(0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11));
 	private String code, title = null;
 	private int credit=0, requiredSections=1;
 	
@@ -39,7 +39,7 @@ public class Course {
 	public void setCredit(int arg){ credit = arg; }
 	public void setRequiredSections(int arg){ requiredSections = arg; }
 	public void setTitle(String arg){ title = arg; }
-	public void addAvailability(int arg){ availability.add(arg); }
+	// public void addAvailability(int arg){ availability.add(arg); }
 	public void setCode(String arg){
 		if(!arg.equals(arg.split(" "))){
 			String[] split = arg.split(" ");
@@ -55,7 +55,7 @@ public class Course {
 	public int getRequiredSections(){ return requiredSections; }
 	public String getCode(){ return code; }
 	public String getTitle(){ return title; }
-	public ArrayList<Integer> getAvailability(){ return availability; }
+	// public ArrayList<Integer> getAvailability(){ return availability; }
 
 	@Override
 	public boolean equals(Object other) {

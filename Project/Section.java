@@ -11,6 +11,7 @@ public class Section {
 	private Lecturer lecturer = null;
 	private Venue venue = null;
 
+	// Section must have course and lecturer
 	public Section(Course course, Lecturer lecturer, int sectionNum){
 		setCourse(course);
 		setLecturer(lecturer);
@@ -26,12 +27,26 @@ public class Section {
 	public void setLecturer(Lecturer arg){ lecturer = arg; }
 	public void setVenue(Venue arg){ venue = arg; }
 	public void setVenue(ArrayList<Venue> venues){
-		String code = course.getCode();
-		ArrayList<String> courses = new ArrayList<String>();
-		for (Venue v : venues) {
-			courses = v.getCourses();
-			if (courses.contains(code))
-				venue = v;
+		try{
+			String code = course.getCode();
+			ArrayList<String> courses = new ArrayList<>();
+			ArrayList<Venue> tempVenues = new ArrayList<>();
+			// Checking if venue can be used for a subject
+			for (Venue v : venues) {
+				courses = v.getCourses();
+				if (courses.contains(code)){
+					// Adding usable venua for a subject to ArrayList
+					tempVenues.add(v);
+				}
+			}
+			// Randomly choosing a venue for a subject
+			int r = (int) (Math.random() * tempVenues.size());
+			venue = tempVenues.get(r);
+			tempVenues.clear();
+		}
+		catch(Exception e){
+			// In case no venue for a subject, make dummy venue
+			venue = new Venue("NA", "");
 		}
 	}
 	public void setTime_inWords(int arg){
@@ -63,10 +78,11 @@ public class Section {
 	public Lecturer getLecturer(){ return lecturer; }
 	public Venue getVenue(){ return venue; }
 	public boolean generateSchedule(ArrayList<Section> sections, boolean random){
+		// Generate only if a section is not marked as user defined
 		if(!userDefined){
 			int tempDay=0, tempTime=0, max=0;
 			boolean inC=true, inL=true, inV=true;
-
+			// Checking if the section has a schedule
 			if (!(time_inWords == null) && !(day_inWords == null)) {
 				if (getDay()==0) {
 					if(getTime()<3) tempTime = getTime();
@@ -78,24 +94,29 @@ public class Section {
 					else tempTime = getTime() + 6;
 					// System.out.println(getTime());
 				}
-				course.addAvailability(new Integer(tempTime));
+				// If yes, restore availability for venue and lecturer
+				// course.addAvailability(new Integer(tempTime));
 				lecturer.addAvailability(new Integer(tempTime));
 				venue.addAvailability(new Integer(tempTime));
 			}
-
+			// Finding max sections that will be using the venue to fill up
+			// morning schedule first
 			for (Section s : sections) {
 				if(s.venue.equals(venue))
 					max++;
 			}
-
+			// If only 3 sections will be using, let the schdule be randomed
+			// between Mon/Wed and Tue/Thu morning sessions
 			if(max<3) max = 5;
 			int count = 0;
 			do{
+				// If random is true, find time that is available in lect and venue
 				if(random){
 					if(count<12) tempTime = (int) (Math.random() * max);
 					else if(count>11 && count<23) tempTime = count-11;
 					else if(count>22) return false;
 				}
+				// If random is false, fill up morning sessions first
 				else{
 					if(count<12) {
 						switch(count){
@@ -115,15 +136,16 @@ public class Section {
 					}
 					else if(count>11) return false;
 				}
-
-				inC = course.getAvailability().contains(tempTime);
+				// Check if lecturer and venue are available for same time
+				// inC = course.getAvailability().contains(tempTime);
 				inL = lecturer.getAvailability().contains(tempTime);
 				inV = venue.getAvailability().contains(tempTime);
 				count++;
 				// System.out.println(tempTime + " " + (!inC || !inL || !inV) + " " + (count++));
-			}while(!inC || !inL || !inV);
+			}while(!inL || !inV);
 
-			course.getAvailability().remove(new Integer(tempTime));
+			// Remove availaibility from lecturer and venue
+			// course.getAvailability().remove(new Integer(tempTime));
 			lecturer.getAvailability().remove(new Integer(tempTime));
 			venue.getAvailability().remove(new Integer(tempTime));
 
