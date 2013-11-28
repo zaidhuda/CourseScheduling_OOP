@@ -1,9 +1,29 @@
-import java.util.concurrent.atomic.AtomicInteger;
+//+------------------------------------------+
+//|			Venue					         |
+//+------------------------------------------+
+//|-name:String 							 |
+//|-type:String                              |
+//|-courses:ArrayList<String>                |
+//|+availability:ArrayList<Integer>          |
+//+------------------------------------------+
+//|+setName(arg:String):void                 |
+//|+setType(arg:String):void                 |
+//|+addCourse(arg:String):void               |
+//|+addCourse(args:ArrayList<String>):void   |
+//|+addAvailability(arg:int):void            |
+//|+removeAvailability(arg:int):void         |
+//|+getName():String                         |
+//|+getType():String                         |
+//|+getCourses():ArrayList<String>           |
+//|+getAvailability():ArrayList<Integer>     |
+//|+equals(other:Object):boolean             |
+//|+toString():String                        |
+//+------------------------------------------+
+
+
 import java.util.ArrayList;
 
 public class Venue {
-    private static AtomicInteger nextId = new AtomicInteger();
-    final int id;
 	private String name, type = "";
     public ArrayList<Integer> availability = new ArrayList<Integer>(java.util.Arrays.asList(0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11));
 	private ArrayList<String> courses = new ArrayList<String>();
@@ -11,7 +31,6 @@ public class Venue {
 	public Venue(String name, String type){
 		setName(name);
 		setType(type);
-		id = nextId.incrementAndGet();
 	}
 
 	public void setName(String arg){ name = arg; }

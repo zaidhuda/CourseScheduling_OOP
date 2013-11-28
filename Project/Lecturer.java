@@ -1,28 +1,42 @@
-import java.util.concurrent.atomic.AtomicInteger;
+// +--------------------------------------------------+
+// |                   Lecturer          			  |
+// +--------------------------------------------------+
+// |-name:String             						  |
+// |-specialization:ArrayList<String>                 |
+// |+availability:ArrayList<Integer>                  |
+// +--------------------------------------------------+
+// |+setName(arg: String):void                        |
+// |+addSpecialization(arg:String):void               |
+// |+addSpecialization(args:ArrayList<String>):void   |
+// |+addAvailability(arg:int):void                    |
+// |+removeAvailability(arg:int):void                 |
+// |+getName():String                                 |
+// |+getSpecialization():ArrayList<String>            |
+// |+getAvailability():ArrayList<Integer>             |
+// |+equals(other:Object):boolean                     |
+// |+toString():String                                |
+// +--------------------------------------------------+
+
+
 import java.util.ArrayList;
 
 public class Lecturer {
-    private static AtomicInteger nextId = new AtomicInteger();
-    final int id;
 	private String name;
     public ArrayList<Integer> availability = new ArrayList<Integer>(java.util.Arrays.asList(0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11));
 	private ArrayList<String> specialization = new ArrayList<String>();
 
 	public Lecturer(String name){
 		setName(name);
-		id = nextId.incrementAndGet();
 	}
 
 	public Lecturer(String name, ArrayList<String> specialization){
 		setName(name);
 		addSpecialization(specialization);
-		id = nextId.incrementAndGet();
 	}
 
 	public Lecturer(String name, String specialization){
 		setName(name);
 		addSpecialization(specialization);
-		id = nextId.incrementAndGet();
 	}
 
 	public void setName(String arg){ name = arg; }

@@ -1,9 +1,6 @@
-import java.util.concurrent.atomic.AtomicInteger;
 import java.util.ArrayList;
 
 public class Section {
-    private static AtomicInteger nextId = new AtomicInteger();
-    final int id;
 	private int sectionNum, studentLimit=30, time=0, day=0;
 	private String time_inWords = null, day_inWords = null;
 	public boolean userDefined = false;
@@ -16,7 +13,6 @@ public class Section {
 		setCourse(course);
 		setLecturer(lecturer);
 		setSectionNum(sectionNum);
-		id = nextId.incrementAndGet();
 	}
 
 	public void setDay(int arg){ day = arg; setDay_inWords(arg); }

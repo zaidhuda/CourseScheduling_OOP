@@ -40,11 +40,11 @@ public class Test {
 			s.setVenue(venues);
 			// System.out.println(s);
 		}
-		try{
-			remove(lecturers.get(1));
-		}
-		catch(Exception e){}
-		remove(courses.get(2));
+		// try{
+		// 	remove(lecturers.get(1));
+		// }
+		// catch(Exception e){}
+		// remove(courses.get(2));
 		// remove(venues.get(1));
 		sections.get(1).setVenue(venues.get(0));
 		System.out.println(sections.get(1));
