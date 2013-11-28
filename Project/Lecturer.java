@@ -40,6 +40,7 @@ public class Lecturer {
 		}
 	}
 	public void addAvailability(int arg){ availability.add(arg); }
+	public void removeAvailability(int arg){ availability.remove(new Integer(arg)); }
 
 	public String getName(){ return name; }
 	public ArrayList<String> getSpecialization(){ return specialization; }

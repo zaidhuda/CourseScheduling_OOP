@@ -25,7 +25,18 @@ public class Section {
 	public void setStudentLimit(int arg){ studentLimit = arg; }
 	public void setCourse(Course arg){ course = arg; }
 	public void setLecturer(Lecturer arg){ lecturer = arg; }
-	public void setVenue(Venue arg){ venue = arg; }
+	public void setVenue(Venue arg){
+		try{
+			if (arg.getCourses().contains(course.getCode()))
+				venue = arg;
+			// else
+			// 	System.out.println("Failed");
+		}
+		catch(Exception e){
+			// In case no venue for a subject, make dummy venue
+			venue = new Venue("NA", "");
+		}
+	}
 	public void setVenue(ArrayList<Venue> venues){
 		try{
 			String code = course.getCode();
@@ -49,7 +60,7 @@ public class Section {
 			venue = new Venue("NA", "");
 		}
 	}
-	public void setTime_inWords(int arg){
+	private void setTime_inWords(int arg){
 		switch(arg){
 			case 0: time_inWords = "08:30 - 09:50"; break;
 			case 1: time_inWords = "10:00 - 11:20"; break;
@@ -60,7 +71,7 @@ public class Section {
 			default: time_inWords = null;
 		}
 	}
-	public void setDay_inWords(int arg){
+	private void setDay_inWords(int arg){
 		switch(arg) {
 			case 0: day_inWords = "Mon/Wed"; break;
 			case 1: day_inWords = "Tue/Thu"; break;
@@ -77,6 +88,7 @@ public class Section {
 	public Course getCourse(){ return course; }
 	public Lecturer getLecturer(){ return lecturer; }
 	public Venue getVenue(){ return venue; }
+
 	public boolean generateSchedule(ArrayList<Section> sections, boolean random){
 		// Generate only if a section is not marked as user defined
 		if(!userDefined){
@@ -137,7 +149,6 @@ public class Section {
 					else if(count>11) return false;
 				}
 				// Check if lecturer and venue are available for same time
-				// inC = course.getAvailability().contains(tempTime);
 				inL = lecturer.getAvailability().contains(tempTime);
 				inV = venue.getAvailability().contains(tempTime);
 				count++;
@@ -145,10 +156,11 @@ public class Section {
 			}while(!inL || !inV);
 
 			// Remove availaibility from lecturer and venue
-			// course.getAvailability().remove(new Integer(tempTime));
-			lecturer.getAvailability().remove(new Integer(tempTime));
-			venue.getAvailability().remove(new Integer(tempTime));
+			lecturer.removeAvailability(new Integer(tempTime));
+			venue.removeAvailability(new Integer(tempTime));
 
+			// Mon = 0,1,2,6,7,8
+			// Tue = 3,4,5,9,10,11
 			if(tempTime>5&&tempTime<9)
 				tempTime-=3;
 			else if((tempTime>2&&tempTime<6)||(tempTime>8)){

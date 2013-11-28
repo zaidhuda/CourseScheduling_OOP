@@ -27,7 +27,7 @@ public class Test {
 
 		venues.add(new Venue("Lab 3", "LAB"));
 		venues.add(new Venue("Lab 6", "LAB"));
-		venues.get(0).addCourse("CSC1100");
+		venues.get(0).addCourse("CSC1102");
 		venues.get(1).addCourse("CSC1100");
 		venues.get(1).addCourse("CSC1103");
 
@@ -45,7 +45,9 @@ public class Test {
 		}
 		catch(Exception e){}
 		remove(courses.get(2));
-		remove(venues.get(1));
+		// remove(venues.get(1));
+		sections.get(1).setVenue(venues.get(0));
+		System.out.println(sections.get(1));
 
 		for (Section s : sections) {
 			if(!s.generateSchedule(sections, true))

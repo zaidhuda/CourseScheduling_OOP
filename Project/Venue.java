@@ -19,6 +19,7 @@ public class Venue {
 	public void addCourse(String arg){ courses.add(arg.toUpperCase()); }
 	public void addCourse(ArrayList<String> args){for (String arg : args) courses.add(arg.toUpperCase()); }
 	public void addAvailability(int arg){ availability.add(arg); }
+	public void removeAvailability(int arg){ availability.remove(new Integer(arg)); }
 
 	public String getName(){ return name; }
 	public String getType(){ return type; }
