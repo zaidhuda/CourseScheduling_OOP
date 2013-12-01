@@ -20,17 +20,52 @@ public class Section {
 	public void setSectionNum(int arg){ sectionNum = arg; }
 	public void setStudentLimit(int arg){ studentLimit = arg; }
 	public void setCourse(Course arg){ course = arg; }
-	public void setLecturer(Lecturer arg){ lecturer = arg; }
+	public void setLecturer(Lecturer arg){
+		try{
+			if(arg.getSpecialization().contains(course.getCode()))
+				lecturer = arg;
+			else
+				lecturer = new Lecturer("TO BE DETERMINED");
+		}
+		catch(Exception e){
+			// In case no venue for a subject, make dummy venue
+			lecturer = new Lecturer("TO BE DETERMINED");
+		}	
+	}
+	public void setLecturer(ArrayList<Lecturer> lecturers, boolean random){
+		// main loop, creating sections for each course
+		try {
+			ArrayList<Lecturer> tempLecturers = new ArrayList<Lecturer>();
+
+			// add lecturers of current course to temporary list
+			for (Lecturer lecturer : lecturers)
+				if(lecturer.getSpecialization().contains(course.getCode()))
+					tempLecturers.add(lecturer);
+
+			// randomly assign lecturer to sections
+			if(random){
+				int r = (int) (Math.random() * tempLecturers.size());
+				setLecturer(tempLecturers.get(r));
+			}
+			// assign lecturer based on order
+			else{
+				setLecturer(tempLecturers.get((sectionNum+1)%tempLecturers.size()));
+			}
+
+			tempLecturers.clear();
+		}
+		catch(Exception e){}
+	}
 	public void setVenue(Venue arg){
 		try{
 			if (arg.getCourses().contains(course.getCode()))
 				venue = arg;
-			// else
-			// 	System.out.println("Failed");
+			else
+				venue = new Venue("TO BE DETERMINED", "");
 		}
 		catch(Exception e){
 			// In case no venue for a subject, make dummy venue
-			venue = new Venue("NA", "");
+			venue = new Venue("TO BE DETERMINED", "");
 		}
 	}
 	public void setVenue(ArrayList<Venue> venues){
@@ -53,7 +88,7 @@ public class Section {
 		}
 		catch(Exception e){
 			// In case no venue for a subject, make dummy venue
-			venue = new Venue("NA", "");
+			venue = new Venue("TO BE DETERMINED", "");
 		}
 	}
 	private void setTime_inWords(int arg){
