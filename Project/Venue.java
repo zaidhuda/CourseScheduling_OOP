@@ -25,7 +25,7 @@ import java.util.ArrayList;
 
 public class Venue {
 	private String name, type = "";
-    public ArrayList<Integer> availability = new ArrayList<Integer>(java.util.Arrays.asList(0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11));
+	public ArrayList<Integer> availability = new ArrayList<Integer>(java.util.Arrays.asList(0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11));
 	private ArrayList<String> courses = new ArrayList<String>();
 
 	public Venue(String name, String type){
@@ -47,13 +47,13 @@ public class Venue {
 
 	@Override
 	public boolean equals(Object other) {
-	    if (!(other instanceof Venue))
-	        return false;
+		if (!(other instanceof Venue))
+			return false;
 
-	    Venue that = (Venue) other;
+		Venue that = (Venue) other;
 
-	    return this.name.equalsIgnoreCase(that.name)
-	    	&& this.type.equalsIgnoreCase(that.type);
+		return this.name.equalsIgnoreCase(that.name)
+			&& this.type.equalsIgnoreCase(that.type);
 	}
 
 	public String toString(){
