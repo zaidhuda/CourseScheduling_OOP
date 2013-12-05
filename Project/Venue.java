@@ -25,35 +25,28 @@ import java.util.*;
 
 public class Venue {
 	private String name, type = "";
-	private boolean[][] isAvailable = new boolean[2][6];
+	private boolean[][] availability = new boolean[2][6];
 	private ArrayList<String> courses = new ArrayList<String>();
 
 	public Venue(String name, String type){
 		setName(name);
 		setType(type);
-		Arrays.fill(isAvailable[0], true);
-		Arrays.fill(isAvailable[1], true);
+		Arrays.fill(availability[0], true);
+		Arrays.fill(availability[1], true);
 	}
 
 	public void setName(String arg){ name = arg; }
 	public void setType(String arg){ type = arg; }
 	public void addCourse(String arg){ courses.add(arg.toUpperCase()); }
 	public void addCourse(ArrayList<String> args){for (String arg : args) courses.add(arg.toUpperCase()); }
-	public void setAvailabilityAt(int day, int time, boolean arg){
-		day %= 2;
-		time %= 6;
-		isAvailable[day][time] = arg;	
-	}
+	public void setAvailability(boolean[][] arg){ availability = arg; }
+	public void setAvailabilityAt(int day, int time, boolean arg){ availability[day%2][time%6] = arg; }
 	
 	public String getName(){ return name; }
 	public String getType(){ return type; }
 	public ArrayList<String> getCourses(){ return courses; }
-	public boolean[][] getAvailability(){ return isAvailable; }
-	public boolean isAvailableAt(int day, int time){
-		day %= 2;
-		time %= 6;
-		return isAvailable[day][time];
-	}
+	public boolean[][] getAvailability(){ return availability; }
+	public boolean isAvailableAt(int day, int time){ return availability[day%2][time%6]; }
 
 	@Override
 	public boolean equals(Object other) {

@@ -45,6 +45,9 @@ public class Test {
 			// System.out.println(s);
 		}
 
+		long seed = System.nanoTime();
+		Collections.shuffle(sections, new Random(seed));
+
 		for (Section s : sections) {
 			if(!s.generateSchedule(sections, true))
 				System.out.println("Failed.");
@@ -52,6 +55,19 @@ public class Test {
 		}
 
 		Collections.sort(sections, courseComparator);
+
+		for (Section s : sections) {
+			System.out.println(s);
+		}
+
+		for (Section s : sections) {
+			if(!s.generateSchedule(sections, true))
+				System.out.println("Failed.");
+			// System.out.println(s);
+		}
+
+		Collections.sort(sections, courseComparator);
+
 		for (Section s : sections) {
 			System.out.println(s);
 		}

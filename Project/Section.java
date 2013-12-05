@@ -123,21 +123,16 @@ public class Section {
 	public boolean generateSchedule(ArrayList<Section> sections, boolean random){
 		// Generate only if a section is not marked as user defined
 		if(!userDefined){
-			int tempDay=getDay(), tempTime=0, max=0;
-			boolean inC=true, inL=true, inV=true;
+			int tempDay=getDay(), tempTime=getTime(), max=0;
+			boolean lecturerFree=true, venueFree=true;
 			// Checking if the section has a schedule
 			if (!(time_inWords == null) && !(day_inWords == null)) {
-				if (tempDay==0)
-					tempTime = getTime();
-					// System.out.println(getTime());
-				else
-					tempTime = getTime()+6;
-
 				// If yes, restore availability for venue and lecturer
 				// course.addAvailability(new Integer(tempTime));
 				lecturer.setAvailabilityAt(tempDay, tempTime, true);
 				venue.setAvailabilityAt(tempDay, tempTime, true);
 			}
+
 			// Finding max sections that will be using the venue to fill up
 			// morning schedule first
 			for (Section s : sections) {
@@ -145,19 +140,21 @@ public class Section {
 					max++;
 			}
 			int count = 0;
+
 			do{
 				// If random is true, find time that is available in lect and venue
 				if(random){
 					if(count<12){
 						tempDay = (int) (Math.random() * 2);
-						tempTime = (int) (Math.random() * (max%6));
+						tempTime = (int) (Math.random() * (max/2+1)+1);
 					}
 					else if(count>11 && count<23){
-						if((count-11)<6)
-							tempDay = 0;
+						tempDay = count%2;
+						if(count<17)
+							tempTime = (count%6)/2;
 						else
-							tempDay = 1;
-						tempTime = (count-11)%6;
+							tempTime = (count-11)/2;
+						System.out.println(count + " " + tempDay + " " + tempTime);
 					}
 					else if(count>22) return false;
 				}
@@ -165,16 +162,19 @@ public class Section {
 				else{
 					if(count<12) {
 						tempDay = count%2;
-						tempTime = (count%6)/2;
+						if(count<6)
+							tempTime = (count%6)/2;
+						else
+							tempTime = count/2;
 					}
 					else if(count>11) return false;
 				}
 				// Check if lecturer and venue are available for same time
-				inL = lecturer.isAvailableAt(tempDay, tempTime);
-				inV = venue.isAvailableAt(tempDay, tempTime);
+				lecturerFree = lecturer.isAvailableAt(tempDay, tempTime);
+				venueFree = venue.isAvailableAt(tempDay, tempTime);
 				count++;
 				// System.out.println(tempDay + " " + tempTime + " " + (inL && inV) + " " + (count++));
-			}while(!inL || !inV);
+			}while(!lecturerFree || !venueFree);
 
 			// Remove availaibility from lecturer and venue
 			lecturer.setAvailabilityAt(tempDay, tempTime, false);
