@@ -18,25 +18,31 @@
 // +--------------------------------------------------+
 
 
-import java.util.ArrayList;
+import java.util.*;
 
 public class Lecturer {
 	private String name;
-    public ArrayList<Integer> availability = new ArrayList<Integer>(java.util.Arrays.asList(0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11));
+	private boolean[][] isAvailable = new boolean[2][6];
 	private ArrayList<String> specialization = new ArrayList<String>();
 
 	public Lecturer(String name){
 		setName(name);
+		Arrays.fill(isAvailable[0], true);
+		Arrays.fill(isAvailable[1], true);
 	}
 
 	public Lecturer(String name, ArrayList<String> specialization){
 		setName(name);
 		addSpecialization(specialization);
+		Arrays.fill(isAvailable[0], true);
+		Arrays.fill(isAvailable[1], true);
 	}
 
 	public Lecturer(String name, String specialization){
 		setName(name);
 		addSpecialization(specialization);
+		Arrays.fill(isAvailable[0], true);
+		Arrays.fill(isAvailable[1], true);
 	}
 
 	public void setName(String arg){ name = arg; }
@@ -53,12 +59,20 @@ public class Lecturer {
 				break;
 		}
 	}
-	public void addAvailability(int arg){ availability.add(arg); }
-	public void removeAvailability(int arg){ availability.remove(new Integer(arg)); }
+	public void setAvailabilityAt(int day, int time, boolean arg){
+		day %= 2;
+		time %= 6;
+		isAvailable[day][time] = arg;	
+	}
 
 	public String getName(){ return name; }
 	public ArrayList<String> getSpecialization(){ return specialization; }
-	public ArrayList<Integer> getAvailability(){ return availability; }
+	public boolean[][] getAvailability(){ return isAvailable; }
+	public boolean isAvailableAt(int day, int time){
+		day %= 2;
+		time %= 6;
+		return isAvailable[day][time];
+	}
 
 	@Override
 	public boolean equals(Object other) {

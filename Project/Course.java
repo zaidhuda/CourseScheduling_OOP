@@ -57,6 +57,13 @@ public class Course {
 	    return this.code.equalsIgnoreCase(that.code);
 	}
 
+	public int compareTo(Course other){
+		if(other.equals(this))
+			return 0;
+
+		return getCode().compareTo(other.getCode());
+	}
+
 	public String toString(){
 		String course = getCode() + " " + getTitle() + " " + getCredit();
 		return course;

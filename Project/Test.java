@@ -1,4 +1,4 @@
-import java.util.ArrayList;
+import java.util.*;
 import java.io.File;
 import java.io.FileOutputStream;
 import java.io.IOException;
@@ -9,6 +9,8 @@ public class Test {
 	public static ArrayList<Venue> venues = new ArrayList<Venue>();
 	public static ArrayList<Schedule> schedules = new ArrayList<Schedule>();
 	public static ArrayList<Section> sections = new ArrayList<Section>();
+
+	public static CourseComparator courseComparator = new CourseComparator();
 
 	public static void main(String[] args) {
 
@@ -46,10 +48,23 @@ public class Test {
 		for (Section s : sections) {
 			if(!s.generateSchedule(sections, true))
 				System.out.println("Failed.");
-			System.out.println(s);
+			// System.out.println(s);
 		}
 
-		save();
+		Collections.sort(sections, courseComparator);
+		for (Section s : sections) {
+			System.out.println(s);
+		}
+		// System.out.println(courses.get(0).compareTo(courses.get(1)));
+
+		// save();
+		// FetchData fd = new FetchData(courses);
+	}
+
+	public static class CourseComparator implements Comparator<Section> {
+	    public int compare(Section o1, Section o2) {
+	        return o1.getCourse().getCode().compareTo(o2.getCourse().getCode());
+	    }
 	}
 
 	public static void save(){

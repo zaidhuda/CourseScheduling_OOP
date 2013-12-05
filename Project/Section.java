@@ -123,24 +123,20 @@ public class Section {
 	public boolean generateSchedule(ArrayList<Section> sections, boolean random){
 		// Generate only if a section is not marked as user defined
 		if(!userDefined){
-			int tempDay=0, tempTime=0, max=0;
+			int tempDay=getDay(), tempTime=0, max=0;
 			boolean inC=true, inL=true, inV=true;
 			// Checking if the section has a schedule
 			if (!(time_inWords == null) && !(day_inWords == null)) {
-				if (getDay()==0) {
-					if(getTime()<3) tempTime = getTime();
-					else tempTime = getTime() + 3;
+				if (tempDay==0)
+					tempTime = getTime();
 					// System.out.println(getTime());
-				}
-				else{
-					if(getTime()<3) tempTime = getTime()+3;
-					else tempTime = getTime() + 6;
-					// System.out.println(getTime());
-				}
+				else
+					tempTime = getTime()+6;
+
 				// If yes, restore availability for venue and lecturer
 				// course.addAvailability(new Integer(tempTime));
-				lecturer.addAvailability(new Integer(tempTime));
-				venue.addAvailability(new Integer(tempTime));
+				lecturer.setAvailabilityAt(tempDay, tempTime, true);
+				venue.setAvailabilityAt(tempDay, tempTime, true);
 			}
 			// Finding max sections that will be using the venue to fill up
 			// morning schedule first
@@ -148,57 +144,41 @@ public class Section {
 				if(s.venue.equals(venue))
 					max++;
 			}
-			// If only 3 sections will be using, let the schdule be randomed
-			// between Mon/Wed and Tue/Thu morning sessions
-			if(max<3) max = 5;
 			int count = 0;
 			do{
 				// If random is true, find time that is available in lect and venue
 				if(random){
-					if(count<12) tempTime = (int) (Math.random() * max);
-					else if(count>11 && count<23) tempTime = count-11;
+					if(count<12){
+						tempDay = (int) (Math.random() * 2);
+						tempTime = (int) (Math.random() * (max%6));
+					}
+					else if(count>11 && count<23){
+						if((count-11)<6)
+							tempDay = 0;
+						else
+							tempDay = 1;
+						tempTime = (count-11)%6;
+					}
 					else if(count>22) return false;
 				}
 				// If random is false, fill up morning sessions first
 				else{
 					if(count<12) {
-						switch(count){
-							case 0: tempTime = 0; break;
-							case 1: tempTime = 3; break;
-							case 2: tempTime = 1; break;
-							case 3: tempTime = 4; break;
-							case 4: tempTime = 2; break;
-							case 5: tempTime = 5; break;
-							case 6: tempTime = 6; break;
-							case 7: tempTime = 9; break;
-							case 8: tempTime = 7; break;
-							case 9: tempTime = 10; break;
-							case 10: tempTime = 8; break;
-							case 11: tempTime = 11; break;
-						}
+						tempDay = count%2;
+						tempTime = (count%6)/2;
 					}
 					else if(count>11) return false;
 				}
 				// Check if lecturer and venue are available for same time
-				inL = lecturer.getAvailability().contains(tempTime);
-				inV = venue.getAvailability().contains(tempTime);
+				inL = lecturer.isAvailableAt(tempDay, tempTime);
+				inV = venue.isAvailableAt(tempDay, tempTime);
 				count++;
-				// System.out.println(tempTime + " " + (!inC || !inL || !inV) + " " + (count++));
+				// System.out.println(tempDay + " " + tempTime + " " + (inL && inV) + " " + (count++));
 			}while(!inL || !inV);
 
 			// Remove availaibility from lecturer and venue
-			lecturer.removeAvailability(new Integer(tempTime));
-			venue.removeAvailability(new Integer(tempTime));
-
-			// Mon = 0,1,2,6,7,8
-			// Tue = 3,4,5,9,10,11
-			if(tempTime>5&&tempTime<9)
-				tempTime-=3;
-			else if((tempTime>2&&tempTime<6)||(tempTime>8)){
-				tempDay=1;
-				if(tempTime<6) tempTime-=3;
-				if(tempTime>8) tempTime-=6;
-			}
+			lecturer.setAvailabilityAt(tempDay, tempTime, false);
+			venue.setAvailabilityAt(tempDay, tempTime, false);
 
 			setDay(tempDay);
 			setTime(tempTime);
