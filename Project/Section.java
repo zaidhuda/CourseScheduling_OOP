@@ -54,13 +54,23 @@ public class Section {
 	}
 
 	public void setDay(int arg){ day = arg; setDay_inWords(arg); }
+	public int getDay(){ return day; }
+
 	public void setTime(int arg){ time = arg; setTime_inWords(arg); }
+	public int getTime(){ return time; }
+
 	public void setSectionNum(int arg){ sectionNum = arg; }
+	public String getSectionNum(){ return Integer.toString(sectionNum); }
+
+	public int getStudentLimit(){ return studentLimit; }
 	public void setStudentLimit(int arg){ studentLimit = arg; }
+
 	public void setCourse(Course arg){ course = arg; }
+	public Course getCourse(){ return course; }
+
 	public void setLecturer(Lecturer arg){
 		try{
-			if(arg.getSpecialization().contains(course.getCode()))
+			if(arg.getSpecializations().contains(course.getCode()))
 				lecturer = arg;
 			else
 				lecturer = new Lecturer("TO BE DETERMINED");
@@ -77,7 +87,7 @@ public class Section {
 
 			// add lecturers of current course to temporary list
 			for (Lecturer lecturer : lecturers)
-				if(lecturer.getSpecialization().contains(course.getCode()))
+				if(lecturer.getSpecializations().contains(course.getCode()))
 					tempLecturers.add(lecturer);
 
 			// randomly assign lecturer to sections
@@ -94,6 +104,8 @@ public class Section {
 		}
 		catch(Exception e){}
 	}
+	public Lecturer getLecturer(){ return lecturer; }
+	
 	public void setVenue(Venue arg){
 		try{
 			if (arg.getCourses().contains(course.getCode()))
@@ -129,6 +141,17 @@ public class Section {
 			venue = new Venue("TO BE DETERMINED");
 		}
 	}
+	public Venue getVenue(){ return venue; }
+
+	private void setDay_inWords(int arg){
+		switch(arg) {
+			case 0: day_inWords = "Mon/Wed"; break;
+			case 1: day_inWords = "Tue/Thu"; break;
+			default: day_inWords = null;
+		}
+	}
+	public String getDay_inWords(){ return day_inWords; }
+
 	private void setTime_inWords(int arg){
 		switch(arg){
 			case 0: time_inWords = "08:30 - 09:50"; break;
@@ -140,23 +163,7 @@ public class Section {
 			default: time_inWords = null;
 		}
 	}
-	private void setDay_inWords(int arg){
-		switch(arg) {
-			case 0: day_inWords = "Mon/Wed"; break;
-			case 1: day_inWords = "Tue/Thu"; break;
-			default: day_inWords = null;
-		}
-	}
-
-	public int getDay(){ return day; }
-	public int getTime(){ return time; }
-	public int getStudentLimit(){ return studentLimit; }
-	public String getSectionNum(){ return Integer.toString(sectionNum); }
-	public String getDay_inWords(){ return day_inWords; }
 	public String getTime_inWords(){ return time_inWords; }
-	public Course getCourse(){ return course; }
-	public Lecturer getLecturer(){ return lecturer; }
-	public Venue getVenue(){ return venue; }
 
 	public boolean generateSchedule(ArrayList<Section> sections, boolean random){
 		int tempDay=getDay(), tempTime=getTime(), max=0;
@@ -245,7 +252,6 @@ public class Section {
 
 	public String toString(){
 		String rep = getSectionNum() + ", " + getCourse().getCode() + ", " + getLecturer().getName() + ", " + getVenue().getName() + ", " + getDay_inWords() + ", " + getTime_inWords() + ", " + note;
-		// String rep = getSectionNum() + ", " + getDay_inWords() + ", " + getTime_inWords();
 		return rep;
 	}
 }

@@ -11,6 +11,7 @@
 //|+keyReleased(e:KeyEvent):void          |
 //|+keyTyped(e:KeyEvent):void             |
 //+---------------------------------------+
+
 import java.awt.*;
 import javax.swing.*;
 import java.awt.event.*;

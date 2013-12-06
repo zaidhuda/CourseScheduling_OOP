@@ -32,7 +32,6 @@ public class Test {
 	public static ArrayList<Course> courses = new ArrayList<Course>();
 	public static ArrayList<Lecturer> lecturers = new ArrayList<Lecturer>();
 	public static ArrayList<Venue> venues = new ArrayList<Venue>();
-	public static ArrayList<Schedule> schedules = new ArrayList<Schedule>();
 	public static ArrayList<Section> sections = new ArrayList<Section>();
 
 	public static CourseComparator courseComparator = new CourseComparator();
@@ -40,7 +39,7 @@ public class Test {
 	public static void main(String[] args) {
 
 		courses.add(new Course("CSC1100", "Elements of Programming", 3, 4));
-		courses.add(new Course("CSC1102", "Web Programming Fundamental", 3, 1));
+		courses.add(new Course("CsC1102", "Web Programming Fundamental", 3, 1));
 		courses.add(new Course("CSC1103", "Object Oriented Programming", 3, 3));
 
 		lecturers.add(new Lecturer("Dr Suriani", "CSC1100"));
@@ -147,7 +146,7 @@ public class Test {
 			// get content of lecturers
 			for (Lecturer l : lecturers) {
 				content = l.getName();
-				content += ";" + l.getSpecialization();
+				content += ";" + l.getSpecializations();
 				content += ";" + l.availability_inWords() + "\n";
 
 				byte[] contentInBytes = content.getBytes();
@@ -161,7 +160,6 @@ public class Test {
 			// get content of venues
 			for (Venue v : venues) {
 				content = v.getName();
-				content += ";" + v.getName();
 				content += ";" + v.getCourses();
 				content += ";" + v.availability_inWords() + "\n";
 

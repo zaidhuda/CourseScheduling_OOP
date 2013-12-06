@@ -18,6 +18,7 @@
 //|+equals(other:Object):boolean                                                    |
 //|+toString():String                                                               |
 //+---------------------------------------------------------------------------------+ 
+
 import java.util.ArrayList;
 
 public class Course {
@@ -47,24 +48,16 @@ public class Course {
 		setRequiredSections(requiredSections);
 	}
 	
-	// setter methods
 	public void setCredit(int arg){ credit = arg; }
-	public void setRequiredSections(int arg){ requiredSections = arg; }
-	public void setTitle(String arg){ title = arg; }
-	public void setCode(String arg){
-		if(!arg.equals(arg.split(" "))){
-			String[] split = arg.split(" ");
-			arg = "";
-			for (String str : split)
-				arg+=str;
-		}
-		code = arg.toUpperCase();
-	}
-
-	// getter methods
 	public int getCredit(){ return credit; }
+
+	public void setRequiredSections(int arg){ requiredSections = arg; }
 	public int getRequiredSections(){ return requiredSections; }
+
+	public void setCode(String arg){ code = arg.replaceAll("\\s","").toUpperCase(); }
 	public String getCode(){ return code; }
+
+	public void setTitle(String arg){ title = arg; }
 	public String getTitle(){ return title; }
 
 	@Override
