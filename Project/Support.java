@@ -1,6 +1,6 @@
 import java.util.*;
 
-public class Support {
+abstract class Support {
 	protected String name;
 	protected boolean[][] availability = new boolean[2][6];
 	protected ArrayList<String> courses = new ArrayList<String>();
@@ -11,22 +11,15 @@ public class Support {
 	public void addCourse(String arg){
 		arg = arg.replaceAll("\\s","").toUpperCase();
 		if(!courses.contains(arg)){
-			if(this instanceof Lecturer){
-				if(courses.size() < 3)
-					courses.add(arg);
-			}
-			else{
+			if(!(this instanceof Lecturer))
 				courses.add(arg);
-			}
+			else if(courses.size() < 3)
+				courses.add(arg);
 		}
 	}
 	public void addCourse(ArrayList<String> args){
-		for (String arg : args){
-			if(this instanceof Lecturer && courses.size() == 3)
-				break;
-			if(!courses.contains(arg))
-				addCourse(arg);
-		}
+		for (String arg : args)
+			addCourse(arg);
 	}
 	public ArrayList<String> getCourses(){ return courses; }
 
