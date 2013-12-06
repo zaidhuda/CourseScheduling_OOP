@@ -222,7 +222,6 @@ public class Section {
 			lecturerFree = lecturer.isAvailableAt(tempDay, tempTime);
 			venueUsable = venue.isAvailableAt(tempDay, tempTime);
 			count++;
-			// System.out.println(tempDay + " " + tempTime + " " + (inL && inV) + " " + (count++));
 		}while(!lecturerFree || !venueUsable);
 
 		// Remove availaibility from lecturer and venue

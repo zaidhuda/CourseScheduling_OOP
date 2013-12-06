@@ -1,1 +1,6 @@
 *.class
+*.xml
+*.iml
+*.fxml
+.idea
+out
