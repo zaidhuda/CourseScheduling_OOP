@@ -1,3 +1,28 @@
+//+-------------------------------------+
+//|			Test 				        |
+//+-------------------------------------+
+//|+courses:ArrayList<Course>           |
+//|__________________________           |
+//|+lecturers:ArrayList<Lecturer>       |
+//|______________________________       |
+//|+venues:ArrayList<Venue>             |
+//|________________________             |
+//|+schedules:ArrayList<Schedule>       |
+//|______________________________       |
+//|+sections:ArrayList<Section>         |
+//|_____________________________        |
+//+-------------------------------------+
+//|+main(String[] args):void            |
+//|_________________________            |
+//|+save():void                         |
+//|____________                         |
+//|+add(o:Object):void                  |
+//|_____________________________        |
+//|+remove(o:Object ):void              |
+//|_______________________              |
+//|+generateSections():void             |
+//|_______________________              |
+//+-------------------------------------+
 import java.util.*;
 import java.io.File;
 import java.io.FileOutputStream;

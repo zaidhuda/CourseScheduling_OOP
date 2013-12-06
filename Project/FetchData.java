@@ -1,3 +1,16 @@
+//+---------------------------------------+
+//|			FetchData                     |
+//+---------------------------------------+
+//|+frame:JFrame                          |
+//|+panel:JPanel                          |
+//|+field:JTextField                      |
+//|+data:JLabel                           |
+//+---------------------------------------+
+//|+(courses:ArrayList<Course>):FetchData |
+//|+keyPressed(e:KeyEvent):void           |
+//|+keyReleased(e:KeyEvent):void          |
+//|+keyTyped(e:KeyEvent):void             |
+//+---------------------------------------+
 import java.awt.*;
 import javax.swing.*;
 import java.awt.event.*;

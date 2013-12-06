@@ -1,3 +1,42 @@
+//+---------------------------------------------------------------------+
+//|                Section                                              |
+//+---------------------------------------------------------------------+
+//|-sectionNum:int                                                      |
+//|-studentLimit:int                                                    |
+//|-time:int                                                            |
+//|-day:int                                                             |
+//|-time_inWords:String                                                 |
+//|-day_inWords:String                                                  |
+//|-course:course                                                       |
+//|-lecturer:Lecturer                                                   |  
+//|-venue:Venue                                                         |
+//|+userDefined:boolean                                                 |
+//+---------------------------------------------------------------------+
+//|-setTime_inWords(arg:int):void                                       |
+//|-setDay_inWords(arg:int):void                                        | 
+//|+setDay(arg:int):void                                                |
+//|+setTime(arg:int):void                                               |
+//|+setSectionNum(arg:int):void                                         |
+//|+setStudentLimit(arg:int):void                                       |
+//|+setCourse(arg:Course):void                                          |
+//|+setLecturer(arg:Lecturer):void                                      |
+//|+setLecturer(lecturers:ArrayList<Lecturer>,random:boolean):void      |  
+//|+setVenue(arg:Venue):void                                            |
+//|+setVenue(venues:ArrayList<Venue>):void                              |
+//|+getDay():int                                                        |
+//|+getTime():int                                                       | 
+//|+getStudentLimit():int                                               |
+//|+getSectionNum():String                                              |
+//|+getDay_inWords():String                                             |
+//|+getTime_inWords():String                                            |
+//|+getCourse():Course                                                  |
+//|+getLecturer():Lecturer                                              | 
+//|+getVenue():Venue                                                    |
+//|+generateSchedule(sections:ArrayList<Section>,random:boolean):boolean|
+//|+equals(other:Object):boolean                                        |   
+//|+toString():String                                                   |
+//+---------------------------------------------------------------------+
+
 import java.util.ArrayList;
 
 public class Section {

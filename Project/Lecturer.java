@@ -5,7 +5,7 @@
 // |-specialization:ArrayList<String>                 |
 // |+availability:ArrayList<Integer>                  |
 // +--------------------------------------------------+
-// |+setName(arg: String):void                        |
+// |+setName(arg:String):void                         |
 // |+addSpecialization(arg:String):void               |
 // |+addSpecialization(args:ArrayList<String>):void   |
 // |+addAvailability(arg:int):void                    |
@@ -16,6 +16,7 @@
 // |+equals(other:Object):boolean                     |
 // |+toString():String                                |
 // +--------------------------------------------------+
+
 
 
 import java.util.*;

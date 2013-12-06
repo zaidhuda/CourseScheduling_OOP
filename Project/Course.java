@@ -1,3 +1,23 @@
+//+---------------------------------------------------------------------------------+
+//|			course                                                                  |
+//+---------------------------------------------------------------------------------+
+//|-code:String                                                                     |
+//|-title:String                                                                    |
+//|-credit:int                                                                      |
+//|-requiredSections:int                                                            |
+//+---------------------------------------------------------------------------------+
+//|-constructor(code:String,title:String,credit:int,requiredSections:int):void      |
+//|+setCredit(arg:int):void                                                         |
+//|+setRequiredSections(arg:int):void                                               |
+//|+setTitle(arg:String):void                                                       |
+//|+setCode(arg:String):void                                                        |
+//|+getCredit():int                                                                 |
+//|+getRequiredSections():int                                                       |
+//|+getCode():String                                                                |
+//|+getTitle():String                                                               |
+//|+equals(other:Object):boolean                                                    |
+//|+toString():String                                                               |
+//+---------------------------------------------------------------------------------+ 
 import java.util.ArrayList;
 
 public class Course {
