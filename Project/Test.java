@@ -24,14 +24,13 @@ public class Test {
 		lecturers.add(new Lecturer("Dr Azlin", "CSC1103"));
 		lecturers.add(new Lecturer("Dr Norsaremah", new ArrayList<String>(java.util.Arrays.asList("CSC1100", "CSC1102", "CSC1103", "CSC1104"))));
 
-		venues.add(new Venue("Lab 3", "LAB"));
-		venues.add(new Venue("Lab 6", "LAB"));
+		venues.add(new Venue("Lab 3"));
+		venues.add(new Venue("Lab 6"));
 		venues.get(0).addCourse("CSC1102");
 		venues.get(1).addCourse("CSC1100");
 		venues.get(1).addCourse("CSC1103");
 
 		// System.out.println(venues);
-
 		// create sections based on specialization
 		generateSections();
 
@@ -44,6 +43,7 @@ public class Test {
 			s.setLecturer(lecturers, false);
 			// System.out.println(s);
 		}
+		sections.get(4).setStudentLimit(50);
 
 		long seed = System.nanoTime();
 		Collections.shuffle(sections, new Random(seed));
@@ -65,7 +65,7 @@ public class Test {
 				System.out.println("Failed.");
 			// System.out.println(s);
 		}
-
+		
 		Collections.sort(sections, courseComparator);
 
 		for (Section s : sections) {
@@ -73,72 +73,89 @@ public class Test {
 		}
 		// System.out.println(courses.get(0).compareTo(courses.get(1)));
 
-		// save();
+		save();
 		// FetchData fd = new FetchData(courses);
 	}
 
 	public static class CourseComparator implements Comparator<Section> {
-	    public int compare(Section o1, Section o2) {
-	        return o1.getCourse().getCode().compareTo(o2.getCourse().getCode());
-	    }
+		public int compare(Section o1, Section o2) {
+			int diff = o1.getCourse().getCode().compareTo(o2.getCourse().getCode());
+			if(diff == 0){
+				int sectDif = o1.getSectionNum().compareTo(o2.getSectionNum());
+				return sectDif;
+			}
+			else 
+				return diff;
+		}
 	}
 
 	public static void save(){
- 
+
 		File file = new File("text.txt");
 		String content;
- 
+
 		try (FileOutputStream fop = new FileOutputStream(file)) {
- 
+
 			// if file doesn't exists, then create it
 			if (!file.exists()) {
 				file.createNewFile();
 			}
 
+			fop.write("// Courses\n".getBytes());
+			fop.flush();
+
 			// get content of courses
 			for (Course c : courses) {
 				content = c.getCode();
-				content += ", " + c.getTitle();
-				content += ", " + c.getCredit();
-				content += ", " + c.getRequiredSections() + ";\n";
+				content += ";" + c.getTitle();
+				content += ";" + c.getCredit();
+				content += ";" + c.getRequiredSections() + "\n";
 
 				byte[] contentInBytes = content.getBytes();
 				fop.write(contentInBytes);
 				fop.flush();
 			}
+
+			fop.write("// Lecturers\n".getBytes());
+			fop.flush();
 
 			// get content of lecturers
 			for (Lecturer l : lecturers) {
 				content = l.getName();
-				content += ", " + l.getSpecialization();
-				content += ", " + l.getAvailability() + ";\n";
+				content += ";" + l.getSpecialization();
+				content += ";" + l.availability_inWords() + "\n";
 
 				byte[] contentInBytes = content.getBytes();
 				fop.write(contentInBytes);
 				fop.flush();
 			}
+
+			fop.write("// Venues\n".getBytes());
+			fop.flush();
 
 			// get content of venues
 			for (Venue v : venues) {
 				content = v.getName();
-				content += ", " + v.getName();
-				content += ", " + v.getType();
-				content += ", " + v.getCourses();
-				content += ", " + v.getAvailability() + ";\n";
+				content += ";" + v.getName();
+				content += ";" + v.getCourses();
+				content += ";" + v.availability_inWords() + "\n";
 
 				byte[] contentInBytes = content.getBytes();
 				fop.write(contentInBytes);
 				fop.flush();
 			}
 
+			fop.write("// Sections\n".getBytes());
+			fop.flush();
+
 			// get content of sections
 			for (Section s : sections) {
-				content = s.getDay() + ", " + s.getTime();
-				content += ", " + s.getStudentLimit();
-				content += ", " + s.getSectionNum();
-				content += ", " + s.getCourse();
-				content += ", " + s.getLecturer();
-				content += ", " + s.getVenue() + ";\n";
+				content = s.getDay() + ";" + s.getTime();
+				content += ";" + s.getStudentLimit();
+				content += ";" + s.getSectionNum();
+				content += ";" + s.getCourse().getCode();
+				content += ";" + s.getLecturer().getName();
+				content += ";" + s.getVenue().getName() + "\n";
 
 				byte[] contentInBytes = content.getBytes();
 				fop.write(contentInBytes);
@@ -146,9 +163,9 @@ public class Test {
 			}
 			
 			fop.close();
- 
+
 			System.out.println("Done");
- 
+
 		} catch (IOException e) {
 			e.printStackTrace();
 		}

@@ -2,6 +2,8 @@ import java.awt.*;
 import javax.swing.*;
 import java.awt.event.*;
 import java.util.*;
+import java.util.regex.Pattern;
+import java.util.regex.Matcher;
 
 public class FetchData {
 	JFrame frame = new JFrame();
@@ -13,8 +15,10 @@ public class FetchData {
 			public void keyPressed(KeyEvent e){}
     		public void keyReleased(KeyEvent e){
 	        	ArrayList<Course> tempCourses = new ArrayList<Course>();
+	        	Pattern pattern = Pattern.compile(field.getText().toLowerCase());
 	        	for (Course c : courses) {
-	        		if(field.getText().equalsIgnoreCase(c.getCode())){
+	        		Matcher matcher = pattern.matcher(c.getCode().toLowerCase() + c.getTitle().toLowerCase());
+	        		if(matcher.find()){
 	        			tempCourses.add(c);
 	        		}
 	        	}
