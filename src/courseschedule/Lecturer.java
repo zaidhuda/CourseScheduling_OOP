@@ -57,9 +57,17 @@ public class Lecturer extends Support {
 		setAvailability(availability);
 	}
 
-	public void addSpecialization(String arg){ addCourse(arg); }
-	public void addSpecialization(ArrayList<String> args){ addCourse(args); }
-	public ArrayList<String> getSpecializations(){ return getCourses(); }
+	public void addSpecialization(String arg){
+        addCourse(arg);
+    }
+
+	public void addSpecialization(ArrayList<String> args){
+        addCourse(args);
+    }
+
+	public ArrayList<String> getSpecializations(){
+        return getCourses();
+    }
 
 	@Override
 	public boolean equals(Object other) {

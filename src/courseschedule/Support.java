@@ -12,14 +12,18 @@ abstract class Support {
      *
      * @param arg the desired name
      */
-	public void setName(String arg){ name = arg; }
+	public void setName(String arg){
+        name = arg;
+    }
 
     /**
      * Return the name of subclasses.
      *
      * @return the name of object
      */
-	public String getName(){ return name; }
+	public String getName(){
+        return name;
+    }
 
     /**
      * Receives a string and add to courses if it's not already in the array list.
@@ -54,14 +58,18 @@ abstract class Support {
      *
      * @return courses array list
      */
-	public ArrayList<String> getCourses(){ return courses; }
+	public ArrayList<String> getCourses(){
+        return courses;
+    }
 
     /**
      * Receives a 2x6 array of boolean and saves to availability.
      *
      * @param arg a 2D boolean array that represents availability
      */
-	public void setAvailability(boolean[][] arg){ availability = arg; }
+	public void setAvailability(boolean[][] arg){
+        availability = arg;
+    }
 
     /**
      * Receives day and time in int and a boolean to set the value of availability at
@@ -71,14 +79,18 @@ abstract class Support {
      * @param time  an int representing column of availability
      * @param arg   desired value to be set to availability[day][time]
      */
-	public void setAvailabilityAt(int day, int time, boolean arg){ availability[day%2][time%6] = arg; }
+	public void setAvailabilityAt(int day, int time, boolean arg){
+        availability[day%2][time%6] = arg;
+    }
 
     /**
      * Return availability as boolean[][].
      *
      * @return 2D array of availability
      */
-    public boolean[][] getAvailability(){ return availability; }
+    public boolean[][] getAvailability(){
+        return availability;
+    }
 
     /**
      * Return value of availability at row day column time.
@@ -87,14 +99,18 @@ abstract class Support {
      * @param time  an int representing column of availability
      * @return      the availability at availability[day][time]
      */
-	public boolean isAvailableAt(int day, int time){ return availability[day%2][time%6]; }
+	public boolean isAvailableAt(int day, int time){
+        return availability[day%2][time%6];
+    }
 
     /**
      * Return a string representation of availability array.
      *
      * @return string representation of availability
      */
-	public String availability_inWords(){ return Arrays.deepToString(availability); }
+	public String availability_inWords(){
+        return Arrays.deepToString(availability);
+    }
 
     /**
      * Return name and courses array list as string.

@@ -35,8 +35,13 @@ public class Venue extends Support {
 		Arrays.fill(availability[1], true);
 	}
 
-	public void setStudentLimit(int arg){ studentLimit = arg; }
-	public int getStudentLimit(){ return studentLimit; }
+	public void setStudentLimit(int arg){
+        studentLimit = arg;
+    }
+
+	public int getStudentLimit(){
+        return studentLimit;
+    }
 
 	@Override
 	public boolean equals(Object other) {

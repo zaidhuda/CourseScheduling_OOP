@@ -81,17 +81,37 @@ public class Section {
         }
     }
 
-    public void setSectionNum(int arg){ sectionNum = arg; }
-    public String getSectionNum(){ return Integer.toString(sectionNum); }
+    public void setSectionNum(int arg){
+        sectionNum = arg;
+    }
 
-    public int getStudentLimit(){ return studentLimit; }
-    public void setStudentLimit(int arg){ studentLimit = arg; }
+    public String getSectionNum(){
+        return Integer.toString(sectionNum);
+    }
 
-    public String getNote() { return note; }
-    public void setNote(String note) { this.note = note; }
+    public int getStudentLimit(){
+        return studentLimit;
+    }
 
-    public void setCourse(Course arg){ course = arg; }
-    public Course getCourse(){ return course; }
+    public void setStudentLimit(int arg){
+        studentLimit = arg;
+    }
+
+    public String getNote() {
+        return note;
+    }
+
+    public void setNote(String note) {
+        this.note = note;
+    }
+
+    public void setCourse(Course arg){
+        course = arg;
+    }
+
+    public Course getCourse(){
+        return course;
+    }
 
     public void setLecturer(Lecturer arg){
         try{
@@ -148,6 +168,7 @@ public class Section {
             String code = course.getCode();
             ArrayList<String> courses;
             ArrayList<Venue> tempVenues = new ArrayList<Venue>();
+
             // Checking if venue can be used for a subject
             for (Venue v : venues) {
                 courses = v.getCourses();
@@ -156,6 +177,7 @@ public class Section {
                     tempVenues.add(v);
                 }
             }
+
             // Randomly choosing a venue for a subject
             int r = (int) (Math.random() * tempVenues.size());
             venue = tempVenues.get(r);
@@ -175,6 +197,7 @@ public class Section {
             setUsing(day, time, false);
 
         int count = 0;
+
         do{
             if(random){
                 if(count<12){
@@ -189,10 +212,12 @@ public class Section {
                 if (!setDayAndTime(count))
                     return false;
             }
+
             // Check if lecturer and venue are available for same time
             lecturerFree = lecturer.isAvailableAt(day, time);
             venueUsable = venue.isAvailableAt(day, time);
             count++;
+
         }while(!lecturerFree || !venueUsable);
 
         setUsing(day, time, true);
@@ -216,6 +241,7 @@ public class Section {
             setTime(-1);
             return false;
         }
+
         return true;
     }
 
