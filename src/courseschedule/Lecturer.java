@@ -1,21 +1,25 @@
-// +--------------------------------------------------+
-// |                   Lecturer          			  |
-// +--------------------------------------------------+
-// |-name:String             						  |
-// |-specialization:ArrayList<String>                 |
-// |+availability:ArrayList<Integer>                  |
-// +--------------------------------------------------+
-// |+setName(arg:String):void                         |
-// |+addSpecialization(arg:String):void               |
-// |+addSpecialization(args:ArrayList<String>):void   |
-// |+addAvailability(arg:int):void                    |
-// |+removeAvailability(arg:int):void                 |
-// |+getName():String                                 |
-// |+getSpecialization():ArrayList<String>            |
-// |+getAvailability():ArrayList<Integer>             |
-// |+equals(other:Object):boolean                     |
-// |+toString():String                                |
-// +--------------------------------------------------+
+/*
++--------------------------------------------------+
+|                   Lecturer          			   |
++--------------------------------------------------+
+|-name:String             						   |
+|-specialization:ArrayList<String>                 |
+|+availability:ArrayList<Integer>                  |
++--------------------------------------------------+
+|+setName(arg:String):void                         |
+|+addSpecialization(arg:String):void               |
+|+addSpecialization(args:ArrayList<String>):void   |
+|+addAvailability(arg:int):void                    |
+|+removeAvailability(arg:int):void                 |
+|+getName():String                                 |
+|+getSpecialization():ArrayList<String>            |
+|+getAvailability():ArrayList<Integer>             |
+|+equals(other:Object):boolean                     |
+|+toString():String                                |
++--------------------------------------------------+
+*/
+
+package courseschedule;
 
 import java.util.*;
 

@@ -23,6 +23,8 @@
 //|+generateSections():void             |
 //|_______________________              |
 //+-------------------------------------+
+
+import courseschedule.*;
 import java.util.*;
 import java.io.File;
 import java.io.FileOutputStream;
@@ -69,32 +71,27 @@ public class Test {
 		}
 		sections.get(4).setStudentLimit(50);
 
-		long seed = System.nanoTime();
-		Collections.shuffle(sections, new Random(seed));
+//		long seed = System.nanoTime();
+//		Collections.shuffle(sections, new Random(seed));
 
-		for (Section s : sections) {
-			if(!s.generateSchedule(sections, true))
-				System.out.println("Failed.");
-			// System.out.println(s);
-		}
+        for (Section s : sections) {
+            if(!s.generateSchedule(false))
+                System.out.println("Failed.");
+            System.out.println(s);
+        }
 
-		Collections.sort(sections, courseComparator);
+        for (Section s : sections) {
+            if(!s.generateSchedule(true))
+                System.out.println("Failed.");
+            System.out.println(s);
+        }
 
-		for (Section s : sections) {
-			System.out.println(s);
-		}
+//		Collections.sort(sections, courseComparator);
+//
+//		for (Section s : sections) {
+//			System.out.println(s);
+//		}
 
-		for (Section s : sections) {
-			if(!s.generateSchedule(sections, true))
-				System.out.println("Failed.");
-			// System.out.println(s);
-		}
-		
-		Collections.sort(sections, courseComparator);
-
-		for (Section s : sections) {
-			System.out.println(s);
-		}
 		// System.out.println(courses.get(0).compareTo(courses.get(1)));
 
 		save();
@@ -118,7 +115,8 @@ public class Test {
 		File file = new File("text.txt");
 		String content;
 
-		try (FileOutputStream fop = new FileOutputStream(file)) {
+		try {
+            FileOutputStream fop = new FileOutputStream(file);
 
 			// if file doesn't exists, then create it
 			if (!file.exists()) {
@@ -244,7 +242,7 @@ public class Test {
 				lect.setName("TO BE DETERMINED");
 			}
 			else if (o instanceof Course) {
-				ArrayList<Section> tempSections = new ArrayList<>();
+				ArrayList<Section> tempSections = new ArrayList<Section>();
 				for (Section s : sections) {
 					if(s.getCourse().equals(o)){
 						tempSections.add(s);

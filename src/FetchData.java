@@ -12,6 +12,7 @@
 //|+keyTyped(e:KeyEvent):void             |
 //+---------------------------------------+
 
+import courseschedule.*;
 import java.awt.*;
 import javax.swing.*;
 import java.awt.event.*;
