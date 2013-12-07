@@ -45,209 +45,237 @@ import java.util.ArrayList;
 
 public class Section {
     private int sectionNum, studentLimit = 30, time = -1, day = -1;
-    private String note;
+    private String note = null;
     private Course course = null;
     private Lecturer lecturer = null;
     private Venue venue = null;
 
     // Section must have course and lecturer
-    public Section(Course course, Lecturer lecturer, int sectionNum){
+    public Section(int sectionNum, Course course, Lecturer lecturer) {
         setCourse(course);
         setLecturer(lecturer);
         setSectionNum(sectionNum);
     }
 
-    public void setDay(int arg){ day = arg; }
-    public int getDay(){ return day; }
-    public String getDay_inWords(){
-        switch(day) {
-            case 0: return "Mon/Wed";
-            case 1: return "Tue/Thu";
-            default: return null;
+    public Section(int sectionNum, Course course, Lecturer lecturer, int studentLimit) {
+        setCourse(course);
+        setLecturer(lecturer);
+        setSectionNum(sectionNum);
+        setStudentLimit(studentLimit);
+    }
+
+    public void setDay(int arg) {
+        day = arg;
+    }
+
+    public int getDay() {
+        return day;
+    }
+
+    public String getDay_inWords() {
+        switch (day) {
+            case 0:
+                return "Mon/Wed";
+            case 1:
+                return "Tue/Thu";
+            default:
+                return null;
         }
     }
 
-    public void setTime(int arg){ time = arg; }
-    public int getTime(){ return time; }
-    public String getTime_inWords(){
-        switch(time){
-            case 0: return "08:30 - 09:50";
-            case 1: return "10:00 - 11:20";
-            case 2: return "11:30 - 12:50";
-            case 3: return "14:00 - 15:20";
-            case 4: return "15:30 - 16:50";
-            case 5: return "17:00 - 18:20";
-            default: return null;
+    public void setTime(int arg) {
+        time = arg;
+    }
+
+    public int getTime() {
+        return time;
+    }
+
+    public String getTime_inWords() {
+        switch (time) {
+            case 0:
+                return "08:30 - 09:50";
+            case 1:
+                return "10:00 - 11:20";
+            case 2:
+                return "11:30 - 12:50";
+            case 3:
+                return "14:00 - 15:20";
+            case 4:
+                return "15:30 - 16:50";
+            case 5:
+                return "17:00 - 18:20";
+            default:
+                return null;
         }
     }
 
-    public void setSectionNum(int arg){
+    public void setSectionNum(int arg) {
         sectionNum = arg;
     }
 
-    public String getSectionNum(){
+    public String getSectionNum() {
         return Integer.toString(sectionNum);
     }
 
-    public int getStudentLimit(){
+    public int getStudentLimit() {
         return studentLimit;
     }
 
-    public void setStudentLimit(int arg){
+    public void setStudentLimit(int arg) {
         studentLimit = arg;
+    }
+
+    public void setNote(String arg) {
+       note = arg;
     }
 
     public String getNote() {
         return note;
     }
 
-    public void setNote(String note) {
-        this.note = note;
-    }
-
-    public void setCourse(Course arg){
+    public void setCourse(Course arg) {
         course = arg;
     }
 
-    public Course getCourse(){
+    public Course getCourse() {
         return course;
     }
 
-    public void setLecturer(Lecturer arg){
-        try{
-            if(arg.getSpecializations().contains(course.getCode()))
+    public void setLecturer(Lecturer arg) {
+        try {
+            if (arg.getSpecializations().contains(course.getCode()))
                 lecturer = arg;
             else
                 lecturer = new Lecturer("TO BE DETERMINED");
-        }
-        catch(Exception e){
+        } catch (Exception e) {
             // In case no venue for a subject, make dummy venue
             lecturer = new Lecturer("TO BE DETERMINED");
         }
     }
-    public void setLecturer(ArrayList<Lecturer> lecturers, boolean random){
+
+    public void setLecturer(ArrayList<Lecturer> lecturers, boolean random) throws Exception {
         // main loop, creating sections for each course
-        try {
-            ArrayList<Lecturer> tempLecturers = new ArrayList<Lecturer>();
+        ArrayList<Lecturer> tempLecturers = new ArrayList<>();
 
-            // add lecturers of current course to temporary list
-            for (Lecturer lecturer : lecturers)
-                if(lecturer.getSpecializations().contains(course.getCode()))
-                    tempLecturers.add(lecturer);
+        // add lecturers of current course to temporary list
+        for (Lecturer lecturer : lecturers)
+            if (lecturer.getSpecializations().contains(course.getCode()))
+                tempLecturers.add(lecturer);
 
-            // randomly assign lecturer to sections
-            if(random){
-                int r = (int) (Math.random() * tempLecturers.size());
-                setLecturer(tempLecturers.get(r));
-            }
-            // assign lecturer based on order
-            else{
-                setLecturer(tempLecturers.get((sectionNum+1)%tempLecturers.size()));
-            }
-
-            tempLecturers.clear();
+        // randomly assign lecturer to sections
+        if (random) {
+            int r = (int) (Math.random() * tempLecturers.size());
+            setLecturer(tempLecturers.get(r));
         }
-        catch(Exception ignored){}
-    }
-    public Lecturer getLecturer(){ return lecturer; }
+        // assign lecturer based on order
+        else {
+            setLecturer(tempLecturers.get((sectionNum + 1) % tempLecturers.size()));
+        }
 
-    public void setVenue(Venue arg){
-        try{
+        tempLecturers.clear();
+    }
+
+    public Lecturer getLecturer() {
+        return lecturer;
+    }
+
+    public void setVenue(Venue arg) {
+        try {
             if (arg.getCourses().contains(course.getCode()))
                 venue = arg;
             else
                 venue = new Venue("TO BE DETERMINED");
-        }
-        catch(Exception e){
+        } catch (Exception e) {
             // In case no venue for a subject, make dummy venue
             venue = new Venue("TO BE DETERMINED");
         }
     }
-    public void setVenue(ArrayList<Venue> venues){
-        try{
+
+    public void setVenue(ArrayList<Venue> venues) {
+        try {
             String code = course.getCode();
             ArrayList<String> courses;
-            ArrayList<Venue> tempVenues = new ArrayList<Venue>();
+            ArrayList<Venue> tempVenues = new ArrayList<>();
 
             // Checking if venue can be used for a subject
             for (Venue v : venues) {
                 courses = v.getCourses();
-                if (courses.contains(code)){
-                    // Adding usable venue for a subject to ArrayList
+                if (courses.contains(code))
                     tempVenues.add(v);
-                }
             }
 
             // Randomly choosing a venue for a subject
             int r = (int) (Math.random() * tempVenues.size());
             venue = tempVenues.get(r);
             tempVenues.clear();
-        }
-        catch(Exception e){
+        } catch (Exception e) {
             // In case no venue for a subject, make dummy venue
             venue = new Venue("TO BE DETERMINED");
         }
     }
-    public Venue getVenue(){ return venue; }
 
-    public boolean generateSchedule(boolean random){
-        boolean lecturerFree, venueUsable;
+    public Venue getVenue() {
+        return venue;
+    }
 
-        if(day != -1 || time != -1)
+    public void generateSchedule(boolean random) {
+        boolean lecturerOccupied, venueUsed;
+        String str = "Success. ";
+
+        if (day != -1 || time != -1)
             setUsing(day, time, false);
 
         int count = 0;
 
-        do{
-            if(random){
-                if(count<12){
-                    day = (int) (Math.random() * 2);
-                    time = (int) (Math.random() * (3) + 1);
+        do {
+            if (random && count < 12) {
+                day = (int) (Math.random() * 2);
+                time = (int) (Math.random() * (3) + 1);
+            } else if (!random || count >= 12){
+                int i = count;
+                if (random) i -= 12;
+                if (!setDayAndTime(i)){
+                    str = "Failed. ";
+                    setNote(str);
+                    return;
                 }
-                else
-                    if (!setDayAndTime(count-12))
-                        return false;
-            }
-            else{
-                if (!setDayAndTime(count))
-                    return false;
             }
 
             // Check if lecturer and venue are available for same time
-            lecturerFree = lecturer.isAvailableAt(day, time);
-            venueUsable = venue.isAvailableAt(day, time);
+            lecturerOccupied = !lecturer.isAvailableAt(day, time);
+            venueUsed = !venue.isAvailableAt(day, time);
             count++;
 
-        }while(!lecturerFree || !venueUsable);
+        } while (lecturerOccupied || venueUsed);
 
         setUsing(day, time, true);
 
-        if(studentLimit > venue.getStudentLimit())
-            setNote("Student exceeded venue capacity.");
+        if (studentLimit > venue.getStudentLimit())
+            str += "Student exceeds venue capacity.";
 
-        return true;
+        setNote(str);
     }
 
-    private boolean setDayAndTime(int i){
-        if(i<12) {
-            day = i%2;
-            if(i<6)
-                time = (i%6)/2;
+    private boolean setDayAndTime(int count) {
+        if (count < 12) {
+            day = count % 2;
+            if (count < 6)
+                time = (count % 6) / 2;
             else
-                time = i/2;
-        }
-        else {
-            setDay(-1);
-            setTime(-1);
+                time = count / 2;
+        } else {
+            day = -1;
+            time = -1;
             return false;
         }
 
         return true;
     }
 
-    private void setUsing(int day, int time, boolean used){
-        lecturer.setAvailabilityAt(day, time, !used);
-        venue.setAvailabilityAt(day, time, !used);
+    private void setUsing(int day, int time, boolean isUsed) {
+        lecturer.setAvailabilityAt(day, time, !isUsed);
+        venue.setAvailabilityAt(day, time, !isUsed);
     }
 
     @Override
@@ -258,11 +286,11 @@ public class Section {
         Section that = (Section) other;
 
         return this.sectionNum == that.sectionNum
-            && this.course.equals(that.course)
-            && this.lecturer.equals(that.lecturer);
+                && this.course.equals(that.course)
+                && this.lecturer.equals(that.lecturer);
     }
 
-    public String toString(){
+    public String toString() {
         return getSectionNum() + ", " + getCourse().getCode() + ", " + getLecturer().getName() + ", " + getVenue().getName() + ", " + getDay_inWords() + ", " + getTime_inWords() + ", " + getNote();
     }
 }

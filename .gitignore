@@ -2,5 +2,9 @@
 *.xml
 *.iml
 *.fxml
+*.html
+*.png
+*.gif
+*.css
 .idea
 out
