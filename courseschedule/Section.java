@@ -51,16 +51,18 @@ public class Section {
     private Venue venue = null;
 
     // Section must have course and lecturer
-    public Section(int sectionNum, Course course, Lecturer lecturer) {
+    public Section(int sectionNum, Course course, Lecturer lecturer, Venue venue) {
         setCourse(course);
         setLecturer(lecturer);
+        setVenue(venue);
         setSectionNum(sectionNum);
     }
 
-    public Section(int sectionNum, Course course, Lecturer lecturer, int studentLimit) {
+    public Section(int sectionNum, Course course, Lecturer lecturer, Venue venue, int studentLimit) {
+        setSectionNum(sectionNum);
         setCourse(course);
         setLecturer(lecturer);
-        setSectionNum(sectionNum);
+        setVenue(venue);
         setStudentLimit(studentLimit);
     }
 

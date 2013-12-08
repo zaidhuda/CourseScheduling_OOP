@@ -14,11 +14,11 @@ public class Schedule {
     public static ArrayList<Lecturer> lecturers = new ArrayList<>();
     public static ArrayList<Venue> venues = new ArrayList<>();
     public static ArrayList<Section> sections = new ArrayList<>();
-    public CourseComparator courseComparator = new CourseComparator();
+    public final CourseComparator courseComparator = new CourseComparator();
 
     public static class CourseComparator implements Comparator<Section> {
         public int compare(Section o1, Section o2) {
-            int diff = o1.getCourse().getCode().compareTo(o2.getCourse().getCode());
+            final int diff = o1.getCourse().getCode().compareTo(o2.getCourse().getCode());
             if(diff == 0){
                 return o1.getSectionNum().compareTo(o2.getSectionNum());
             }
@@ -27,84 +27,63 @@ public class Schedule {
         }
     }
 
-    public static void add(Object o) {
+    public static void add(Course o) {
         boolean exist = false;
-        try {
-            if(o instanceof Lecturer){
-                Lecturer that = (Lecturer) o;
-                for (Lecturer l : lecturers)
-                    if(l.equals(that)){
-                        exist = true;
-                        break;
-                    }
-                if(!exist)
-                    lecturers.add(that);
+        for (Course c : courses)
+            if(c.equals(o)){
+                exist = true;
+                break;
             }
-            else if (o instanceof Course){
-                Course that = (Course) o;
-                for (Course c : courses)
-                    if(c.equals(that)){
-                        exist = true;
-                        break;
-                    }
-                if(!exist)
-                    courses.add(that);
-            }
-            else if (o instanceof Venue){
-                Venue that = (Venue) o;
-                for (Venue v : venues)
-                    if(v.equals(that)){
-                        exist = true;
-                        break;
-                    }
-                if(!exist)
-                    venues.add(that);
-            }
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
+        if(!exist)
+            courses.add(o);
     }
 
-    public static void remove(Object o) {
-        try {
-            if(o instanceof Lecturer){
-                // for (Section s : sections) {
-                // 	if(s.getLecturer().equals(o))
-                // 		s.setLecturer(new Lecturer("TO BE DETERMINED"));
-                // }
-                // lecturers.remove(o);
-                Lecturer lect = (Lecturer) o;
-                lect.setName("TO BE DETERMINED");
+    public static void add(Lecturer o) {
+        boolean exist = false;
+        for (Lecturer l : lecturers)
+            if(l.equals(o)){
+                exist = true;
+                break;
             }
-            else if (o instanceof Course) {
-                ArrayList<Section> tempSections = new ArrayList<>();
-                for (Section s : sections) {
-                    if(s.getCourse().equals(o)){
-                        tempSections.add(s);
-                    }
-                }
-                for (Section s : tempSections) {
-                    sections.remove(s);
-                }
-                courses.remove(o);
+        if(!exist)
+            lecturers.add(o);
+    }
+
+    public static void add(Venue o) {
+        boolean exist = false;
+        for (Venue v : venues)
+            if(v.equals(o)){
+                exist = true;
+                break;
             }
-            else if (o instanceof Venue) {
-                // for (Section s : sections) {
-                // 	if(s.getVenue().equals(o))
-                // 		s.setVenue(new Venue("TO BE DETERMINED", ""));
-                // }
-                // venues.remove(o);
-                Venue ven = (Venue) o;
-                ven.setName("TO BE DETERMINED");
+        if(!exist)
+            venues.add(o);
+    }
+
+    public static void remove(Course o) {
+        ArrayList<Section> tempSections = new ArrayList<>();
+        for (Section s : sections) {
+            if(s.getCourse().equals(o)){
+                tempSections.add(s);
             }
-        } catch (Exception e) {
-            e.printStackTrace();
         }
+        sections.removeAll(tempSections);
+        courses.remove(o);
+    }
+
+    public static void remove(Lecturer o) {
+        o.setName("TO BE DETERMINED");
+    }
+
+    public static void remove(Venue o) {
+        o.setName("TO BE DETERMINED");
     }
 
     public static void generateSections(){
+        sections.clear();
         for (Course course : courses)
-            for (int i=0;i<course.getRequiredSections();++i)
-                sections.add(new Section(i+1, course, new Lecturer("TO BE DETERMINED")));
+            for (int i=0;i<course.getRequiredSections();++i){
+                sections.add(new Section(i + 1, course, new Lecturer(), new Venue()));
+            }
     }
 }

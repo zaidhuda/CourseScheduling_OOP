@@ -95,70 +95,8 @@ public class Test extends Schedule{
                 stringBuilder = new StringBuilder(fileLine);
                 String newLine = stringBuilder.toString();
                 String[] splits = newLine.split(";");
-                if (splits.length>1) {
-                    switch (type) {
-                        case COURSE: {
-                            Course course = new Course(splits[0], splits[1], Integer.parseInt(splits[2]), Integer.parseInt(splits[3]));
-                            add(course);
-                            break;
-                        }
-                        case LECTURER: {
-                            boolean[][] bool = new boolean[2][6];
-                            String[] c = splits[1].replaceAll("\\[", "").replaceAll("]", "").split(", ");
-                            String[] b = splits[2].replaceAll("\\[", "").replaceAll("]", "").split(", ");
-                            for (int i = 0; i < 2; i++)
-                                for (int j = 0; j < 6; j++)
-                                    bool[i][j] = Boolean.parseBoolean(b[(i * 6) + j]);
-                            Lecturer lecturer = new Lecturer(splits[0]);
-                            lecturer.addCourses(new ArrayList<>(Arrays.asList(c)));
-                            lecturer.setAvailability(bool);
-                            add(lecturer);
-                            break;
-                        }
-                        case VENUE: {
-                            boolean[][] bool = new boolean[2][6];
-                            String[] c = splits[1].replaceAll("\\[", "").replaceAll("]", "").split(", ");
-                            String[] b = splits[2].replaceAll("\\[", "").replaceAll("]", "").split(", ");
-                            for (int i = 0; i < 2; i++)
-                                for (int j = 0; j < 6; j++)
-                                    bool[i][j] = Boolean.parseBoolean(b[(i * 6) + j]);
-                            Venue venue = new Venue(splits[0], bool);
-                            venue.addCourses(new ArrayList<>(Arrays.asList(c)));
-                            venue.setStudentLimit(Integer.parseInt(splits[3]));
-                            add(venue);
-                            break;
-                        }
-                        case SECTION: {
-                            Course course = new Course("");
-                            Lecturer lecturer = new Lecturer();
-                            Venue venue = new Venue();
-                            for (Course c : courses) {
-                                if (splits[4].equalsIgnoreCase(c.getCode())) {
-                                    course = c;
-                                    break;
-                                }
-                            }
-                            for (Lecturer l : lecturers) {
-                                if (splits[5].equalsIgnoreCase(l.getName())) {
-                                    lecturer = l;
-                                    break;
-                                }
-                            }
-                            for (Venue v : venues) {
-                                if (splits[6].equalsIgnoreCase(v.getName())) {
-                                    venue = v;
-                                    break;
-                                }
-                            }
-                            Section section = new Section(Integer.parseInt(splits[0]), course, lecturer, Integer.parseInt(splits[3]));
-                            section.setVenue(venue);
-                            section.setDay(Integer.parseInt(splits[1]));
-                            section.setTime(Integer.parseInt(splits[2]));
-                            sections.add(section);
-                            break;
-                        }
-                    }
-                }
+
+                if(splits.length>1) readFile(type, splits);
 
                 if ("courses".equalsIgnoreCase(newLine.replaceAll("// ", ""))) type = COURSE;
                 else if ("lecturers".equalsIgnoreCase(newLine.replaceAll("// ", ""))) type = LECTURER;
@@ -168,6 +106,71 @@ public class Test extends Schedule{
                 fileLine = br.readLine();
             }
         } catch (Exception ignored) {}
+    }
+
+    private static void readFile(int type, String[] splits){
+        final int COURSE = 0, LECTURER = 1, VENUE = 2, SECTION = 3;
+        switch (type) {
+            case COURSE: {
+                Course course = new Course(splits[0], splits[1], Integer.parseInt(splits[2]), Integer.parseInt(splits[3]));
+                add(course);
+                break;
+            }
+            case LECTURER: { // TODO try combine with venue below
+                boolean[][] bool = new boolean[2][6];
+                String[] c = splits[1].replaceAll("\\[", "").replaceAll("]", "").split(", ");
+                String[] b = splits[2].replaceAll("\\[", "").replaceAll("]", "").split(", ");
+                for (int i = 0; i < 2; i++)
+                    for (int j = 0; j < 6; j++)
+                        bool[i][j] = Boolean.parseBoolean(b[(i * 6) + j]);
+                Lecturer lecturer = new Lecturer(splits[0]);
+                lecturer.addCourses(new ArrayList<>(Arrays.asList(c)));
+                lecturer.setAvailability(bool);
+                add(lecturer);
+                break;
+            }
+            case VENUE: {
+                boolean[][] bool = new boolean[2][6];
+                String[] c = splits[1].replaceAll("\\[", "").replaceAll("]", "").split(", ");
+                String[] b = splits[2].replaceAll("\\[", "").replaceAll("]", "").split(", ");
+                for (int i = 0; i < 2; i++)
+                    for (int j = 0; j < 6; j++)
+                        bool[i][j] = Boolean.parseBoolean(b[(i * 6) + j]);
+                Venue venue = new Venue(splits[0], bool);
+                venue.addCourses(new ArrayList<>(Arrays.asList(c)));
+                venue.setStudentLimit(Integer.parseInt(splits[3]));
+                add(venue);
+                break;
+            }
+            case SECTION: {
+                Course course = new Course("");
+                Lecturer lecturer = new Lecturer();
+                Venue venue = new Venue();
+                for (Course c : courses) {
+                    if (splits[4].equalsIgnoreCase(c.getCode())) {
+                        course = c;
+                        break;
+                    }
+                }
+                for (Lecturer l : lecturers) {
+                    if (splits[5].equalsIgnoreCase(l.getName())) {
+                        lecturer = l;
+                        break;
+                    }
+                }
+                for (Venue v : venues) {
+                    if (splits[6].equalsIgnoreCase(v.getName())) {
+                        venue = v;
+                        break;
+                    }
+                }
+                Section section = new Section(Integer.parseInt(splits[0]), course, lecturer, venue, Integer.parseInt(splits[3]));
+                section.setDay(Integer.parseInt(splits[1]));
+                section.setTime(Integer.parseInt(splits[2]));
+                sections.add(section);
+                break;
+            }
+        }
     }
 
 	public static void save() {
