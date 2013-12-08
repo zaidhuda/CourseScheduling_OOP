@@ -21,11 +21,12 @@
 
 package courseschedule;
 
-import java.util.*;
+import java.util.ArrayList;
+import java.util.Arrays;
 
 public class Lecturer extends Support {
 
-    public Lecturer(){
+    public Lecturer() {
         setName("TO BE DETERMINED");
         Arrays.fill(availability[0], false);
         Arrays.fill(availability[1], false);
@@ -65,6 +66,7 @@ public class Lecturer extends Support {
 
     /**
      * Return an array list of strings of specialization fields of the lecturer.
+     *
      * @return array list of course codes
      */
     public ArrayList<String> getSpecializations() {
@@ -89,7 +91,7 @@ public class Lecturer extends Support {
         return this.name.equalsIgnoreCase(that.name);
     }
 
-    public String getDetails(){
+    public String getDetails() {
         return getName() + ";" + getSpecializations() + ";" + getAvailability_inWords();
     }
 }

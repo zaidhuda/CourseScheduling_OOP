@@ -129,7 +129,7 @@ public class Section {
     }
 
     public void setNote(String arg) {
-       note = arg;
+        note = arg;
     }
 
     public String getNote() {
@@ -236,10 +236,10 @@ public class Section {
                 if (random && count < 12) {
                     day = (int) (Math.random() * 2);
                     time = (int) (Math.random() * (3) + 1);
-                } else if (!random || count >= 12){
+                } else if (!random || count >= 12) {
                     int i = count;
                     if (random) i -= 12;
-                    if (!setDayAndTime(i)){
+                    if (!setDayAndTime(i)) {
                         str = "Failed. ";
                         setNote(str);
                         return;
@@ -295,7 +295,7 @@ public class Section {
                 && this.lecturer.equals(that.lecturer);
     }
 
-    public String getDetails(){
+    public String getDetails() {
         return getSectionNum() + ";" + getDay() + ";" + getTime() + ";" + getStudentLimit() + ";" +
                 getCourse().getCode() + ";" + getLecturer().getName() + ";" + getVenue().getName();
     }

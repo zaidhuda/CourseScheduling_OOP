@@ -1,0 +1,4 @@
+courses
+lecturers
+venues
+sections

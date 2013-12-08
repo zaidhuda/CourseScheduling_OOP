@@ -99,7 +99,7 @@ public class Course {
         return getCode().compareTo(other.getCode());
     }
 
-    public String getDetails(){
+    public String getDetails() {
         return getCode() + ";" + getTitle() + ";" + getCredit() + ";" + getRequiredSections();
     }
 

@@ -1,6 +1,7 @@
 package courseschedule;
 
-import java.util.*;
+import java.util.ArrayList;
+import java.util.Arrays;
 
 abstract class Support {
     protected String name;
@@ -55,8 +56,8 @@ abstract class Support {
 
     /**
      * Receives a course code and remove it from courses array list.
+     *
      * @param arg the course code to be removed from courses array list.
-     * @throws Exception
      */
     public void removeCourse(String arg) throws Exception {
         arg = arg.replaceAll("\\s", "").toUpperCase();
@@ -65,11 +66,11 @@ abstract class Support {
 
     /**
      * Receives course codes and remove it from courses array list.
+     *
      * @param args the course codes to be removed from courses array list.
-     * @throws Exception
      */
     public void removeCourses(ArrayList<String> args) throws Exception {
-        for (String arg : args){
+        for (String arg : args) {
             removeCourse(arg);
         }
     }

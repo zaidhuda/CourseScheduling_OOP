@@ -24,12 +24,12 @@
 
 package courseschedule;
 
-import java.util.*;
+import java.util.Arrays;
 
 public class Venue extends Support {
     private int studentLimit = 30;
 
-    public Venue(){
+    public Venue() {
         setName("TO BE DETERMINED");
         Arrays.fill(availability[0], false);
         Arrays.fill(availability[1], false);
@@ -87,7 +87,7 @@ public class Venue extends Support {
         return this.name.equalsIgnoreCase(that.name);
     }
 
-    public String getDetails(){
+    public String getDetails() {
         return getName() + ";" + getCourses() + ";" + getAvailability_inWords() + ";" + getStudentLimit();
     }
 }
