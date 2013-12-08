@@ -297,7 +297,7 @@ public class Section {
 
     public String getDetails() {
         return getSectionNum() + ";" + getDay() + ";" + getTime() + ";" + getStudentLimit() + ";" +
-                getCourse().getCode() + ";" + getLecturer().getName() + ";" + getVenue().getName();
+                getCourse().getCode() + ";" + getLecturer().getName() + ";" + getVenue().getName() + ";" + getNote();
     }
 
     public String toString() {

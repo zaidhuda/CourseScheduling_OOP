@@ -30,6 +30,7 @@ import java.util.*;
 
 public class Test {
     public static final ScheduleBuilder sb = new ScheduleBuilder();
+    public static final ScheduleFiling sf = new ScheduleFiling(sb);
 
     public static void main(String[] args) {
 
@@ -53,7 +54,7 @@ public class Test {
 //        venues.get(1).addCourse("CSC1100");
 //        venues.get(1).addCourse("CSC1103");
 //        venues.get(1).removeCourse("lalalala");
-        sb.load();
+        sf.load();
 
 //        System.out.println(Arrays.deepToString(lecturers.get(1).getAvailability()));
 //        System.out.println(Arrays.deepToString(venues.get(1).getAvailability()));
@@ -70,12 +71,12 @@ public class Test {
             System.out.println(s);
         }
 
-//        for (Section s : sections) {
-//            s.generateSchedule(false);
-//            System.out.println(s);
-//        }
+        for (Section s : sb.sections) {
+            s.generateSchedule(false);
+            System.out.println(s);
+        }
 
-		  sb.save();
+		  sf.save();
 //        FetchData fd = new FetchData(courses);
     }
 }
