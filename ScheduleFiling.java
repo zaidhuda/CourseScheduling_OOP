@@ -81,7 +81,7 @@ public class ScheduleFiling {
                 lecturer.addCourses(new ArrayList<>(Arrays.asList(c)));
                 lecturer.setAvailability(bool);
                 sb.add(lecturer);
-
+                break;
 
             }
             case VENUE: {

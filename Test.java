@@ -29,7 +29,7 @@ import courseschedule.*;
 import java.util.*;
 
 public class Test {
-    public static final ScheduleBuilder sb = new ScheduleBuilder();
+    public static ScheduleBuilder sb = new ScheduleBuilder();
     public static final ScheduleFiling sf = new ScheduleFiling(sb);
 
     public static void main(String[] args) {
@@ -55,24 +55,23 @@ public class Test {
 //        venues.get(1).addCourse("CSC1103");
 //        venues.get(1).removeCourse("lalalala");
         sf.load();
-
 //        System.out.println(Arrays.deepToString(lecturers.get(1).getAvailability()));
 //        System.out.println(Arrays.deepToString(venues.get(1).getAvailability()));
 //        System.out.println(Arrays.deepToString(getAvailableSlots(lecturers.get(1), venues.get(1))));
 
-//        generateSections();
+        sb.generateSections();
 
-        long seed = System.nanoTime();
-        Collections.shuffle(sb.sections, new Random(seed));
-
-        Collections.sort(sb.sections, sb.courseComparator);
+//        long seed = System.nanoTime();
+//        Collections.shuffle(sb.sections, new Random(seed));
+//
+//        Collections.sort(sb.sections, sb.courseComparator);
+        for (Section s : sb.sections)
+            s.setLecturer(sb.lecturers, false);
+        for (Section s : sb.sections)
+            s.setVenue(sb.venues);
 
         for (Section s : sb.sections) {
-            System.out.println(s);
-        }
-
-        for (Section s : sb.sections) {
-            s.generateSchedule(false);
+            s.generateSchedule(true);
             System.out.println(s);
         }
 

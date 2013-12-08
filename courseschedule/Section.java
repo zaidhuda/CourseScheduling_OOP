@@ -149,10 +149,10 @@ public class Section {
             if (arg.getSpecializations().contains(course.getCode()))
                 lecturer = arg;
             else
-                lecturer = new Lecturer("TO BE DETERMINED");
+                lecturer = new Lecturer();
         } catch (Exception e) {
             // In case no venue for a subject, make dummy venue
-            lecturer = new Lecturer("TO BE DETERMINED");
+            lecturer = new Lecturer();
         }
     }
 
@@ -188,10 +188,10 @@ public class Section {
             if (arg.getCourses().contains(course.getCode()))
                 venue = arg;
             else
-                venue = new Venue("TO BE DETERMINED");
+                venue = new Venue();
         } catch (Exception e) {
             // In case no venue for a subject, make dummy venue
-            venue = new Venue("TO BE DETERMINED");
+            venue = new Venue();
         }
     }
 
@@ -201,20 +201,17 @@ public class Section {
             ArrayList<String> courses;
             ArrayList<Venue> tempVenues = new ArrayList<>();
 
-            // Checking if venue can be used for a subject
             for (Venue v : venues) {
                 courses = v.getCourses();
                 if (courses.contains(code))
                     tempVenues.add(v);
             }
 
-            // Randomly choosing a venue for a subject
             int r = (int) (Math.random() * tempVenues.size());
             venue = tempVenues.get(r);
             tempVenues.clear();
         } catch (Exception e) {
-            // In case no venue for a subject, make dummy venue
-            venue = new Venue("TO BE DETERMINED");
+            venue = new Venue();
         }
     }
 
@@ -246,7 +243,6 @@ public class Section {
                     }
                 }
 
-                // Check if lecturer and venue are available for same time
                 lecturerOccupied = !lecturer.isAvailableAt(day, time);
                 venueUsed = !venue.isAvailableAt(day, time);
                 count++;
@@ -274,7 +270,6 @@ public class Section {
             time = -1;
             return false;
         }
-
         return true;
     }
 

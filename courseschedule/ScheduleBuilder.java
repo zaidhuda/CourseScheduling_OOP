@@ -11,18 +11,26 @@ import java.util.Comparator;
  */
 public class ScheduleBuilder {
 
-    private final int MAX_ROW = 2, MAX_COL = 6;
-
     public ArrayList<Course> courses = new ArrayList<>();
     public ArrayList<Lecturer> lecturers = new ArrayList<>();
     public ArrayList<Venue> venues = new ArrayList<>();
     public ArrayList<Section> sections = new ArrayList<>();
     public final CourseComparator courseComparator = new CourseComparator();
 
-    public ScheduleBuilder(){}
-
     public void generateSections() {
+
+        for (Section s : sections){
+            int day = s.getDay();
+            int time = s.getTime();
+
+            if (day != -1 || time != -1){
+                s.getVenue().setAvailabilityAt(day, time, true);
+                s.getLecturer().setAvailabilityAt(day, time, true);
+            }
+        }
+
         sections.clear();
+
         for (Course course : courses)
             for (int i = 0; i < course.getRequiredSections(); ++i) {
                 sections.add(new Section(i + 1, course, new Lecturer(), new Venue()));
@@ -87,6 +95,8 @@ public class ScheduleBuilder {
     }
 
     public int[][] getAvailableSlots(Lecturer lecturer, Venue venue) {
+
+        final int MAX_ROW = 2, MAX_COL = 6;
         int[][] newAvailability = new int[MAX_ROW][MAX_COL];
 
         for (int i = 0; i < MAX_ROW; ++i) {
