@@ -154,7 +154,7 @@ public class Section {
         }
     }
 
-    public void setLecturer(ArrayList<Lecturer> lecturers, boolean random) throws Exception {
+    public void setLecturer(ArrayList<Lecturer> lecturers, boolean random) {
         // main loop, creating sections for each course
         ArrayList<Lecturer> tempLecturers = new ArrayList<>();
 
@@ -164,13 +164,14 @@ public class Section {
                 tempLecturers.add(lecturer);
 
         // randomly assign lecturer to sections
-        if (random) {
-            int r = (int) (Math.random() * tempLecturers.size());
-            setLecturer(tempLecturers.get(r));
-        }
-        // assign lecturer based on order
-        else {
-            setLecturer(tempLecturers.get((sectionNum + 1) % tempLecturers.size()));
+        try {
+            if (random) {
+                int r = (int) (Math.random() * tempLecturers.size());
+                setLecturer(tempLecturers.get(r));
+            }
+            // assign lecturer based on order
+            else setLecturer(tempLecturers.get((sectionNum + 1) % tempLecturers.size()));
+        } catch (Exception ignored) {
         }
 
         tempLecturers.clear();
@@ -220,41 +221,43 @@ public class Section {
     }
 
     public void generateSchedule(boolean random) {
-        boolean lecturerOccupied, venueUsed;
-        String str = "Success. ";
+        if (venue != null && lecturer != null) {
+            boolean lecturerOccupied, venueUsed;
+            String str = "Success. ";
 
-        if (day != -1 || time != -1)
-            setUsing(day, time, false);
+            if (day != -1 || time != -1)
+                setUsing(day, time, false);
 
-        int count = 0;
+            int count = 0;
 
-        do {
-            if (random && count < 12) {
-                day = (int) (Math.random() * 2);
-                time = (int) (Math.random() * (3) + 1);
-            } else if (!random || count >= 12){
-                int i = count;
-                if (random) i -= 12;
-                if (!setDayAndTime(i)){
-                    str = "Failed. ";
-                    setNote(str);
-                    return;
+            do {
+                if (random && count < 12) {
+                    day = (int) (Math.random() * 2);
+                    time = (int) (Math.random() * (3) + 1);
+                } else if (!random || count >= 12){
+                    int i = count;
+                    if (random) i -= 12;
+                    if (!setDayAndTime(i)){
+                        str = "Failed. ";
+                        setNote(str);
+                        return;
+                    }
                 }
-            }
 
-            // Check if lecturer and venue are available for same time
-            lecturerOccupied = !lecturer.isAvailableAt(day, time);
-            venueUsed = !venue.isAvailableAt(day, time);
-            count++;
+                // Check if lecturer and venue are available for same time
+                lecturerOccupied = !lecturer.isAvailableAt(day, time);
+                venueUsed = !venue.isAvailableAt(day, time);
+                count++;
 
-        } while (lecturerOccupied || venueUsed);
+            } while (lecturerOccupied || venueUsed);
 
-        setUsing(day, time, true);
+            setUsing(day, time, true);
 
-        if (studentLimit > venue.getStudentLimit())
-            str += "Student exceeds venue capacity.";
+            if (studentLimit > venue.getStudentLimit())
+                str += "Student exceeds venue capacity.";
 
-        setNote(str);
+            setNote(str);
+        }
     }
 
     private boolean setDayAndTime(int count) {
@@ -288,6 +291,11 @@ public class Section {
         return this.sectionNum == that.sectionNum
                 && this.course.equals(that.course)
                 && this.lecturer.equals(that.lecturer);
+    }
+
+    public String getDetails(){
+        return getSectionNum() + ";" + getDay() + ";" + getTime() + ";" + getStudentLimit() + ";" +
+                getCourse().getCode() + ";" + getLecturer().getName() + ";" + getVenue().getName();
     }
 
     public String toString() {

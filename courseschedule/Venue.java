@@ -29,6 +29,12 @@ import java.util.*;
 public class Venue extends Support {
     private int studentLimit = 30;
 
+    public Venue(){
+        setName("TO BE DETERMINED");
+        Arrays.fill(availability[0], false);
+        Arrays.fill(availability[1], false);
+    }
+
     /**
      * Construct a new instance of Venue and fill availability with true.
      *
@@ -79,5 +85,9 @@ public class Venue extends Support {
         Venue that = (Venue) other;
 
         return this.name.equalsIgnoreCase(that.name);
+    }
+
+    public String getDetails(){
+        return getName() + ";" + getCourses() + ";" + getAvailability_inWords() + ";" + getStudentLimit();
     }
 }

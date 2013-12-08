@@ -25,6 +25,12 @@ import java.util.*;
 
 public class Lecturer extends Support {
 
+    public Lecturer(){
+        setName("TO BE DETERMINED");
+        Arrays.fill(availability[0], false);
+        Arrays.fill(availability[1], false);
+    }
+
     public Lecturer(String name) {
         setName(name);
         Arrays.fill(availability[0], true);
@@ -81,5 +87,9 @@ public class Lecturer extends Support {
         Lecturer that = (Lecturer) other;
 
         return this.name.equalsIgnoreCase(that.name);
+    }
+
+    public String getDetails(){
+        return getName() + ";" + getSpecializations() + ";" + getAvailability_inWords();
     }
 }
