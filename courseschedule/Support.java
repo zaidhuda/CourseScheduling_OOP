@@ -98,12 +98,12 @@ abstract class Support {
      * Receives day and time in int and a boolean to set the value of availability at
      * row day column time to arg.
      *
-     * @param day  an int representing row of availability
+     * @param day int representing row of availability
      * @param time an int representing column of availability
-     * @param arg  desired value to be set to availability[day][time]
+     * @param isUsed  desired value to be set to availability[day][time]
      */
-    public void setAvailabilityAt(int day, int time, boolean arg) {
-        availability[day % 2][time % 6] = arg;
+    public void setAvailabilityAt(int day, int time, boolean isUsed) {
+        availability[day % 2][time % 6] = isUsed;
     }
 
     /**

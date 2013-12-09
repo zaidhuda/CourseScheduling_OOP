@@ -87,11 +87,17 @@ public class ScheduleBuilder {
     }
 
     public void remove(Lecturer o) {
-        o.setName("TO BE DETERMINED");
+        for (Section s : sections)
+            if (s.getLecturer().equals(o))
+                s.setLecturer(new Lecturer());
+        lecturers.remove(o);
     }
 
     public void remove(Venue o) {
-        o.setName("TO BE DETERMINED");
+        for (Section s : sections)
+            if (s.getVenue().equals(o))
+                s.setVenue(new Venue());
+        venues.remove(o);
     }
 
     public int[][] getAvailableSlots(Lecturer lecturer, Venue venue) {

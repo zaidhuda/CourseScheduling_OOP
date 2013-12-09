@@ -51,7 +51,9 @@ public class ScheduleFiling {
                 fileLine = br.readLine();
             }
 
-        } catch (Exception ignored) {
+            System.out.println("Loaded Successfully");
+        } catch (Exception e) {
+            System.out.println("Load Failed: " + e);
         }
     }
 
@@ -126,8 +128,7 @@ public class ScheduleFiling {
                     }
 
                 Section section = new Section(Integer.parseInt(splits[0]), course, lecturer, venue, Integer.parseInt(splits[3]));
-                section.setDay(Integer.parseInt(splits[1]));
-                section.setTime(Integer.parseInt(splits[2]));
+                section.setDayAndTime(Integer.parseInt(splits[1]), Integer.parseInt(splits[2]));
                 section.setNote(splits[7]);
                 sb.sections.add(section);
                 break;
@@ -165,8 +166,9 @@ public class ScheduleFiling {
                 newFile.delete();
             file.renameTo(newFile);
 
-            System.out.println("Done");
-        } catch (Exception ignored) {
+            System.out.println("Saved Successfully");
+        } catch (Exception e) {
+            System.out.println("Save Failed: " + e);
         }
     }
 }
