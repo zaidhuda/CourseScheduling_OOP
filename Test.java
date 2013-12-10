@@ -26,6 +26,8 @@
 
 import courseschedule.*;
 import javax.swing.*;
+import javax.swing.event.AncestorEvent;
+import javax.swing.event.AncestorListener;
 
 public class Test {
     public static final ScheduleBuilder sb = new ScheduleBuilder();
@@ -47,11 +49,10 @@ public class Test {
 	    //System.out.println(sb.getAssignedVenues(sb.sections.get(1)));
 	    System.out.println(sb.getClassAt(1, 1, sb.lecturers.get(1), sb.sections));
 	    System.out.println(sb.getClassAt(1, 1, sb.venues.get(1), sb.sections));
-	    Section s = sb.sections.get(5);
-	    //System.out.println(s.getLecturer());
 	    JFrame frame = new JFrame("Time Table Selector");
-	    TimePicker panel = new TimePicker(s.getDay(), s.getTime(), sb.getAvailableSlots(s.getLecturer(),s.getVenue()));
-	    //TimePicker panel = new TimePicker(sb.lecturers.get(4).getAvailability());
+	    Section s = sb.sections.get(5);
+	    //TimePicker panel = new TimePicker(s.getDay(), s.getTime(), sb.getAvailableSlots(s.getLecturer(),s.getVenue()));
+	    TimePicker panel = new TimePicker(sb.lecturers.get(4).getAvailability());
         panel.setSize(75);
         panel.obeyConflict(true);
         frame.setContentPane(panel);
