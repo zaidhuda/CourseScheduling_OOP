@@ -70,7 +70,7 @@ public class TimePicker extends JPanel {
                 button[k].addActionListener(bl);
 
 	            if (selectMany){
-		            setColor(button[k], availability[i][j]);
+		            setColor(button[k], availability[i][j]? 0 : 3);
 	            } else {
 		            setColor(button[k], slots[i][j]);
 		            button[k].putClientProperty("original", false);
@@ -89,17 +89,6 @@ public class TimePicker extends JPanel {
         }
 
         setLayout(new GridLayout(ROW, COL));
-    }
-
-    private void setColor(JButton btn, boolean bool){
-        if (bool){
-            btn.putClientProperty("availability", 0);
-            btn.setBackground(Color.white);
-        } else {
-            btn.putClientProperty("availability", 3);
-            btn.setBackground(Color.black);
-            btn.setEnabled(false);
-        }
     }
 
     private void setColor(JButton btn, int i){
@@ -123,7 +112,6 @@ public class TimePicker extends JPanel {
 
 	private class SButton extends JButton {
 		public SButton(){
-			super();
 			setFocusPainted(false);
 			setBorderPainted(false);
 			setCursor(new Cursor(Cursor.HAND_CURSOR));
@@ -138,16 +126,20 @@ public class TimePicker extends JPanel {
             time = index % 6;
 
             if (selectMany) {
-                availability[day][time] = !availability[day][time];
                 Color btnBack = currentButton.getBackground();
                 if (btnBack.equals(Color.white)) {
-                    for (JButton btn : button)
-                        if ((int) btn.getClientProperty("availability") != 3) {
-                            currentButton.setEnabled(true);
-                            currentButton.setBackground(Color.orange);
-                        }
+	                if ((int) currentButton.getClientProperty("availability") == 0)
+	                    setColor(currentButton, 1);
+	                else
+		                setColor(currentButton, 3);
+	                availability[day][time] = !availability[day][time];
                 } else if (btnBack.equals(Color.orange)) {
-                    currentButton.setBackground(Color.white);
+	                setColor(currentButton, 0);
+	                availability[day][time] = !availability[day][time];
+                } else if (JOptionPane.showConfirmDialog(null, "Remove this section?", "Warning", JOptionPane.YES_NO_OPTION) == 0){
+	                currentButton.setEnabled(true);
+	                currentButton.setBackground(Color.white);
+	                availability[day][time] = !availability[day][time];
                 }
                 System.out.println(Arrays.deepToString(availability));
             } else if (obeyConflict()) {
@@ -172,17 +164,17 @@ public class TimePicker extends JPanel {
             String note = null;
             switch (avail) {
                 case 1:
-                    note = "Venue is not available at selected time. Decide venue later?";
+                    note = "Venue is in use by other section. Re-Schedule the section?";
                     break;
                 case 2:
-                    note = "Lecturer is not available at selected time. Decide lecturer later?";
+                    note = "Lecturer is having another section. Re-Schedule the section?";
                     break;
                 case 3:
-                    note = "Current venue and lecturer not available at selected time. Decide later?";
+                    note = "Another Section is set here. Re-Schedule the section?";
                     break;
             }
             if (obeyConflict){
-	            hasConflict = JOptionPane.showConfirmDialog(null, note) == 0;
+	            hasConflict = JOptionPane.showConfirmDialog(null, note, "Warning", JOptionPane.YES_OPTION) == 0;
                 return hasConflict;
             }
         }

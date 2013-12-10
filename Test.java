@@ -45,9 +45,10 @@ public class Test {
 
 	    //System.out.println(sb.getAssignedLecturers(sb.sections.get(1)));
 	    //System.out.println(sb.getAssignedVenues(sb.sections.get(1)));
-
+	    System.out.println(sb.getClassAt(1, 1, sb.lecturers.get(1), sb.sections));
+	    System.out.println(sb.getClassAt(1, 1, sb.venues.get(1), sb.sections));
 	    Section s = sb.sections.get(5);
-	    System.out.println(s.getLecturer());
+	    //System.out.println(s.getLecturer());
 	    JFrame frame = new JFrame("Time Table Selector");
 	    TimePicker panel = new TimePicker(s.getDay(), s.getTime(), sb.getAvailableSlots(s.getLecturer(),s.getVenue()));
 	    //TimePicker panel = new TimePicker(sb.lecturers.get(4).getAvailability());

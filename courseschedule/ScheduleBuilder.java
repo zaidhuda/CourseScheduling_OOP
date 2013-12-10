@@ -127,6 +127,28 @@ public class ScheduleBuilder {
         return newAvailability;
     }
 
+	public Section getClassAt(int day, int time, Lecturer theLecturer, ArrayList<Section> sections){
+		for(Section s : sections){
+			boolean sameTime = (day == s.getDay() && time == s.getTime()),
+					sameLect = s.getLecturer().equals(theLecturer);
+			if(sameTime && sameLect){
+				return s;
+			}
+		}
+		return null;
+	}
+
+	public Section getClassAt(int day, int time, Venue theVenue, ArrayList<Section> sections){
+		for(Section s : sections){
+			boolean sameTime = (day == s.getDay() && time == s.getTime()),
+					sameVenue = s.getVenue().equals(theVenue);
+			if(sameTime && sameVenue){
+				return s;
+			}
+		}
+		return null;
+	}
+
 	public void forceReSchedule(int day, int time, Section theSection, ArrayList<Section> sections){
 		Lecturer theLecturer = theSection.getLecturer();
 		Venue theVenue = theSection.getVenue();
