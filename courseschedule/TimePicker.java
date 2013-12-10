@@ -16,6 +16,7 @@ public class TimePicker extends JPanel {
 
     private boolean[][] availability;
     private boolean selectMany;
+	private boolean hasConflict = false;
     private boolean obeyConflict = true;
 
     private SButton[] button = null;
@@ -165,22 +166,25 @@ public class TimePicker extends JPanel {
     }
 
     private boolean obeyConflict(){
+	    hasConflict = false;
         int avail = (int) button[(day * 6) + time].getClientProperty("availability");
         if (avail != 0 && !(boolean) button[(day * 6) + time].getClientProperty("original")){
             String note = null;
             switch (avail) {
                 case 1:
-                    note = "Venue is not available. Decide later?";
+                    note = "Venue is not available at selected time. Decide venue later?";
                     break;
                 case 2:
-                    note = "Lecturer is not available. Decide later?";
+                    note = "Lecturer is not available at selected time. Decide lecturer later?";
                     break;
                 case 3:
-                    note = "Another section is already set. Replace?";
+                    note = "Current venue and lecturer not available at selected time. Decide later?";
                     break;
             }
-            if(obeyConflict)
-                return (JOptionPane.showConfirmDialog(null, note) == 0);
+            if (obeyConflict){
+	            hasConflict = JOptionPane.showConfirmDialog(null, note) == 0;
+                return hasConflict;
+            }
         }
         return true;
     }
@@ -200,6 +204,10 @@ public class TimePicker extends JPanel {
     public boolean[][] getAvailability() {
         return availability;
     }
+
+	public boolean hasConflict(){
+		return hasConflict;
+	}
 
     public void setSize(int size) {
         if(size>=30 && size<150){

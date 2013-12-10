@@ -51,6 +51,8 @@ public class Section {
     private Venue venue = null;
 
     // Section must have course and lecturer
+	public Section(){}
+
     public Section(int sectionNum, Course course, Lecturer lecturer, Venue venue) {
         setCourse(course);
         setLecturer(lecturer);
@@ -169,37 +171,25 @@ public class Section {
         return course;
     }
 
-    public void setLecturer(Lecturer arg) {
-        try {
-            if (arg.getSpecializations().contains(course.getCode()))
-                lecturer = arg;
-            else
-                lecturer = new Lecturer();
-        } catch (Exception e) {
-            // In case no venue for a subject, make dummy venue
-            lecturer = new Lecturer();
-        }
+    public void setLecturer(Lecturer newLecturer) {
+	    lecturer = new Lecturer();
+	    if(newLecturer != null && newLecturer.getSpecializations().contains(course.getCode()))
+		    lecturer = newLecturer;
     }
 
     public void setLecturer(ArrayList<Lecturer> lecturers, boolean random) {
-        // main loop, creating sections for each course
         ArrayList<Lecturer> tempLecturers = new ArrayList<>();
 
-        // add lecturers of current course to temporary list
         for (Lecturer lecturer : lecturers)
             if (lecturer.getSpecializations().contains(course.getCode()))
                 tempLecturers.add(lecturer);
 
-        // randomly assign lecturer to sections
-        try {
-            if (random) {
-                int r = (int) (Math.random() * tempLecturers.size());
-                setLecturer(tempLecturers.get(r));
-            }
-            // assign lecturer based on order
-            else setLecturer(tempLecturers.get((sectionNum + 1) % tempLecturers.size()));
-        } catch (Exception ignored) {
+        if (random) {
+            int r = (int) (Math.random() * tempLecturers.size());
+            setLecturer(tempLecturers.get(r));
         }
+        else
+            setLecturer(tempLecturers.get((sectionNum + 1) % tempLecturers.size()));
 
         tempLecturers.clear();
     }
@@ -208,36 +198,30 @@ public class Section {
         return lecturer;
     }
 
-    public void setVenue(Venue arg) {
-        try {
-            if (arg.getCourses().contains(course.getCode()))
-                venue = arg;
-            else
-                venue = new Venue();
-        } catch (Exception e) {
-            // In case no venue for a subject, make dummy venue
-            venue = new Venue();
-        }
+    public void setVenue(Venue newVenue) {
+	    venue = new Venue();
+	    if (newVenue != null && newVenue.getCourses().contains(course.getCode()))
+		    venue = newVenue;
     }
 
-    public void setVenue(ArrayList<Venue> venues) {
-        try {
-            String code = course.getCode();
-            ArrayList<String> courses;
-            ArrayList<Venue> tempVenues = new ArrayList<>();
+    public void setVenue(ArrayList<Venue> venues, boolean random) {
+        ArrayList<String> courses;
+        ArrayList<Venue> tempVenues = new ArrayList<>();
 
-            for (Venue v : venues) {
-                courses = v.getCourses();
-                if (courses.contains(code))
-                    tempVenues.add(v);
-            }
-
-            int r = (int) (Math.random() * tempVenues.size());
-            venue = tempVenues.get(r);
-            tempVenues.clear();
-        } catch (Exception e) {
-            venue = new Venue();
+        for (Venue v : venues) {
+            courses = v.getCourses();
+            if (courses.contains(course.getCode()))
+                tempVenues.add(v);
         }
+
+        if (random) {
+	        int r = (int) (Math.random() * tempVenues.size());
+	        setVenue(tempVenues.get(r));
+        }
+        else
+	        setVenue(tempVenues.get((sectionNum + 1) % tempVenues.size()));
+
+        tempVenues.clear();
     }
 
     public Venue getVenue() {
@@ -245,8 +229,8 @@ public class Section {
     }
 
     public void generateSchedule(boolean random) {
-        if (venue != null && lecturer != null) {
-            boolean lecturerOccupied, venueUsed;
+	    if (venue != null && lecturer != null) {
+		    boolean lecturerOccupied, venueUsed;
             String str = "Success. ";
 
             if (day != -1 || time != -1)

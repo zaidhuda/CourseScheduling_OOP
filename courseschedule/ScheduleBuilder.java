@@ -36,7 +36,7 @@ public class ScheduleBuilder {
 	    if (generateSchedule) {
 		    for (Section s : sections){
 		        if (venues != null)
-				    s.setVenue(venues);
+				    s.setVenue(venues, true);
 			    if (lecturers != null)
 					s.setLecturer(lecturers, false);
 			    s.generateSchedule(true);
@@ -114,18 +114,40 @@ public class ScheduleBuilder {
 
         for (int i = 0; i < MAX_ROW; ++i) {
             for (int j = 0; j < MAX_COL; ++j) {
-                if (lecturer.isAvailableAt(i, j) && venue.isAvailableAt(i, j))
-                    newAvailability[i][j] = 0;
-                else if (lecturer.isAvailableAt(i, j))
+                if (lecturer.isAvailableAt(i, j))
                     newAvailability[i][j] = 1;
-                else if (venue.isAvailableAt(i, j))
+                if (venue.isAvailableAt(i, j))
                     newAvailability[i][j] = 2;
-                else
+	            if (lecturer.isAvailableAt(i, j) && venue.isAvailableAt(i, j))
+		            newAvailability[i][j] = 0;
+                if (!lecturer.isAvailableAt(i, j) && !venue.isAvailableAt(i, j))
                     newAvailability[i][j] = 3;
             }
         }
         return newAvailability;
     }
+
+	public void forceReSchedule(int day, int time, Section theSection, ArrayList<Section> sections){
+		Lecturer theLecturer = theSection.getLecturer();
+		Venue theVenue = theSection.getVenue();
+		for (Section s : sections){
+			int t = s.getTime(), d = s.getDay();
+			if (!s.equals(theSection) && (time == t && d == day)) {
+				Lecturer l = s.getLecturer();
+				Venue v = s.getVenue();
+
+				if (l.equals(theLecturer))
+					s.getLecturer().setAvailabilityAt(day, time, true);
+				if (v.equals(theVenue))
+					s.getVenue().setAvailabilityAt(day, time, true);
+
+				s.setDayAndTime(-1, -1);
+				theSection.setDayAndTime(day, time);
+				s.generateSchedule(true);
+				return;
+			}
+		}
+	}
 
 	public ArrayList<Lecturer> getAssignedLecturers(Section theSection){
 		String courseCode = theSection.getCourse().getCode();

@@ -25,7 +25,6 @@
 //+-------------------------------------+
 
 import courseschedule.*;
-
 import javax.swing.*;
 
 public class Test {
@@ -35,29 +34,22 @@ public class Test {
     public static void main(String[] args) {
         sf.load();
 
-//        sb.generateSections();
-//        long seed = System.nanoTime();
-//        Collections.shuffle(sb.sections, new Random(seed));
-//
-//        Collections.sort(sb.sections, sb.courseComparator);
-//        for (Section s : sb.sections)
-//            s.setLecturer(sb.lecturers, false);
-//        for (Section s : sb.sections)
-//            s.setVenue(sb.venues);
+	    //sb.generateSections(true);
+	    //for (Section s : sb.sections) {
+         //   //s.generateSchedule(true);
+         //   System.out.println(s);
+	    //}
+	    //sb.sections.get(0).setDayAndTime(1,2);
+	    sb.forceReSchedule(1, 1, sb.sections.get(0), sb.sections);
+	    //System.out.println(sb.sections.get(0));
 
-	    sb.generateSections(true);
-        for (Section s : sb.sections) {
-            //s.generateSchedule(true);
-            System.out.println(s);
-        }
-	    sb.sections.get(0).setDayAndTime(1,4);
-	    System.out.println(sb.sections.get(0));
+	    //System.out.println(sb.getAssignedLecturers(sb.sections.get(1)));
+	    //System.out.println(sb.getAssignedVenues(sb.sections.get(1)));
 
-	    System.out.println(sb.getAssignedLecturers(sb.sections.get(1)));
-	    System.out.println(sb.getAssignedVenues(sb.sections.get(1)));
-
-        JFrame frame = new JFrame("Time Table Selector");
-	    TimePicker panel = new TimePicker(sb.sections.get(0).getDay(), sb.sections.get(0).getTime(), sb.getAvailableSlots(sb.sections.get(0).getLecturer(), sb.sections.get(0).getVenue()));
+	    Section s = sb.sections.get(5);
+	    System.out.println(s.getLecturer());
+	    JFrame frame = new JFrame("Time Table Selector");
+	    TimePicker panel = new TimePicker(s.getDay(), s.getTime(), sb.getAvailableSlots(s.getLecturer(),s.getVenue()));
 	    //TimePicker panel = new TimePicker(sb.lecturers.get(4).getAvailability());
         panel.setSize(75);
         panel.obeyConflict(true);
@@ -65,7 +57,7 @@ public class Test {
         frame.pack();
         frame.setLocationRelativeTo(null);
         frame.setVisible(true);
-        frame.setDefaultCloseOperation(frame.EXIT_ON_CLOSE);
+        frame.setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
 
 		sf.save();
     }
