@@ -67,7 +67,6 @@ public class Section {
     }
 
     public void setDayAndTime(int newDay, int newTime) {
-	    System.out.println(newDay + " " + newTime);
 	    try {
 	        if (!(newDay == -1 && newTime == -1) && !(newDay == day && newTime == time)){
 		        if (venue == null) {
@@ -86,7 +85,6 @@ public class Section {
 		            time = newTime;
 	                venue.setAvailabilityAt(day, time, false);
 	                lecturer.setAvailabilityAt(day, time, false);
-		            System.out.println("hish.");
 	            } else {
 	                System.out.println("Cannot change schedule.");
 	            }
@@ -95,7 +93,7 @@ public class Section {
 		        time = newTime;
 	        }
         } catch (Exception e) {
-            System.out.println("failed!");
+            System.out.println("Failed!");
         }
 //        day = newDay;
 //        time = newTime;

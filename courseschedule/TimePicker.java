@@ -53,7 +53,14 @@ public class TimePicker extends JPanel {
 
         button = new SButton[ROW * COL];
 
+	    String[] str = {"<html><center>Monday<br>Wednesday</center></html>",
+			            "<html><center>Tuesday<br>Thursday</center></html>" };
+
         for (int i = 0; i < ROW; ++i) {
+	        JPanel p = new JPanel();
+	        p.setBackground(Color.darkGray);
+	        p.add(new JLabel(str[i]), BorderLayout.CENTER);
+	        add(p);
             for (int j = 0; j < COL; ++j) {
                 int k = (i * 6) + j;
                 button[k] = new SButton();
@@ -195,7 +202,7 @@ public class TimePicker extends JPanel {
     }
 
     public void setSize(int size) {
-        if(size>=30){
+        if(size>=30 && size<150){
             this.SIZE = size;
             for (JButton btn : button)
                 btn.setPreferredSize(new Dimension(SIZE, SIZE));

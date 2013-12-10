@@ -45,12 +45,16 @@ public class Test {
 //        for (Section s : sb.sections)
 //            s.setVenue(sb.venues);
 
+	    sb.generateSections(true);
         for (Section s : sb.sections) {
-            s.generateSchedule(true);
+            //s.generateSchedule(true);
             System.out.println(s);
         }
-	    sb.sections.get(0).setDayAndTime(1,0);
+	    sb.sections.get(0).setDayAndTime(1,4);
 	    System.out.println(sb.sections.get(0));
+
+	    System.out.println(sb.getAssignedLecturers(sb.sections.get(1)));
+	    System.out.println(sb.getAssignedVenues(sb.sections.get(1)));
 
         JFrame frame = new JFrame("Time Table Selector");
 	    TimePicker panel = new TimePicker(sb.sections.get(0).getDay(), sb.sections.get(0).getTime(), sb.getAvailableSlots(sb.sections.get(0).getLecturer(), sb.sections.get(0).getVenue()));

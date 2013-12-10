@@ -31,8 +31,8 @@ public class Venue extends Support {
 
     public Venue() {
         setName("TO BE DETERMINED");
-        Arrays.fill(availability[0], false);
-        Arrays.fill(availability[1], false);
+        Arrays.fill(availability[0], true);
+        Arrays.fill(availability[1], true);
     }
 
     /**

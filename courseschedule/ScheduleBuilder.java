@@ -17,15 +17,12 @@ public class ScheduleBuilder {
     public ArrayList<Section> sections = new ArrayList<>();
     public final CourseComparator courseComparator = new CourseComparator();
 
-    public void generateSections() {
+    public void generateSections(boolean generateSchedule) {
 
         for (Section s : sections){
-            int day = s.getDay();
-            int time = s.getTime();
-
-            if (day != -1 || time != -1){
-                s.getVenue().setAvailabilityAt(day, time, true);
-                s.getLecturer().setAvailabilityAt(day, time, true);
+	        if (s.getDay() != -1 || s.getTime() != -1){
+                s.getVenue().setAvailabilityAt(s.getDay(), s.getTime(), true);
+                s.getLecturer().setAvailabilityAt(s.getDay(), s.getTime(), true);
             }
         }
 
@@ -35,6 +32,17 @@ public class ScheduleBuilder {
             for (int i = 0; i < course.getRequiredSections(); ++i) {
                 sections.add(new Section(i + 1, course, new Lecturer(), new Venue()));
             }
+
+	    if (generateSchedule) {
+		    for (Section s : sections){
+		        if (venues != null)
+				    s.setVenue(venues);
+			    if (lecturers != null)
+					s.setLecturer(lecturers, false);
+			    s.generateSchedule(true);
+		    }
+	    }
+
     }
 
     private class CourseComparator implements Comparator<Section> {
@@ -101,7 +109,6 @@ public class ScheduleBuilder {
     }
 
     public int[][] getAvailableSlots(Lecturer lecturer, Venue venue) {
-
         final int MAX_ROW = 2, MAX_COL = 6;
         int[][] newAvailability = new int[MAX_ROW][MAX_COL];
 
@@ -117,7 +124,24 @@ public class ScheduleBuilder {
                     newAvailability[i][j] = 3;
             }
         }
-
         return newAvailability;
     }
+
+	public ArrayList<Lecturer> getAssignedLecturers(Section theSection){
+		String courseCode = theSection.getCourse().getCode();
+		ArrayList<Lecturer> tempLecturers = new ArrayList<>();
+		for (Lecturer l : lecturers)
+			if(l.getCourses().contains(courseCode))
+				tempLecturers.add(l);
+		return tempLecturers;
+	}
+
+	public ArrayList<Venue> getAssignedVenues(Section theSection){
+		String courseCode = theSection.getCourse().getCode();
+		ArrayList<Venue> tempVenues = new ArrayList<>();
+		for (Venue v : venues)
+			if(v.getCourses().contains(courseCode))
+				tempVenues.add(v);
+		return tempVenues;
+	}
 }
