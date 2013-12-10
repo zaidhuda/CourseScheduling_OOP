@@ -6,7 +6,7 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.util.Arrays;
 
-public class BooleanTable extends JPanel {
+public class TimePicker extends JPanel {
     private int ROW = 2;
     private int COL = 6;
     private int SIZE = 100;
@@ -18,15 +18,15 @@ public class BooleanTable extends JPanel {
     private boolean selectMany;
     private boolean obeyConflict = true;
 
-    private JButton[] button = null;
+    private SButton[] button = null;
 
     private ButtonListener bl = new ButtonListener();
 
-    public BooleanTable(int day, int time, boolean[][] availability) {
+    public TimePicker(boolean[][] availability) {
         constructor(day, time, availability, null);
     }
 
-    public BooleanTable(int day, int time, int[][] slots) {
+    public TimePicker(int day, int time, int[][] slots) {
         constructor(day, time, null, slots);
     }
 
@@ -34,15 +34,14 @@ public class BooleanTable extends JPanel {
         this.day = day;
         this.time = time;
 
-        if (availability != null) {
+	    selectMany = availability != null;
+
+        if (selectMany) {
             this.availability = new boolean[ROW][COL];
-            selectMany = true;
             this.availability[0] = Arrays.copyOf(availability[0], COL);
             this.availability[1] = Arrays.copyOf(availability[1], COL);
-        }
-        if (slots != null) {
+        } else {
             this.slots = new int[ROW][COL];
-            selectMany = false;
             this.slots[0] = Arrays.copyOf(slots[0], COL);
             this.slots[1] = Arrays.copyOf(slots[1], COL);
         }
@@ -52,25 +51,26 @@ public class BooleanTable extends JPanel {
 
     private void drawTable() {
 
-        button = new JButton[ROW * COL];
-        JPanel[] btnPane = new JPanel[ROW * COL];
+        button = new SButton[ROW * COL];
 
         for (int i = 0; i < ROW; ++i) {
             for (int j = 0; j < COL; ++j) {
-                int i2 = (i * 6) + j;
-                btnPane[i2] = new JPanel();
-                button[i2] = new JButton();
-                button[i2].putClientProperty("index", i2);
-                button[i2].putClientProperty("original", false);
-                button[i2].setFocusPainted(false);
-                button[i2].setBorderPainted(false);
-                button[i2].setCursor(new Cursor(Cursor.HAND_CURSOR));
-                if (selectMany) setColor(button[i2], availability[i][j]);
-                else setColor(button[i2], slots[i][j]);
-                button[i2].setPreferredSize(new Dimension(SIZE, SIZE));
-                button[i2].addActionListener(bl);
-                btnPane[i2].add(button[i2]);
-                add(btnPane[i2]);
+                int k = (i * 6) + j;
+                button[k] = new SButton();
+                button[k].putClientProperty("index", k);
+                button[k].setPreferredSize(new Dimension(SIZE, SIZE));
+                button[k].addActionListener(bl);
+
+	            if (selectMany){
+		            setColor(button[k], availability[i][j]);
+	            } else {
+		            setColor(button[k], slots[i][j]);
+		            button[k].putClientProperty("original", false);
+	            }
+
+	            JPanel btnPane = new JPanel();
+                btnPane.add(button[k]);
+                add(btnPane);
             }
         }
 
@@ -112,6 +112,15 @@ public class BooleanTable extends JPanel {
         }
         btn.putClientProperty("availability", i);
     }
+
+	private class SButton extends JButton {
+		public SButton(){
+			super();
+			setFocusPainted(false);
+			setBorderPainted(false);
+			setCursor(new Cursor(Cursor.HAND_CURSOR));
+		}
+	}
 
     private class ButtonListener implements ActionListener {
         public void actionPerformed(ActionEvent e) {
@@ -165,8 +174,6 @@ public class BooleanTable extends JPanel {
             }
             if(obeyConflict)
                 return (JOptionPane.showConfirmDialog(null, note) == 0);
-            else
-                return !obeyConflict;
         }
         return true;
     }

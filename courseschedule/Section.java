@@ -67,27 +67,33 @@ public class Section {
     }
 
     public void setDayAndTime(int newDay, int newTime) {
-        try {
-            if ((venue == null && lecturer == null) && (day != newDay && time != newTime)){
-                venue = new Venue();
-                lecturer = new Lecturer();
-                day = newDay;
-                time = newTime;
-            } else {
-                boolean lecturerOccupied = lecturer.isAvailableAt(newDay, newTime), venueUsed = venue.isAvailableAt(newDay, newTime);
-                if ((venue != null && lecturer != null) && (!lecturerOccupied && !venueUsed)){
-                    if(day != -1 && time != -1){
-                        venue.setAvailabilityAt(day, time, true);
-                        lecturer.setAvailabilityAt(day, time, true);
-                    }
-                    venue.setAvailabilityAt(newDay, newTime, false);
-                    lecturer.setAvailabilityAt(newDay, newTime, false);
-                    day = newDay;
-                    time = newTime;
-                } else {
-                    System.out.println("Not available");
-                }
-            }
+	    System.out.println(newDay + " " + newTime);
+	    try {
+	        if (!(newDay == -1 && newTime == -1) && !(newDay == day && newTime == time)){
+		        if (venue == null) {
+		            venue = new Venue();
+		        } else if (lecturer == null) {
+		            lecturer = new Lecturer();
+		        }
+	            boolean lecturerAvailable = lecturer.isAvailableAt(newDay, newTime),
+			            venueAvailable = venue.isAvailableAt(newDay, newTime);
+	            if ((lecturerAvailable && venueAvailable) || (day == -1 && time == -1)){
+		            if (!(day == -1 && time == -1)){
+	                    venue.setAvailabilityAt(day, time, true);
+	                    lecturer.setAvailabilityAt(day, time, true);
+		            }
+		            day = newDay;
+		            time = newTime;
+	                venue.setAvailabilityAt(day, time, false);
+	                lecturer.setAvailabilityAt(day, time, false);
+		            System.out.println("hish.");
+	            } else {
+	                System.out.println("Cannot change schedule.");
+	            }
+	        } else {
+		        day = newDay;
+		        time = newTime;
+	        }
         } catch (Exception e) {
             System.out.println("failed!");
         }

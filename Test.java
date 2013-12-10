@@ -49,10 +49,12 @@ public class Test {
             s.generateSchedule(true);
             System.out.println(s);
         }
+	    sb.sections.get(0).setDayAndTime(1,0);
+	    System.out.println(sb.sections.get(0));
 
         JFrame frame = new JFrame("Time Table Selector");
-        BooleanTable panel = new BooleanTable(sb.sections.get(0).getDay(), sb.sections.get(0).getTime(), sb.getAvailableSlots(sb.sections.get(0).getLecturer(), sb.sections.get(0).getVenue()));
-//        BooleanTable panel = new BooleanTable(-1, -1, sb.lecturers.get(4).getAvailability());
+	    TimePicker panel = new TimePicker(sb.sections.get(0).getDay(), sb.sections.get(0).getTime(), sb.getAvailableSlots(sb.sections.get(0).getLecturer(), sb.sections.get(0).getVenue()));
+	    //TimePicker panel = new TimePicker(sb.lecturers.get(4).getAvailability());
         panel.setSize(75);
         panel.obeyConflict(true);
         frame.setContentPane(panel);
