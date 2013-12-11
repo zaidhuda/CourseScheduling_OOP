@@ -91,6 +91,13 @@ public class Lecturer extends Support {
         return this.name.equalsIgnoreCase(that.name);
     }
 
+	public String[] detailsArray(){
+		String[] str = new String[2];
+		str[0] = getName();
+		str[1] = getSpecializations().toString();
+		return str;
+	}
+
     public String getDetails() {
         return getName() + ";" + getSpecializations() + ";" + getAvailability_inWords();
     }

@@ -5,7 +5,9 @@ import courseschedule.Lecturer;
 import courseschedule.Section;
 import courseschedule.Venue;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Comparator;
+import java.util.Objects;
 
 /**
  * Created by Diaz
@@ -88,6 +90,33 @@ public class ScheduleBuilder {
             }
         if (!exist) venues.add(o);
     }
+
+	public String[][] getCourses(){
+		String[][] str = new String[courses.size()][];
+		for (int i=0;i<courses.size();i++){
+			String[] arr = courses.get(i).detailsArray();
+			str[i] = arr;
+		}
+		return str;
+	}
+
+	public String[][] getLecturers(){
+		String[][] str = new String[lecturers.size()][];
+		for (int i=0;i<lecturers.size();i++){
+			String[] arr = lecturers.get(i).detailsArray();
+			str[i] = arr;
+		}
+		return str;
+	}
+
+	public String[][] getVenues(){
+		String[][] str = new String[venues.size()][];
+		for (int i=0;i<venues.size();i++){
+			String[] arr = venues.get(i).detailsArray();
+			str[i] = arr;
+		}
+		return str;
+	}
 
     public void remove(Course o) {
         ArrayList<Section> tempSections = new ArrayList<>();

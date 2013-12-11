@@ -87,6 +87,14 @@ public class Venue extends Support {
         return this.name.equalsIgnoreCase(that.name);
     }
 
+	public String[] detailsArray(){
+		String[] str = new String[3];
+		str[0] = getName();
+		str[1] = getCourses().toString();
+		str[2] = Integer.toString(getStudentLimit());
+		return str;
+	}
+
     public String getDetails() {
         return getName() + ";" + getCourses() + ";" + getAvailability_inWords() + ";" + getStudentLimit();
     }
