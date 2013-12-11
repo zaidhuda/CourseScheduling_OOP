@@ -24,17 +24,18 @@
 //|_______________________              |
 //+-------------------------------------+
 
-import courseschedule.*;
+import courseschedule.Section;
+import courseschedule.util.ScheduleBuilder;
+import courseschedule.util.ScheduleFiling;
 import javax.swing.*;
-import javax.swing.event.AncestorEvent;
-import javax.swing.event.AncestorListener;
 
 public class Test {
     public static final ScheduleBuilder sb = new ScheduleBuilder();
     public static final ScheduleFiling sf = new ScheduleFiling(sb);
 
     public static void main(String[] args) {
-        sf.load();
+	    if (JOptionPane.showConfirmDialog(null, "Load?") == 0)
+            sf.load();
 
 	    //sb.generateSections(true);
 	    //for (Section s : sb.sections) {
@@ -42,25 +43,15 @@ public class Test {
          //   System.out.println(s);
 	    //}
 	    //sb.sections.get(0).setDayAndTime(1,2);
-	    sb.forceReSchedule(1, 1, sb.sections.get(0), sb.sections);
+	    //sb.forceReSchedule(1, 1, sb.sections.get(0), sb.sections);
 	    //System.out.println(sb.sections.get(0));
+	    //sb.remove(sb.courses.get(1));
+	    for (Section s : sb.sections) {
+	       System.out.println(s);
+	    }
+	    //System.out.println(sb.lecturers.get(2));
 
-	    //System.out.println(sb.getAssignedLecturers(sb.sections.get(1)));
-	    //System.out.println(sb.getAssignedVenues(sb.sections.get(1)));
-	    System.out.println(sb.getClassAt(1, 1, sb.lecturers.get(1), sb.sections));
-	    System.out.println(sb.getClassAt(1, 1, sb.venues.get(1), sb.sections));
-	    JFrame frame = new JFrame("Time Table Selector");
-	    Section s = sb.sections.get(5);
-	    //TimePicker panel = new TimePicker(s.getDay(), s.getTime(), sb.getAvailableSlots(s.getLecturer(),s.getVenue()));
-	    TimePicker panel = new TimePicker(sb.lecturers.get(4).getAvailability());
-        panel.setSize(75);
-        panel.obeyConflict(true);
-        frame.setContentPane(panel);
-        frame.pack();
-        frame.setLocationRelativeTo(null);
-        frame.setVisible(true);
-        frame.setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
-
-		sf.save();
+	    if (JOptionPane.showConfirmDialog(null, "Save?") == 0)
+		    sf.save();
     }
 }

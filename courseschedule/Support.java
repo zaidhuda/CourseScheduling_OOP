@@ -59,7 +59,7 @@ abstract class Support {
      *
      * @param arg the course code to be removed from courses array list.
      */
-    public void removeCourse(String arg) throws Exception {
+    public void removeCourse(String arg) {
         arg = arg.replaceAll("\\s", "").toUpperCase();
         courses.remove(arg);
     }
@@ -69,7 +69,7 @@ abstract class Support {
      *
      * @param args the course codes to be removed from courses array list.
      */
-    public void removeCourses(ArrayList<String> args) throws Exception {
+    public void removeCourses(ArrayList<String> args) {
         for (String arg : args) {
             removeCourse(arg);
         }

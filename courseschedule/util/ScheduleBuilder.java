@@ -1,5 +1,9 @@
-package courseschedule;
+package courseschedule.util;
 
+import courseschedule.Course;
+import courseschedule.Lecturer;
+import courseschedule.Section;
+import courseschedule.Venue;
 import java.util.ArrayList;
 import java.util.Comparator;
 
@@ -90,6 +94,12 @@ public class ScheduleBuilder {
         for (Section s : sections)
             if (s.getCourse().equals(o))
                 tempSections.add(s);
+	    for (Lecturer l : lecturers)
+		    if (l.getCourses().contains(o.getCode()))
+			    l.removeCourse(o.getCode());
+	    for (Venue v : venues)
+		    if (v.getCourses().contains(o.getCode()))
+			    v.removeCourse(o.getCode());
         sections.removeAll(tempSections);
         courses.remove(o);
     }
