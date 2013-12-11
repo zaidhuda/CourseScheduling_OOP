@@ -20,6 +20,7 @@ public class TimePicker extends JPanel {
     private int day = -1;
     private int time = -1;
     private int [][] slots = null;
+    //
 
     private boolean[][] availability;
     private boolean selectMany;
