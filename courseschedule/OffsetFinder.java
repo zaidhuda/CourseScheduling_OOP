@@ -1,9 +1,6 @@
 package courseschedule;
 
-import javax.swing.*;
-import java.awt.*;
-import java.awt.geom.Arc2D;
-import java.util.Arrays;
+import javax.swing.JComponent;
 
 /**
  * Created by Diaz
@@ -19,8 +16,8 @@ public class OffsetFinder {
 
 	public OffsetFinder(String[][] theTable, JComponent theContainer){
 		if (theContainer != null) theContainerSize = theContainer.getWidth();
-		for (int i=0;i<theTable.length;i++){
-			findWidth(theTable[i]);
+		for (String[] str : theTable){
+			findWidth(str);
 		}
 		SIZE = width.length;
 		findOffset();
@@ -47,7 +44,6 @@ public class OffsetFinder {
 		int total = 0;
 		double[] size = new double[SIZE];
 		offset = new double[SIZE];
-		theContainerSize = (double) 900;
 		for (int i : width)
 			total += i;
 		for (int i=0;i<SIZE;i++){
@@ -57,6 +53,8 @@ public class OffsetFinder {
 		for (int i=0;i<SIZE;i++){
 			for(int j=0;j<i;j++)
 				offset[i] += size[j];
+			if (offset[i] < 0)
+				offset[i] = 0.0;
 		}
 	}
 

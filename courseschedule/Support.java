@@ -136,6 +136,18 @@ abstract class Support {
         return Arrays.deepToString(availability);
     }
 
+	/**
+	 * Returns string array name and courses list.
+	 *
+	 * @return str String array
+	 */
+	public String[] detailsArray(){
+		String[] str = new String[2];
+		str[0] = getName();
+		str[1] = getCourses().toString();
+		return str;
+	}
+
     /**
      * Return name and courses array list as string.
      *
