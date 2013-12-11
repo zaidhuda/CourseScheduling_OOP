@@ -18,7 +18,7 @@ public class OffsetFinder {
 	private double theContainerSize = 0.0;
 
 	public OffsetFinder(String[][] theTable, JComponent theContainer){
-		//theContainerSize = theContainer.size();
+		if (theContainer != null) theContainerSize = theContainer.getWidth();
 		for (int i=0;i<theTable.length;i++){
 			findWidth(theTable[i]);
 		}
@@ -27,7 +27,7 @@ public class OffsetFinder {
 	}
 
 	public OffsetFinder(String[] theStrings, JComponent theContainer){
-		//theContainerSize = theContainer.size();
+		if (theContainer != null) theContainerSize = theContainer.getWidth();
 		findWidth(theStrings);
 		SIZE = width.length;
 		findOffset();

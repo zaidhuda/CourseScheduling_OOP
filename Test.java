@@ -40,16 +40,11 @@ public class Test {
 	    //if (JOptionPane.showConfirmDialog(null, "Load?") == 0)
             sf.load();
 
-
-	    String[][] str = new String[sb.courses.size()][];
-	    for (int i=0;i<sb.courses.size();i++){
-		    String[] arr = sb.courses.get(i).detailsArray();
-		    System.out.println(Arrays.toString(arr));
-		    str[i] = arr;
-	    }
-
-
-	    OffsetFinder of = new OffsetFinder(str, null);
+	    OffsetFinder of = new OffsetFinder(sb.getCourses(), null);
+	    System.out.println(Arrays.toString(of.getOffset()));
+	    of = new OffsetFinder(sb.getVenues(), null);
+	    System.out.println(Arrays.toString(of.getOffset()));
+	    of = new OffsetFinder(sb.getLecturers(), null);
 	    System.out.println(Arrays.toString(of.getOffset()));
 
 	    //sb.generateSections(true);
