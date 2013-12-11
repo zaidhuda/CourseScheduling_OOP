@@ -13,20 +13,27 @@ import java.util.Arrays;
  */
 public class OffsetFinder {
 	private int[] width = null;
+	private int SIZE = -1;
 	private double[] offset = null;
-	private double theObjectSize = 0.0;
+	private double theContainerSize = 0.0;
 
-	public OffsetFinder(String[][] theTable, JComponent theObject){
+	public OffsetFinder(String[][] theTable, JComponent theContainer){
+		//theContainerSize = theContainer.size();
 		for (int i=0;i<theTable.length;i++){
-			findWidth(theTable[i], theObject);
+			findWidth(theTable[i]);
 		}
+		SIZE = width.length;
+		findOffset();
 	}
 
-	public OffsetFinder(String[] theStrings, JComponent theObject){
-		findWidth(theStrings, theObject);
+	public OffsetFinder(String[] theStrings, JComponent theContainer){
+		//theContainerSize = theContainer.size();
+		findWidth(theStrings);
+		SIZE = width.length;
+		findOffset();
 	}
 
-	private void findWidth(String[] theTable, JComponent theObject){
+	private void findWidth(String[] theTable){
 		if (width == null) width = new int[theTable.length];
 		for (int i=0;i<theTable.length;i++){
 			int length = theTable[i].length();
@@ -36,23 +43,24 @@ public class OffsetFinder {
 		}
 	}
 
-	public double[] getOffset(){
-		int SIZE = width.length;
+	public void findOffset(){
 		int total = 0;
 		double[] size = new double[SIZE];
 		offset = new double[SIZE];
-		theObjectSize = (double) 900;
+		theContainerSize = (double) 900;
 		for (int i : width)
 			total += i;
 		for (int i=0;i<SIZE;i++){
-			size[i] = width[i]*theObjectSize/total;
+			size[i] = width[i]*theContainerSize/total;
 			offset[i] = size[i]/2-width[i]/2;
 		}
 		for (int i=0;i<SIZE;i++){
 			for(int j=0;j<i;j++)
 				offset[i] += size[j];
 		}
+	}
 
+	public double[] getOffset(){
 		return offset;
 	}
 
