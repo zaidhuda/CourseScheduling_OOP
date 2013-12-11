@@ -62,7 +62,7 @@ public class Test {
 	    }
 
 	    JFrame frame = new JFrame("Hweh");
-	    Panel panel = new Panel(sb.getCourses());
+	    Panel panel = new Panel(sb.getLecturers());
 	    panel.setPreferredSize(new Dimension(800, 300));
 	    frame.setContentPane(panel);
 	    frame.pack();
@@ -77,29 +77,21 @@ public class Test {
 
 	public static class Panel extends JPanel {
 		String[][] str;
-		double[] offset;
 		public Panel(String[][] str){
 			super();
 			this.str = str;
-			System.out.println(this.getWidth());
 		}
 		public void paint(Graphics g){
 			Graphics2D g2d = (Graphics2D)g;
-
 			Font font = new Font(Font.SERIF, Font.PLAIN, 20);
 			g2d.setFont(font);
-			FontMetrics fm = getFontMetrics(font);
-
 			g2d.setRenderingHint(RenderingHints.KEY_TEXT_ANTIALIASING, RenderingHints.VALUE_TEXT_ANTIALIAS_LCD_HRGB);
 
 			OffsetFinder of = new OffsetFinder(str, this);
-			offset = of.getOffset();
-			System.out.println(this.getWidth());
 
 			for (int i=0;i<str.length;i++)
 				for (int j=0;j<str[i].length;++j){
-					int strHalfWidth = (int) offset[j] - fm.stringWidth(str[i][j])/2;
-					g2d.drawString(str[i][j], strHalfWidth, 50*(i+1));
+					g2d.drawString(str[i][j], of.getOffset(this, font, j, str[i][j]), 50*(i+1));
 				}
 		}
 	}

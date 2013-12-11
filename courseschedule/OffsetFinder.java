@@ -68,4 +68,9 @@ public class OffsetFinder {
 	public double[] getOffset(){
 		return offset;
 	}
+
+	public int getOffset(JComponent theContainer, Font font, int index, String str){
+		FontMetrics fm = theContainer.getFontMetrics(font);
+		return (int) offset[index]-fm.stringWidth(str)/2;
+	}
 }
