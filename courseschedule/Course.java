@@ -23,6 +23,8 @@
 
 package courseschedule;
 
+import java.util.ArrayList;
+
 public class Course {
     private String code, title = null;
     private int credit = 0, requiredSections = 1;
@@ -102,6 +104,15 @@ public class Course {
     public String getDetails() {
         return getCode() + ";" + getTitle() + ";" + getCredit() + ";" + getRequiredSections();
     }
+
+	public String[] detailsArray(){
+		String[] str = new String[4];
+		str[0] = getCode();
+		str[1] = getTitle();
+		str[2] = Integer.toString(getCredit());
+		str[3] = Integer.toString(getRequiredSections());
+		return str;
+	}
 
     public String toString() {
         return getCode() + " " + getTitle() + " " + getCredit();

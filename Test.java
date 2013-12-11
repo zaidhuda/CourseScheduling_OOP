@@ -24,18 +24,33 @@
 //|_______________________              |
 //+-------------------------------------+
 
+import courseschedule.Course;
+import courseschedule.OffsetFinder;
 import courseschedule.Section;
 import courseschedule.util.ScheduleBuilder;
 import courseschedule.util.ScheduleFiling;
 import javax.swing.*;
+import java.util.Arrays;
 
 public class Test {
     public static final ScheduleBuilder sb = new ScheduleBuilder();
     public static final ScheduleFiling sf = new ScheduleFiling(sb);
 
     public static void main(String[] args) {
-	    if (JOptionPane.showConfirmDialog(null, "Load?") == 0)
+	    //if (JOptionPane.showConfirmDialog(null, "Load?") == 0)
             sf.load();
+
+
+	    String[][] str = new String[sb.courses.size()][];
+	    for (int i=0;i<sb.courses.size();i++){
+		    String[] arr = sb.courses.get(i).detailsArray();
+		    System.out.println(Arrays.toString(arr));
+		    str[i] = arr;
+	    }
+
+
+	    OffsetFinder of = new OffsetFinder(str, null);
+	    System.out.println(Arrays.toString(of.getOffset()));
 
 	    //sb.generateSections(true);
 	    //for (Section s : sb.sections) {
@@ -51,7 +66,7 @@ public class Test {
 	    }
 	    //System.out.println(sb.lecturers.get(2));
 
-	    if (JOptionPane.showConfirmDialog(null, "Save?") == 0)
-		    sf.save();
+	    //if (JOptionPane.showConfirmDialog(null, "Save?") == 0)
+		    //sf.save();
     }
 }

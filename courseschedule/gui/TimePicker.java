@@ -1,9 +1,6 @@
 package courseschedule.gui;
 
-import javax.swing.JButton;
-import javax.swing.JLabel;
-import javax.swing.JOptionPane;
-import javax.swing.JPanel;
+import javax.swing.*;
 import java.awt.BorderLayout;
 import java.awt.Color;
 import java.awt.Cursor;
@@ -60,7 +57,6 @@ public class TimePicker extends JPanel {
     private void drawTable() {
 
         button = new SButton[ROW * COL];
-
 	    String[] str = {"<html><center>Monday<br>Wednesday</center></html>",
 			            "<html><center>Tuesday<br>Thursday</center></html>" };
 
