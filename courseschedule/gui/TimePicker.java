@@ -1,4 +1,4 @@
-package courseschedule.gui;
+// package courseschedule.gui;
 
 import javax.swing.JButton;
 import javax.swing.JLabel;
