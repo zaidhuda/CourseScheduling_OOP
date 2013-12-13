@@ -230,7 +230,7 @@ public class Section {
 
     public void generateSchedule(boolean random) {
 	    if (venue != null && lecturer != null) {
-		    boolean lecturerOccupied, venueUsed;
+		    boolean lecturerOccupied, venueUsed, lecturerFound = true, venueFound = true;
             String str = "Success. ";
 
             if (day != -1 || time != -1)
@@ -247,6 +247,10 @@ public class Section {
                     if (random) i -= 12;
                     if (!setDayAndTime(i)) {
                         str = "Failed. ";
+	                    if(!venueFound)
+		                    str += "Not enough venue for " + course.getCode();
+	                    if(!lecturerFound)
+		                    str += "Not enough lecturer for " + course.getCode();
                         setNote(str);
                         return;
                     }
@@ -254,6 +258,10 @@ public class Section {
 
                 lecturerOccupied = !lecturer.isAvailableAt(day, time);
                 venueUsed = !venue.isAvailableAt(day, time);
+
+	            if (!lecturerOccupied) lecturerFound = true;
+	            if (!venueUsed) venueFound = true;
+
                 count++;
 
             } while (lecturerOccupied || venueUsed);
