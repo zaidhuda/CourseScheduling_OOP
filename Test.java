@@ -24,14 +24,14 @@
 //|_______________________              |
 //+-------------------------------------+
 
-import courseschedule.OffsetFinder;
+import courseschedule.gui.TimePicker;
+import courseschedule.util.OffsetFinder;
 import courseschedule.Section;
 import courseschedule.util.ScheduleBuilder;
 import courseschedule.util.ScheduleFiling;
 
 import javax.swing.*;
 import java.awt.*;
-import java.util.Arrays;
 
 public class Test {
     public static final ScheduleBuilder sb = new ScheduleBuilder();
@@ -63,6 +63,11 @@ public class Test {
 
 	    JFrame frame = new JFrame("Hweh");
 	    Panel panel = new Panel(sb.getLecturers());
+
+	    //Section s = sb.sections.get(1);
+	    //TimePicker tp = new TimePicker(s.getDay(), s.getTime(), sb.getAvailableSlots(s.getLecturer(), s.getVenue()));
+	    //tp.setSPACING(50);
+	    //tp.setSize(150);
 	    panel.setPreferredSize(new Dimension(800, 300));
 	    frame.setContentPane(panel);
 	    frame.pack();
@@ -72,7 +77,7 @@ public class Test {
 	    //System.out.println(sb.lecturers.get(2));
 
 	    //if (JOptionPane.showConfirmDialog(null, "Save?") == 0)
-		    //sf.save();
+		    sf.save();
     }
 
 	public static class Panel extends JPanel {
@@ -91,7 +96,7 @@ public class Test {
 
 			for (int i=0;i<str.length;i++)
 				for (int j=0;j<str[i].length;++j){
-					g2d.drawString(str[i][j], of.getOffset(this, font, j, str[i][j]), 50*(i+1));
+					g2d.drawString(str[i][j], of.getOffset(str[i][j], j, font), 50*(i+1));
 				}
 		}
 	}

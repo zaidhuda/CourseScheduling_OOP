@@ -49,7 +49,7 @@ public class ScheduleBuilder {
 
     }
 
-    private class CourseComparator implements Comparator<Section> {
+    private static class CourseComparator implements Comparator<Section> {
         public int compare(Section o1, Section o2) {
             final int diff = o1.getCourse().getCode().compareTo(o2.getCourse().getCode());
             if (diff == 0) {
@@ -145,7 +145,7 @@ public class ScheduleBuilder {
         venues.remove(o);
     }
 
-    public int[][] getAvailableSlots(Lecturer lecturer, Venue venue) {
+    public static int[][] getAvailableSlots(Lecturer lecturer, Venue venue) {
         final int MAX_ROW = 2, MAX_COL = 6;
         int[][] newAvailability = new int[MAX_ROW][MAX_COL];
 
@@ -164,7 +164,7 @@ public class ScheduleBuilder {
         return newAvailability;
     }
 
-	public Section getClassAt(int day, int time, Lecturer theLecturer, ArrayList<Section> sections){
+	public static Section getClassAt(int day, int time, Lecturer theLecturer, ArrayList<Section> sections){
 		for(Section s : sections){
 			boolean sameTime = (day == s.getDay() && time == s.getTime()),
 					sameLect = s.getLecturer().equals(theLecturer);
@@ -175,7 +175,7 @@ public class ScheduleBuilder {
 		return null;
 	}
 
-	public Section getClassAt(int day, int time, Venue theVenue, ArrayList<Section> sections){
+	public static Section getClassAt(int day, int time, Venue theVenue, ArrayList<Section> sections){
 		for(Section s : sections){
 			boolean sameTime = (day == s.getDay() && time == s.getTime()),
 					sameVenue = s.getVenue().equals(theVenue);
@@ -186,22 +186,21 @@ public class ScheduleBuilder {
 		return null;
 	}
 
-	public void forceReSchedule(int day, int time, Section theSection, ArrayList<Section> sections){
+	public static void forceReSchedule(int newDay, int newTime, Section theSection, ArrayList<Section> sections){
 		Lecturer theLecturer = theSection.getLecturer();
 		Venue theVenue = theSection.getVenue();
 		for (Section s : sections){
-			int t = s.getTime(), d = s.getDay();
-			if (!s.equals(theSection) && (time == t && d == day)) {
+			if (!s.equals(theSection) && (newDay == s.getDay() && newTime == s.getTime())) {
 				Lecturer l = s.getLecturer();
 				Venue v = s.getVenue();
 
 				if (l.equals(theLecturer))
-					s.getLecturer().setAvailabilityAt(day, time, true);
+					s.getLecturer().setAvailabilityAt(newDay, newTime, true);
 				if (v.equals(theVenue))
-					s.getVenue().setAvailabilityAt(day, time, true);
+					s.getVenue().setAvailabilityAt(newDay, newTime, true);
 
 				s.setDayAndTime(-1, -1);
-				theSection.setDayAndTime(day, time);
+				theSection.setDayAndTime(newDay, newTime);
 				s.generateSchedule(true);
 				return;
 			}

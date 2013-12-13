@@ -1,9 +1,6 @@
 package courseschedule.gui;
 
-import javax.swing.JButton;
-import javax.swing.JLabel;
-import javax.swing.JOptionPane;
-import javax.swing.JPanel;
+import javax.swing.*;
 import java.awt.BorderLayout;
 import java.awt.Color;
 import java.awt.Cursor;
@@ -19,6 +16,7 @@ public class TimePicker extends JPanel {
     private int SIZE = 100;
     private int day = -1;
     private int time = -1;
+	public int SPACE = 0;
     private int [][] slots = null;
 
     private boolean[][] availability;
@@ -31,14 +29,14 @@ public class TimePicker extends JPanel {
     private ButtonListener bl = new ButtonListener();
 
     public TimePicker(boolean[][] availability) {
-        constructor(day, time, availability, null);
+        this(-1, -1, availability, null);
     }
 
     public TimePicker(int day, int time, int[][] slots) {
-        constructor(day, time, null, slots);
+        this(day, time, null, slots);
     }
 
-    private void constructor(int day, int time, boolean[][] availability, int[][] slots){
+    public TimePicker(int day, int time, boolean[][] availability, int[][] slots){
         this.day = day;
         this.time = time;
 
@@ -57,7 +55,7 @@ public class TimePicker extends JPanel {
         drawTable();
     }
 
-    private void drawTable() {
+    public void drawTable() {
 
         button = new SButton[ROW * COL];
 	    String[] str = {"<html><center>Monday<br>Wednesday</center></html>",
@@ -88,7 +86,7 @@ public class TimePicker extends JPanel {
             }
         }
 
-        if (!selectMany){
+        if (!selectMany && (day != -1 && time!=-1)){
             button[(day * 6) + time].putClientProperty("original", true);
             button[(day * 6) + time].setBackground(Color.green);
             button[(day * 6) + time].setEnabled(false);
@@ -115,6 +113,10 @@ public class TimePicker extends JPanel {
         }
         btn.putClientProperty("availability", i);
     }
+
+	public void setSPACING(int newSpacing){
+		SIZE = newSpacing;
+	}
 
 	private class SButton extends JButton {
 		public SButton(){
