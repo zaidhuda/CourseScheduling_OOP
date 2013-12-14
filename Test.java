@@ -24,14 +24,14 @@
 //|_______________________              |
 //+-------------------------------------+
 
-import courseschedule.OffsetFinder;
+import courseschedule.gui.TimePicker;
+import courseschedule.util.OffsetFinder;
 import courseschedule.Section;
 import courseschedule.util.ScheduleBuilder;
 import courseschedule.util.ScheduleFiling;
 
 import javax.swing.*;
 import java.awt.*;
-import java.util.Arrays;
 
 public class Test {
     public static final ScheduleBuilder sb = new ScheduleBuilder();
@@ -62,7 +62,12 @@ public class Test {
 	    }
 
 	    JFrame frame = new JFrame("Hweh");
-	    Panel panel = new Panel(sb.getCourses());
+	    Panel panel = new Panel(sb.getLecturers());
+
+	    //Section s = sb.sections.get(1);
+	    //TimePicker tp = new TimePicker(s.getDay(), s.getTime(), sb.getAvailableSlots(s.getLecturer(), s.getVenue()));
+	    //tp.setSPACING(50);
+	    //tp.setSize(150);
 	    panel.setPreferredSize(new Dimension(800, 300));
 	    frame.setContentPane(panel);
 	    frame.pack();
@@ -72,34 +77,26 @@ public class Test {
 	    //System.out.println(sb.lecturers.get(2));
 
 	    //if (JOptionPane.showConfirmDialog(null, "Save?") == 0)
-		    //sf.save();
+		    sf.save();
     }
 
 	public static class Panel extends JPanel {
 		String[][] str;
-		double[] offset;
 		public Panel(String[][] str){
 			super();
 			this.str = str;
-			System.out.println(this.getWidth());
 		}
 		public void paint(Graphics g){
 			Graphics2D g2d = (Graphics2D)g;
-
 			Font font = new Font(Font.SERIF, Font.PLAIN, 20);
 			g2d.setFont(font);
-			FontMetrics fm = getFontMetrics(font);
-
 			g2d.setRenderingHint(RenderingHints.KEY_TEXT_ANTIALIASING, RenderingHints.VALUE_TEXT_ANTIALIAS_LCD_HRGB);
 
 			OffsetFinder of = new OffsetFinder(str, this);
-			offset = of.getOffset();
-			System.out.println(this.getWidth());
 
 			for (int i=0;i<str.length;i++)
 				for (int j=0;j<str[i].length;++j){
-					int strHalfWidth = (int) offset[j] - fm.stringWidth(str[i][j])/2;
-					g2d.drawString(str[i][j], strHalfWidth, 50*(i+1));
+					g2d.drawString(str[i][j], of.getOffset(str[i][j], j, font), 50*(i+1));
 				}
 		}
 	}
