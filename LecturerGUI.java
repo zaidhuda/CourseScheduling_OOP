@@ -37,6 +37,8 @@ public class LecturerGUI extends JPanel {
 
 	public LecturerGUI(Lecturer lecturer) {
 		this.lecturer = lecturer;
+		//if (!lecturer.getName().equals("TO BE DETERMINED")) this.lecturer = lecturer;
+		//else this.lecturer = new Lecturer();
 		setLayout(new BorderLayout());
 	}
 
@@ -140,7 +142,7 @@ public class LecturerGUI extends JPanel {
 
 				if(!(name.equals("")) && !(specialization.equals(""))) {
 					lecturer.setName(name);
-					lecturer.setCourses(specialization);
+					lecturer.setCourses(ScheduleBuilder.filterCodes(specialization));
 					sb.add(lecturer);
 				}
 
@@ -158,7 +160,7 @@ public class LecturerGUI extends JPanel {
 
 	public void setFrame(Frame frame) {
 		this.frame = frame;
-		this.sb = frame.sb;
+		sb = Frame.sb;
 
 		createTopPanel();
 		createMiddlePanel();
