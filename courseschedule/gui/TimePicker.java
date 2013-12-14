@@ -1,4 +1,4 @@
-package courseschedule.gui;
+// package courseschedule.gui;
 
 import javax.swing.*;
 import java.awt.BorderLayout;
@@ -18,6 +18,7 @@ public class TimePicker extends JPanel {
     private int time = -1;
 	public int SPACE = 0;
     private int [][] slots = null;
+    //
 
     private boolean[][] availability;
     private boolean selectMany;
