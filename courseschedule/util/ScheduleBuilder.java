@@ -5,6 +5,7 @@ import courseschedule.Lecturer;
 import courseschedule.Section;
 import courseschedule.Venue;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Comparator;
 
 /**
@@ -15,10 +16,10 @@ import java.util.Comparator;
  */
 public class ScheduleBuilder {
 
-    public ArrayList<Course> courses = new ArrayList<>();
-    public ArrayList<Lecturer> lecturers = new ArrayList<>();
-    public ArrayList<Venue> venues = new ArrayList<>();
-    public ArrayList<Section> sections = new ArrayList<>();
+    public static ArrayList<Course> courses = new ArrayList<>();
+    public static ArrayList<Lecturer> lecturers = new ArrayList<>();
+    public static ArrayList<Venue> venues = new ArrayList<>();
+    public static ArrayList<Section> sections = new ArrayList<>();
     public final CourseComparator courseComparator = new CourseComparator();
 
     public void generateSections(boolean generateSchedule) {
@@ -77,15 +78,15 @@ public class ScheduleBuilder {
                 break;
             }
         if (!exist) {
-        	ArrayList<String> tempCodes = getCourseCodes();
-        	ArrayList<String> newCodes = new ArrayList<>();
-        	for (String str : o.getCourses()) {
-        		if (tempCodes.contains(str))
-        			newCodes.add(str);
-        	}
-        	o.getCourses().clear();
-        	o.setCourses(newCodes);
         	lecturers.add(o);
+        } else {
+	        for (Section s : sections){
+		        if (s.getLecturer().equals(o)){
+			        if (!o.getCourses().contains(s.getCourse().getCode())){
+				        s.setLecturer(new Lecturer());
+			        }
+		        }
+	        }
         }
     }
 
@@ -97,18 +98,31 @@ public class ScheduleBuilder {
                 break;
             }
         if (!exist) {
-        	ArrayList<String> tempCodes = getCourseCodes();
-        	ArrayList<String> newCodes = new ArrayList<>();
-        	for (String str : o.getCourses()) {
-        		if (tempCodes.contains(str))
-        			newCodes.add(str);
-        	}
-        	o.setCourses(newCodes);
         	venues.add(o);
+        } else {
+	        for (Section s : sections){
+		        if (s.getVenue().equals(o)){
+			        if (!o.getCourses().contains(s.getCourse().getCode())){
+				        s.setVenue(new Venue());
+			        }
+		        }
+	        }
         }
     }
 
-    private ArrayList<String> getCourseCodes(){
+	public static ArrayList<String> filterCodes(String arg){
+		System.out.println(arg);
+		String[] strs = arg.replaceAll(" ", "").toUpperCase().split(",");
+		ArrayList<String> tempCodes = getCourseCodes();
+		ArrayList<String> newCodes = new ArrayList<>();
+		for (String str : Arrays.asList(strs)) {
+				if (tempCodes.contains(str))
+					newCodes.add(str);
+			}
+		return newCodes;
+	}
+
+    private static ArrayList<String> getCourseCodes(){
     	ArrayList<String> tempCodes = new ArrayList<>();
     	for (Course c :  courses) {
     		tempCodes.add(c.getCode());

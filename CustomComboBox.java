@@ -1,5 +1,5 @@
 import java.awt.*;
-import java.awt.event.*;
+import courseschedule.gui.*;
 import javax.swing.*;
 
 public class CustomComboBox extends JComboBox {

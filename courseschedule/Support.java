@@ -56,16 +56,15 @@ abstract class Support {
 
     public void setCourses(ArrayList<String> args){
         for (String arg : args) {            
-            arg.replaceAll(" ", "").split(",");
+            arg = arg.replaceAll("\\s", "").toUpperCase();
         }
-        courses = args;        
+        courses = args;
     }
 
 
     public void setCourses(String arg){
-        String[] str = null;
-        str = arg.replaceAll(" ", "").split(",");
-        courses = new ArrayList<String>(Arrays.asList(str));        
+        String[] str = arg.replaceAll("\\s", "").toUpperCase().split(",");
+        courses = new ArrayList<>(Arrays.asList(str));
     }
 
     /**

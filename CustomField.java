@@ -1,5 +1,6 @@
 import java.awt.*;
 import javax.swing.*;
+import courseschedule.gui.*;
 
 public class CustomField extends JTextField {
 	private CustomColour color = new CustomColour();
