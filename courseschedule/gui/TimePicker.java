@@ -1,19 +1,14 @@
-// package courseschedule.gui;
+package courseschedule.gui;
 
 import javax.swing.*;
-import java.awt.BorderLayout;
-import java.awt.Color;
-import java.awt.Cursor;
-import java.awt.Dimension;
-import java.awt.GridLayout;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
+import java.awt.*;
+import java.awt.event.*;
 import java.util.Arrays;
 
 public class TimePicker extends JPanel {
     private int ROW = 2;
     private int COL = 6;
-    private int SIZE = 100;
+    private int SIZE = 94;
     private int day = -1;
     private int time = -1;
 	public int SPACE = 0;
@@ -28,6 +23,9 @@ public class TimePicker extends JPanel {
     private SButton[] button = null;
 
     private ButtonListener bl = new ButtonListener();
+
+    private CustomFont font = new CustomFont();
+    private CustomColour color = new CustomColour();
 
     public TimePicker(boolean[][] availability) {
         this(-1, -1, availability, null);
@@ -59,31 +57,71 @@ public class TimePicker extends JPanel {
     public void drawTable() {
 
         button = new SButton[ROW * COL];
-	    String[] str = {"<html><center>Monday<br>Wednesday</center></html>",
-			            "<html><center>Tuesday<br>Thursday</center></html>" };
+	    String[] str = {"<html><p align=right>MONDAY<br>WEDNESDAY</p></html>",
+                        "<html><p align=right>TUESDAY<br>THURSDAY</p></html>",
+                        "0830",
+                        "1000",
+                        "1130",
+                        "1400",
+                        "1530",
+			            "1700" };
 
-        for (int i = 0; i < ROW; ++i) {
-	        JPanel p = new JPanel();
-	        p.setBackground(Color.darkGray);
-	        p.add(new JLabel(str[i]), BorderLayout.CENTER);
-	        add(p);
-            for (int j = 0; j < COL; ++j) {
-                int k = (i * 6) + j;
-                button[k] = new SButton();
-                button[k].putClientProperty("index", k);
-                button[k].setPreferredSize(new Dimension(SIZE, SIZE));
-                button[k].addActionListener(bl);
+        for (int i = 0; i < (ROW+1); ++i) {
+            JPanel rowPane = new JPanel();
+            rowPane.setLayout(new BoxLayout(rowPane, BoxLayout.LINE_AXIS));
+            if(i == 0) {
+                rowPane.add(Box.createRigidArea(new Dimension((SIZE-25),0)));
+                for(int j = 0; j<COL; j++) {
+                    JLabel timeLabel = new JLabel(str[j+2]);
+                    timeLabel.setPreferredSize(new Dimension(SIZE,(SIZE-65)));
+                    timeLabel.setMaximumSize(timeLabel.getPreferredSize());
+                    timeLabel.setMinimumSize(timeLabel.getPreferredSize());
+                    timeLabel.setVerticalAlignment(JLabel.BOTTOM);
+                    timeLabel.setFont(font.getFontAbel(18,-0.05));
+                    timeLabel.setForeground(color.getSilver());
+                    rowPane.add(timeLabel);
+                    if(j==2)
+                        rowPane.add(Box.createRigidArea(new Dimension(30,0)));
+                    else
+                        rowPane.add(Box.createRigidArea(new Dimension(3,0)));
+                }
+                rowPane.add(Box.createRigidArea(new Dimension((SIZE-25),0)));
+                add(rowPane);
+            }
+            else {
+                JLabel dayLabel = new JLabel(str[i-1]);
+                dayLabel.setPreferredSize(new Dimension((SIZE-25),SIZE));
+                dayLabel.setMaximumSize(dayLabel.getPreferredSize());
+                dayLabel.setMinimumSize(dayLabel.getPreferredSize());
+                dayLabel.setVerticalAlignment(JLabel.BOTTOM);
+                dayLabel.setVerticalTextPosition(JLabel.BOTTOM);
+                dayLabel.setForeground(color.getSilver());
+                // dayLabel.setFont(font.getFontAbel(15)); //SLOWS DOWN PERFORMANCE
+    	        rowPane.add(dayLabel);
 
-	            if (selectMany){
-		            setColor(button[k], availability[i][j]? 0 : 3);
-	            } else {
-		            setColor(button[k], slots[i][j]);
-	            }
-	            button[k].putClientProperty("original", false);
+                for (int j = 0; j < COL; ++j) {
+                    int k = ((i-1) * 6) + j;
+                    button[k] = new SButton();
+                    button[k].putClientProperty("index", k);
+                    button[k].addActionListener(bl);
 
-	            JPanel btnPane = new JPanel();
-                btnPane.add(button[k]);
-                add(btnPane);
+    	            if (selectMany){
+    		            setColor(button[k], availability[i-1][j]? 0 : 3);
+    	            } else {
+    		            setColor(button[k], slots[i-1][j]);
+    	            }
+    	            button[k].putClientProperty("original", false);
+
+                    rowPane.add(button[k]);
+
+                    if(j==2)
+                        rowPane.add(Box.createRigidArea(new Dimension(30,0)));
+                    else
+                        rowPane.add(Box.createRigidArea(new Dimension(3,0)));
+                }
+                rowPane.add(Box.createRigidArea(dayLabel.getPreferredSize()));
+                add(rowPane);
+                add(Box.createRigidArea(new Dimension(0,3)));
             }
         }
 
@@ -93,7 +131,7 @@ public class TimePicker extends JPanel {
             button[(day * 6) + time].setEnabled(false);
         }
 
-        setLayout(new GridLayout(ROW, COL));
+        setLayout(new BoxLayout(this, BoxLayout.PAGE_AXIS));
     }
 
     private void setColor(JButton btn, int i){
@@ -101,17 +139,21 @@ public class TimePicker extends JPanel {
         switch (i){
             case 0:
                 btn.setBackground(Color.white);
+                btn.setText("YES");
                 break;
             case 1:
                 btn.setBackground(Color.orange);
+                btn.setText("NO");
                 break;
             case 2:
                 btn.setBackground(Color.cyan);
                 break;
             case 3:
-                btn.setBackground(Color.black);
+                btn.setBackground(color.getSilverGray());
+                btn.setText("CLASS");
                 break;
         }
+        btn.setForeground(Color.GRAY.brighter());
         btn.putClientProperty("availability", i);
     }
 
@@ -125,6 +167,21 @@ public class TimePicker extends JPanel {
 			setBorderPainted(false);
 			setCursor(new Cursor(Cursor.HAND_CURSOR));
 		}
+
+        @Override
+        public Dimension getPreferredSize() {
+            return new Dimension(SIZE,SIZE);
+        }
+
+        @Override
+        public Dimension getMinimumSize() {
+            return getPreferredSize();
+        }
+
+        @Override
+        public Dimension getMaximumSize() {
+            return getPreferredSize();
+        }
 	}
 
     private class ButtonListener implements ActionListener {

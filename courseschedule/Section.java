@@ -312,6 +312,20 @@ public class Section {
                 getCourse().getCode() + ";" + getLecturer().getName() + ";" + getVenue().getName() + ";" + getNote();
     }
 
+    public String[] detailsArray() {
+        String[] str = new String[9];
+        str[0] = getCourse().getCode();
+        str[1] = getSectionNum();
+        str[2] = getCourse().getTitle();
+        str[3] = Integer.toString(getCourse().getCredit());
+        str[4] = getDay_inWords();
+        str[5] = getTime_inWords();
+        str[6] = getLecturer().getName();
+        str[7] = getVenue().getName();
+        str[8] = Integer.toString(getStudentLimit());
+        return str;
+    }
+
     public String toString() {
         return getSectionNum() + ", " + getCourse().getCode() + ", " + getLecturer().getName() + ", " + getVenue().getName() + ", " + getDay_inWords() + ", " + getTime_inWords() + ", " + getNote();
     }

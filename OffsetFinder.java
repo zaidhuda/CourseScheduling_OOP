@@ -1,4 +1,4 @@
-package courseschedule.util;
+// package courseschedule.util;
 
 import javax.swing.JComponent;
 import java.awt.*;
