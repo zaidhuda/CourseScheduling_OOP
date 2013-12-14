@@ -1,16 +1,17 @@
+package courseschedule.gui;
+
 import java.awt.*;
 import javax.swing.*;
 import courseschedule.gui.*;
 
 public class CustomField extends JTextField {
-	private CustomColour color = new CustomColour();
 	private CustomFont font = new CustomFont();
 
 	public CustomField(){
 		super();
 
 		// set background colour
-		setBackground(color.getSilverGray());
+		setBackground(CustomColour.silvergray);
 
 		// creates outer border and inner border(for indentation)
 		setBorder(BorderFactory.createCompoundBorder(BorderFactory.createEmptyBorder(),BorderFactory.createEmptyBorder(10,10,10,10)));
@@ -20,7 +21,7 @@ public class CustomField extends JTextField {
 
 		// set text font & colour
 		setFont(font.getFontAbel(25,-0.05));
-		setForeground(color.getSilverClouds());
+		setForeground(CustomColour.silverclouds);
 	}
 
 	@Override

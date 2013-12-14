@@ -1,7 +1,7 @@
+package courseschedule.gui;
+
 import java.awt.*;
-import java.awt.event.*;
 import javax.swing.*;
-import courseschedule.gui.*;
 
 public class TableButton extends JButton {
 
@@ -9,7 +9,6 @@ public class TableButton extends JButton {
     private double[] columnWidth;
     private Dimension dimension = new Dimension(900,40);
     private CustomFont font = new CustomFont();
-    private CustomColour color = new CustomColour();
     private Color colour;
 
     /*
@@ -21,7 +20,7 @@ public class TableButton extends JButton {
         enableEvents(AWTEvent.MOUSE_EVENT_MASK);
         setContentAreaFilled(false);
         setBorder(BorderFactory.createEmptyBorder());
-        setForeground(color.getNightBlue());
+        setForeground(CustomColour.nightblue);
         setFont(font.getFontAbel(15));
         setCursor(new Cursor(Cursor.HAND_CURSOR));
     }

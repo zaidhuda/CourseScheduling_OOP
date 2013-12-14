@@ -1,3 +1,5 @@
+package courseschedule.gui;
+
 import java.awt.*;
 import java.awt.event.*;
 import javax.swing.*;
@@ -8,7 +10,6 @@ public class SquareButton extends JComponent {
     private String label1, label2;                      // The Button's text.
     private Font[] font = new Font[2];
     private Color color;
-    private CustomColour custom = new CustomColour();
     protected boolean hovered = false; // true if the mouse is over the button.
 
     /*
@@ -133,7 +134,6 @@ public class SquareButton extends JComponent {
      */
     @Override
     public void processMouseEvent(MouseEvent e) {
-        Graphics g;
         switch (e.getID()) {
             case MouseEvent.MOUSE_PRESSED:
 
@@ -157,7 +157,7 @@ public class SquareButton extends JComponent {
                 break;
 
             case MouseEvent.MOUSE_EXITED:
-                if (hovered == true) {
+                if (hovered) {
                     // Cancel! Don't send action event.
                     hovered = false;
 

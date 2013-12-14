@@ -1,8 +1,7 @@
 package courseschedule.util;
 
-import javax.swing.JComponent;
+import javax.swing.*;
 import java.awt.*;
-import java.util.Arrays;
 
 /**
  * Created by Diaz
@@ -16,20 +15,20 @@ public class OffsetFinder {
 	private double[] offset = null;
 	private JComponent theContainer;
 
-	public OffsetFinder(String[][] theTable, JComponent theContainer){
+	public OffsetFinder(String[][] theTable, JComponent theContainer) {
 		this.theContainer = theContainer;
 		findWidth(theTable);
 		findOffset();
 	}
 
-	public OffsetFinder(String[] theStrings, JComponent theContainer){
+	public OffsetFinder(String[] theStrings, JComponent theContainer) {
 		this.theContainer = theContainer;
 		String[][] theTable = new String[1][theStrings.length];
 		findWidth(theTable);
 		findOffset();
 	}
 
-	private void findWidth(String[][] theTable){
+	private void findWidth(String[][] theTable) {
 		max = new int[theTable[0].length];
 		for (String[] aTheTable : theTable) {
 			for (int j = 0; j < aTheTable.length; j++) {
@@ -45,21 +44,21 @@ public class OffsetFinder {
 		SIZE = max.length;
 	}
 
-	public void findOffset(){
+	public void findOffset() {
 		int theContainerSize = theContainer.getWidth();
-		if(theContainerSize == 0)
+		if (theContainerSize == 0)
 			theContainerSize = (int) theContainer.getPreferredSize().getWidth();
 
 		int total = 0;
 		offset = new double[SIZE];
 		for (int i : max)
 			total += i;
-		for (int j=0;j<SIZE;j++){
-			max[j] *= theContainerSize /total;
-			offset[j] = max[j]/2;
+		for (int j = 0; j < SIZE; j++) {
+			max[j] *= theContainerSize / total;
+			offset[j] = max[j] / 2;
 		}
-		for (int i=0;i<SIZE;i++){
-			for(int j=0;j<i;j++){
+		for (int i = 0; i < SIZE; i++) {
+			for (int j = 0; j < i; j++) {
 				offset[i] += max[j];
 			}
 			if (offset[i] < 0)
@@ -67,12 +66,12 @@ public class OffsetFinder {
 		}
 	}
 
-	public double[] getOffset(){
+	public double[] getOffset() {
 		return offset;
 	}
 
-	public int getOffset(String str, int index, Font font){
+	public int getOffset(String str, int index, Font font) {
 		FontMetrics fm = theContainer.getFontMetrics(font);
-		return (int) offset[index]-fm.stringWidth(str)/2;
+		return (int) offset[index] - fm.stringWidth(str) / 2;
 	}
 }

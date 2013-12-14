@@ -1,16 +1,16 @@
+package courseschedule.gui;
+
 import java.awt.*;
-import courseschedule.gui.*;
 import javax.swing.*;
 
 public class CustomComboBox extends JComboBox {
 	private CustomFont font = new CustomFont();
-	private CustomColour color = new CustomColour();
 
 	public CustomComboBox(String[] s) {
 		super(s);
 		setRenderer(new ComboBoxRenderer());
-		setBackground(color.getSilverGray());
-		setForeground(color.getSilverClouds());
+		setBackground(CustomColour.silvergray);
+		setForeground(CustomColour.silverclouds);
 		setFont(font.getFontPTSans(15,-0.05));
 		setMaximumRowCount(3);
 	}

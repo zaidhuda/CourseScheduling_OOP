@@ -1,3 +1,5 @@
+package courseschedule.gui;
+
 import java.awt.*;
 import java.awt.event.*;
 import javax.swing.*;
@@ -63,30 +65,30 @@ public class RoundedButton extends JComponent {
         // paint the interior of the button
         if(hovered) {
             if(code == 0)
-                g.setColor(color.getLighterRed().brighter());
+                g.setColor(CustomColour.lighterred.brighter());
             if(code == 1)
-                g.setColor(color.getLighterBlue().brighter());            
+                g.setColor(CustomColour.lighterblue.brighter());
         }
         else {
             if(code == 0)
-                g.setColor(color.getLighterRed());
+                g.setColor(CustomColour.lighterred);
             if(code == 1)
-                g.setColor(color.getLighterBlue());
+                g.setColor(CustomColour.lighterblue);
         }
         g.fillRoundRect(0, 0, getWidth() - 1, getHeight() - 1, 15, 15);
 
         // draw the perimeter of the button
         if(hovered) {
             if(code == 0)
-                g.setColor(color.getLighterRed().brighter());
+                g.setColor(CustomColour.lighterred.brighter());
             if(code == 1)
-                g.setColor(color.getLighterBlue().brighter());            
+                g.setColor(CustomColour.lighterblue.brighter());
         }
         else {
             if(code == 0)
-                g.setColor(color.getLighterRed());
+                g.setColor(CustomColour.lighterred);
             if(code == 1)
-                g.setColor(color.getLighterBlue());
+                g.setColor(CustomColour.lighterblue);
         }
         g.drawRoundRect(0, 0, getWidth() - 1, getHeight() - 1, 15, 15);
 

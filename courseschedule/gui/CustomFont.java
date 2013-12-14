@@ -1,12 +1,8 @@
 package courseschedule.gui;
-import java.awt.*;
-import javax.swing.*;
-import java.io.*;
-import java.net.*;
-import java.util.*;
-import java.awt.font.*;
 
-public class CustomFont{
+import java.awt.*;
+
+public class CustomFont {
 	private Font font = new Font("serif", Font.PLAIN, 24);
 
 	public Font getFontAbel(int size) {

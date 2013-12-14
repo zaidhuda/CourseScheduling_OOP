@@ -5,12 +5,10 @@ import courseschedule.util.*;
 import java.awt.*;
 import java.awt.event.*;
 import javax.swing.*;
-import java.util.*;
 
 public class CourseGUI extends JPanel {
 	// VARIABLES FOR GENERAL USE
     public static ScheduleBuilder sb = null;
-	private CustomColour color = new CustomColour();
 	private CustomFont font = new CustomFont();
 	private Frame frame = new Frame();
 
@@ -43,14 +41,14 @@ public class CourseGUI extends JPanel {
 	public void createTopPanel() {
 		topPanel = new JPanel();
 
-		topPanel.setBackground(color.getNightBlue());
+		topPanel.setBackground(CustomColour.nightblue);
 		topPanel.setPreferredSize(new Dimension(900, 70));
 		topPanel.setMinimumSize(getPreferredSize());
 		topPanel.setMaximumSize(getPreferredSize());
 
 		textLabel = new JLabel("COURSE");
 
-		textLabel.setForeground(color.getSilverClouds());
+		textLabel.setForeground(CustomColour.silverclouds);
 		textLabel.setFont(font.getFontAbel(48));
 
 		topPanel.add(textLabel);
@@ -63,7 +61,7 @@ public class CourseGUI extends JPanel {
 		midLeftPanel = new JPanel();
 		midRightPanel = new JPanel();
 
-		midLeftPanel.setBackground(color.getSilverClouds());
+		midLeftPanel.setBackground(CustomColour.silverclouds);
 		midLeftPanel.setLayout(new BoxLayout(midLeftPanel, BoxLayout.Y_AXIS));
 		
 		for(int i=0; i<2; i++) {
@@ -74,7 +72,7 @@ public class CourseGUI extends JPanel {
 			midLeftPanel.add(Box.createRigidArea(new Dimension(0,15)));
 		}
 
-		midRightPanel.setBackground(color.getSilverClouds());
+		midRightPanel.setBackground(CustomColour.silverclouds);
 		midRightPanel.setLayout(new BoxLayout(midRightPanel, BoxLayout.Y_AXIS));
 		
 		for(int i=0; i<2; i++) {
@@ -85,7 +83,7 @@ public class CourseGUI extends JPanel {
 			midRightPanel.add(Box.createRigidArea(new Dimension(0,15)));
 		}
 
-		midUpperPanel.setBackground(color.getSilverClouds());
+		midUpperPanel.setBackground(CustomColour.silverclouds);
 		midUpperPanel.setLayout(new BoxLayout(midUpperPanel, BoxLayout.X_AXIS));
 		midUpperPanel.setAlignmentX(CENTER_ALIGNMENT);
 		midUpperPanel.add(midLeftPanel);
@@ -161,7 +159,7 @@ public class CourseGUI extends JPanel {
 
 	public void setFrame(Frame frame) {
 		this.frame = frame;
-		this.sb = frame.sb;
+		sb = Frame.sb;
 
 		createTopPanel();
 		createMiddlePanel();

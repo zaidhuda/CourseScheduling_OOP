@@ -1,10 +1,10 @@
+package courseschedule.gui;
+
 import java.awt.*;
 import javax.swing.*;
-import courseschedule.gui.*;
 
 public class CustomLabel extends JLabel{
 	private CustomFont font = new CustomFont();
-	private CustomColour color = new CustomColour();
 	private String label;
     private Dimension dimension = new Dimension(287,20);
 
@@ -12,7 +12,7 @@ public class CustomLabel extends JLabel{
 		// super(label); 
 		this.label = label;
 
-		setForeground(color.getSilver());
+		setForeground(CustomColour.silver);
 		setAlignmentX(CENTER_ALIGNMENT);
 		setFont(font.getFontAbel(20,-0.05));
 	}
