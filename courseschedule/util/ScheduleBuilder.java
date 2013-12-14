@@ -76,7 +76,17 @@ public class ScheduleBuilder {
                 exist = true;
                 break;
             }
-        if (!exist) lecturers.add(o);
+        if (!exist) {
+        	ArrayList<String> tempCodes = getCourseCodes();
+        	ArrayList<String> newCodes = new ArrayList<>();
+        	for (String str : o.getCourses()) {
+        		if (tempCodes.contains(str))
+        			newCodes.add(str);
+        	}
+        	o.getCourses().clear();
+        	o.setCourses(newCodes);
+        	lecturers.add(o);
+        }
     }
 
     public void add(Venue o) {
@@ -86,7 +96,24 @@ public class ScheduleBuilder {
                 exist = true;
                 break;
             }
-        if (!exist) venues.add(o);
+        if (!exist) {
+        	ArrayList<String> tempCodes = getCourseCodes();
+        	ArrayList<String> newCodes = new ArrayList<>();
+        	for (String str : o.getCourses()) {
+        		if (tempCodes.contains(str))
+        			newCodes.add(str);
+        	}
+        	o.setCourses(newCodes);
+        	venues.add(o);
+        }
+    }
+
+    private ArrayList<String> getCourseCodes(){
+    	ArrayList<String> tempCodes = new ArrayList<>();
+    	for (Course c :  courses) {
+    		tempCodes.add(c.getCode());
+    	}
+    	return tempCodes;
     }
 
 	public String[][] getCourses(){
@@ -111,6 +138,15 @@ public class ScheduleBuilder {
 		String[][] str = new String[venues.size()][];
 		for (int i=0;i<venues.size();i++){
 			String[] arr = venues.get(i).detailsArray();
+			str[i] = arr;
+		}
+		return str;
+	}
+
+	public String[][] getSections(){
+		String[][] str = new String[sections.size()][];
+		for (int i=0;i<sections.size();i++){
+			String[] arr = sections.get(i).detailsArray();
 			str[i] = arr;
 		}
 		return str;

@@ -54,6 +54,20 @@ abstract class Support {
             addCourse(arg);
     }
 
+    public void setCourses(ArrayList<String> args){
+        for (String arg : args) {            
+            arg.replaceAll(" ", "").split(",");
+        }
+        courses = args;        
+    }
+
+
+    public void setCourses(String arg){
+        String[] str = null;
+        str = arg.replaceAll(" ", "").split(",");
+        courses = new ArrayList<String>(Arrays.asList(str));        
+    }
+
     /**
      * Receives a course code and remove it from courses array list.
      *

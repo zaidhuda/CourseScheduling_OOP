@@ -63,7 +63,8 @@ public class Course {
     }
 
     public void setCode(String arg) {
-        code = arg.replaceAll("\\s", "").toUpperCase();
+        if(arg!=null)
+            code = arg.replaceAll("\\s", "").toUpperCase();
     }
 
     public String getCode() {
@@ -71,7 +72,8 @@ public class Course {
     }
 
     public void setTitle(String arg) {
-        title = arg;
+        if(arg!=null)
+            title = arg;
     }
 
     public String getTitle() {
