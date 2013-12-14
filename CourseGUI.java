@@ -5,7 +5,6 @@ import courseschedule.util.*;
 import java.awt.*;
 import java.awt.event.*;
 import javax.swing.*;
-import java.util.*;
 
 public class CourseGUI extends JPanel {
 	// VARIABLES FOR GENERAL USE
@@ -161,7 +160,7 @@ public class CourseGUI extends JPanel {
 
 	public void setFrame(Frame frame) {
 		this.frame = frame;
-		this.sb = frame.sb;
+		sb = Frame.sb;
 
 		createTopPanel();
 		createMiddlePanel();

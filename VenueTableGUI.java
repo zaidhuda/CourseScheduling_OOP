@@ -1,12 +1,9 @@
-import courseschedule.*;
 import courseschedule.gui.*;
 import courseschedule.util.*;
 
 import java.awt.*;
 import java.awt.event.*;
 import javax.swing.*;
-import javax.swing.table.*;
-import javax.swing.border.*;
 import java.util.*;
 
 public class VenueTableGUI extends JPanel {

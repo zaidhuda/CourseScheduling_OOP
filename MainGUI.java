@@ -1,4 +1,3 @@
-import courseschedule.*;
 import courseschedule.gui.*;
 import courseschedule.util.*;
 
@@ -184,6 +183,6 @@ public class MainGUI extends JPanel {
 
 	public void setFrame(Frame frame) {
 		this.frame = frame;
-		this.sb = frame.sb;
+		sb = Frame.sb;
 	}
 }

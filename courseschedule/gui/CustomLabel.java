@@ -1,6 +1,7 @@
+package courseschedule.gui;
+
 import java.awt.*;
 import javax.swing.*;
-import courseschedule.gui.*;
 
 public class CustomLabel extends JLabel{
 	private CustomFont font = new CustomFont();

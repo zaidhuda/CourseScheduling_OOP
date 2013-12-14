@@ -1,5 +1,6 @@
+package courseschedule.gui;
+
 import java.awt.*;
-import courseschedule.gui.*;
 import javax.swing.*;
 
 public class CustomComboBox extends JComboBox {
