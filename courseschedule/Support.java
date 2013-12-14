@@ -55,10 +55,14 @@ abstract class Support {
     }
 
     public void setCourses(ArrayList<String> args){
+	    courses.clear();
         for (String arg : args) {            
             arg = arg.replaceAll("\\s", "").toUpperCase();
+	        if (!(this instanceof Lecturer))
+		        courses.add(arg);
+	        else if (courses.size() < 3)
+		        courses.add(arg);
         }
-        courses = args;
     }
 
 

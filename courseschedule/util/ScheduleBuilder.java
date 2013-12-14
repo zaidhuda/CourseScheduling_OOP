@@ -4,9 +4,8 @@ import courseschedule.Course;
 import courseschedule.Lecturer;
 import courseschedule.Section;
 import courseschedule.Venue;
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.Comparator;
+
+import java.util.*;
 
 /**
  * Created by Diaz
@@ -80,13 +79,10 @@ public class ScheduleBuilder {
         if (!exist) {
         	lecturers.add(o);
         } else {
-	        for (Section s : sections){
-		        if (s.getLecturer().equals(o)){
-			        if (!o.getCourses().contains(s.getCourse().getCode())){
+	        for (Section s : sections)
+		        if (s.getLecturer().equals(o))
+			        if (!o.getCourses().contains(s.getCourse().getCode()))
 				        s.setLecturer(new Lecturer());
-			        }
-		        }
-	        }
         }
     }
 
@@ -100,25 +96,20 @@ public class ScheduleBuilder {
         if (!exist) {
         	venues.add(o);
         } else {
-	        for (Section s : sections){
-		        if (s.getVenue().equals(o)){
-			        if (!o.getCourses().contains(s.getCourse().getCode())){
+	        for (Section s : sections)
+		        if (s.getVenue().equals(o))
+			        if (!o.getCourses().contains(s.getCourse().getCode()))
 				        s.setVenue(new Venue());
-			        }
-		        }
-	        }
         }
     }
 
 	public static ArrayList<String> filterCodes(String arg){
-		System.out.println(arg);
-		String[] strs = arg.replaceAll(" ", "").toUpperCase().split(",");
+		String[] strs = arg.replaceAll("\\s", "").toUpperCase().split(",");
 		ArrayList<String> tempCodes = getCourseCodes();
 		ArrayList<String> newCodes = new ArrayList<>();
-		for (String str : Arrays.asList(strs)) {
-				if (tempCodes.contains(str))
-					newCodes.add(str);
-			}
+		for (String str : Arrays.asList(strs))
+			if (tempCodes.contains(str) && !newCodes.contains(str))
+				newCodes.add(str);
 		return newCodes;
 	}
 
@@ -214,7 +205,7 @@ public class ScheduleBuilder {
         return newAvailability;
     }
 
-	public static Section getClassAt(int day, int time, Lecturer theLecturer, ArrayList<Section> sections){
+	public Section getClassAt(int day, int time, Lecturer theLecturer){
 		for(Section s : sections){
 			boolean sameTime = (day == s.getDay() && time == s.getTime()),
 					sameLect = s.getLecturer().equals(theLecturer);
@@ -225,7 +216,7 @@ public class ScheduleBuilder {
 		return null;
 	}
 
-	public static Section getClassAt(int day, int time, Venue theVenue, ArrayList<Section> sections){
+	public Section getClassAt(int day, int time, Venue theVenue){
 		for(Section s : sections){
 			boolean sameTime = (day == s.getDay() && time == s.getTime()),
 					sameVenue = s.getVenue().equals(theVenue);
@@ -236,7 +227,7 @@ public class ScheduleBuilder {
 		return null;
 	}
 
-	public static void forceReSchedule(int newDay, int newTime, Section theSection, ArrayList<Section> sections){
+	public void forceReSchedule(int newDay, int newTime, Section theSection){
 		Lecturer theLecturer = theSection.getLecturer();
 		Venue theVenue = theSection.getVenue();
 		for (Section s : sections){
