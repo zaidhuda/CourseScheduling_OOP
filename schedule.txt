@@ -1,0 +1,20 @@
+courses
+CSC1100;Elements of Programming;3;3
+CSC1102;Web Programming Fundamental;3;1
+CSC1103;Object Oriented Programming;3;2
+lecturers
+DR SURIANI;[CSC1100];[[true, true, true, true, true, true], [true, true, true, false, true, true]]
+DR AMELIA;[CSC1100];[[true, true, true, true, true, true], [true, true, false, true, true, true]]
+DR RIZAL;[CSC1102];[[true, true, true, true, true, true], [true, false, true, false, true, true]]
+DR AZLIN;[CSC1103];[[true, true, false, true, true, true], [true, true, true, true, false, true]]
+DR NORSAREMAH;[CSC1100, CSC1102, CSC1103];[[true, true, true, false, true, true], [true, false, true, true, true, true]]
+venues
+LAB 3;[CSC1102];[[true, true, true, true, true, true], [true, true, true, false, true, true]];30
+LAB 6;[CSC1100, CSC1103];[[true, true, false, false, true, true], [true, false, false, false, true, true]];30
+sections
+1;0;3;30;CSC1100;DR NORSAREMAH;LAB 6;Success.
+2;1;3;30;CSC1100;DR SURIANI;LAB 6;Success.
+3;1;2;30;CSC1100;DR AMELIA;LAB 6;Success.
+1;1;3;30;CSC1102;DR RIZAL;LAB 3;Success.
+1;0;2;30;CSC1103;DR AZLIN;LAB 6;Success.
+2;1;1;30;CSC1103;DR NORSAREMAH;LAB 6;Success.
