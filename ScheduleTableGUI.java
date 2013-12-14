@@ -10,7 +10,6 @@ public class ScheduleTableGUI extends JPanel {
 	// VARIABLES FOR GENERAL USE
     public static ScheduleBuilder sb = null;
 	private Frame frame = new Frame();
-	private CustomColour color = new CustomColour();
 	private CustomFont font = new CustomFont();
 
 	// VARIABLES FOR TOP PANEL
@@ -52,11 +51,11 @@ public class ScheduleTableGUI extends JPanel {
 		topPanel = new JPanel();
 
 		topPanel.setBorder(BorderFactory.createEmptyBorder());
-		topPanel.setBackground(color.getLighterBlue());
+		topPanel.setBackground(CustomColour.getLighterBlue());
 
 		textLabel = new JLabel("SCHEDULE");
 
-		textLabel.setForeground(color.getSilverClouds());
+		textLabel.setForeground(CustomColour.getSilverClouds());
 		textLabel.setFont(font.getFontAbel(48));
 
 		topPanel.add(textLabel);
@@ -79,7 +78,7 @@ public class ScheduleTableGUI extends JPanel {
 	}
 
 	public void createHeaderPanel() {
-		containerHeader.setBackground(color.getDarkerBlue());
+		containerHeader.setBackground(CustomColour.getDarkerBlue());
 		containerHeader.setLayout(new BoxLayout(containerHeader, BoxLayout.X_AXIS));
 		containerHeader.setPreferredSize(new Dimension(900, 20));
 		containerHeader.setMinimumSize(getPreferredSize());
@@ -89,7 +88,7 @@ public class ScheduleTableGUI extends JPanel {
 
 		TableButton tb = new TableButton(header, of.getOffset());
 		tb.setPreferredSize(new Dimension(900,20));
-		tb.setForeground(color.getSilverClouds());
+		tb.setForeground(CustomColour.getSilverClouds());
 		containerHeader.add(tb);
 	}
 
@@ -109,14 +108,14 @@ public class ScheduleTableGUI extends JPanel {
 		// scrollPanel.getHorizontalScrollBar().setUI(new CustomScrollBarUI(2));
 		scrollPanel.setHorizontalScrollBar(null);
 
-		containerRow.setBackground(color.getSilverClouds());
+		containerRow.setBackground(CustomColour.getSilverClouds());
 		containerRow.add(scrollPanel);
 	}
 
 	public void createBottomPanel() {
 		bottomPanel = new JPanel();
 
-		bottomPanel.setBackground(color.getSilverClouds());
+		bottomPanel.setBackground(CustomColour.getSilverClouds());
 
 		backBtn = new RoundedButton("BACK", 0);
 		printBtn = new RoundedButton("PRINT", 1);

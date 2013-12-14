@@ -11,7 +11,6 @@ public class LecturerTableGUI extends JPanel {
 	// VARIABLES FOR GENERAL USE
     public static ScheduleBuilder sb = null;
 	private Frame frame = new Frame();
-	private CustomColour color = new CustomColour();
 	private CustomFont font = new CustomFont();
 
 	// VARIABLES FOR TOP PANEL
@@ -49,11 +48,11 @@ public class LecturerTableGUI extends JPanel {
 		topPanel = new JPanel();
 
 		topPanel.setBorder(BorderFactory.createEmptyBorder());
-		topPanel.setBackground(color.getLighterBlue());
+		topPanel.setBackground(CustomColour.lighterblue);
 
 		textLabel = new JLabel("LECTURER");
 
-		textLabel.setForeground(color.getSilverClouds());
+		textLabel.setForeground(CustomColour.silverclouds);
 		textLabel.setFont(font.getFontAbel(48));
 
 		topPanel.add(textLabel);
@@ -76,7 +75,7 @@ public class LecturerTableGUI extends JPanel {
 	}
 
 	public void createHeaderPanel() {
-		containerHeader.setBackground(color.getDarkerBlue());
+		containerHeader.setBackground(CustomColour.darkerblue);
 		containerHeader.setLayout(new BoxLayout(containerHeader, BoxLayout.X_AXIS));
 		containerHeader.setPreferredSize(new Dimension(900, 20));
 		containerHeader.setMinimumSize(getPreferredSize());
@@ -86,7 +85,7 @@ public class LecturerTableGUI extends JPanel {
 
 		TableButton tb = new TableButton(header, of.getOffset());
 		tb.setPreferredSize(new Dimension(900,20));
-		tb.setForeground(color.getSilverClouds());
+		tb.setForeground(CustomColour.silverclouds);
 		containerHeader.add(tb);
 	}
 
@@ -106,14 +105,14 @@ public class LecturerTableGUI extends JPanel {
 		// scrollPanel.getHorizontalScrollBar().setUI(new CustomScrollBarUI(2));
 		scrollPanel.setHorizontalScrollBar(null);
 
-		containerRow.setBackground(color.getSilverClouds());
+		containerRow.setBackground(CustomColour.silverclouds);
 		containerRow.add(scrollPanel);
 	}
 
 	public void createBottomPanel() {
 		bottomPanel = new JPanel();
 
-		bottomPanel.setBackground(color.getSilverClouds());
+		bottomPanel.setBackground(CustomColour.silverclouds);
 
 		backBtn = new RoundedButton("BACK", 0);
 		addBtn = new RoundedButton("ADD LECTURER", 1);
@@ -159,7 +158,7 @@ public class LecturerTableGUI extends JPanel {
 
 	public void setFrame(Frame frame) {
 		this.frame = frame;
-		this.sb = frame.sb;
+		sb = Frame.sb;
 
 		if(!sb.lecturers.isEmpty())
 			label = sb.getLecturers();

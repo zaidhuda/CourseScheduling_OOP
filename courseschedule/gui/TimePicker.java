@@ -71,7 +71,7 @@ public class TimePicker extends JPanel {
 					timeLabel.setMinimumSize(timeLabel.getPreferredSize());
 					timeLabel.setVerticalAlignment(JLabel.BOTTOM);
 					timeLabel.setFont(font.getFontAbel(18, -0.05));
-					timeLabel.setForeground(color.getSilver());
+					timeLabel.setForeground(CustomColour.silver);
 					rowPane.add(timeLabel);
 					if (j == 2)
 						rowPane.add(Box.createRigidArea(new Dimension(30, 0)));
@@ -87,7 +87,7 @@ public class TimePicker extends JPanel {
 				dayLabel.setMinimumSize(dayLabel.getPreferredSize());
 				dayLabel.setVerticalAlignment(JLabel.BOTTOM);
 				dayLabel.setVerticalTextPosition(JLabel.BOTTOM);
-				dayLabel.setForeground(color.getSilver());
+				dayLabel.setForeground(CustomColour.silver);
 				// dayLabel.setFont(font.getFontAbel(15)); //SLOWS DOWN PERFORMANCE
 				rowPane.add(dayLabel);
 
@@ -141,7 +141,7 @@ public class TimePicker extends JPanel {
 				btn.setBackground(Color.cyan);
 				break;
 			case 3:
-				btn.setBackground(color.getSilverGray());
+				btn.setBackground(CustomColour.silvergray);
 				btn.setText("CLASS");
 				break;
 		}

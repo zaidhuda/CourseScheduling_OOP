@@ -6,7 +6,6 @@ import javax.swing.plaf.basic.*;
 
 public class CustomScrollBarUI extends BasicScrollBarUI {
 	private int scrollbar = 0;
-	private CustomColour color = new CustomColour();
 
 	public CustomScrollBarUI(int i) {
 		super();
@@ -34,7 +33,7 @@ public class CustomScrollBarUI extends BasicScrollBarUI {
 
 	@Override
 	public void paintTrack(Graphics g, JComponent c, Rectangle trackBounds) {
-        g.setColor(color.getSilver());
+        g.setColor(CustomColour.silver);
         switch(scrollbar) {
         	case 1: g.fillRect(0, 0, 5, (int)trackBounds.getHeight()); break;
         	case 2: g.fillRect(0, 0, (int)trackBounds.getWidth(), 5); break;
@@ -44,7 +43,7 @@ public class CustomScrollBarUI extends BasicScrollBarUI {
 
     @Override
     public void paintThumb(Graphics g, JComponent c, Rectangle thumbBounds) {
-        g.setColor(color.getNightBlue());
+        g.setColor(CustomColour.nightblue);
         switch(scrollbar) {
         	case 1: g.fillRect(thumbBounds.x, thumbBounds.y, 5, (int)thumbBounds.getHeight()); break;
         	case 2: g.fillRect(thumbBounds.x, thumbBounds.y, (int)thumbBounds.getWidth(), 5); break;

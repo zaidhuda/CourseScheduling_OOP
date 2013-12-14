@@ -9,7 +9,6 @@ import javax.swing.*;
 public class ScheduleGUI extends JPanel {
 	// VARIABLES FOR GENERAL USE
     public static ScheduleBuilder sb = null;
-	private CustomColour color = new CustomColour();
 	private CustomFont font = new CustomFont();
 	private Frame frame = new Frame();
 
@@ -42,14 +41,14 @@ public class ScheduleGUI extends JPanel {
 	public void createTopPanel() {
 		topPanel = new JPanel();
 
-		topPanel.setBackground(color.getNightBlue());
+		topPanel.setBackground(CustomColour.getNightBlue());
 		topPanel.setPreferredSize(new Dimension(900, 70));
 		topPanel.setMinimumSize(getPreferredSize());
 		topPanel.setMaximumSize(getPreferredSize());
 
 		textLabel = new JLabel("SCHEDULE");
 
-		textLabel.setForeground(color.getSilverClouds());
+		textLabel.setForeground(CustomColour.getSilverClouds());
 		textLabel.setFont(font.getFontAbel(48));
 
 		topPanel.add(textLabel);
@@ -60,13 +59,13 @@ public class ScheduleGUI extends JPanel {
 		middlePanel = new JPanel();
 		midUpperPanel = new JPanel();
 		midMiddlePanel = new JPanel();
-		int[][] slots = sb.getAvailableSlots(section.getLecturer(), section.getVenue());
+		int[][] slots = ScheduleBuilder.getAvailableSlots(section.getLecturer(), section.getVenue());
 		midLowerPanel = new TimePicker(section.getDay(),section.getTime(),slots);
 		midLeftPanel = new JPanel();
 		midRightPanel = new JPanel();
 		System.out.println(section.getDay() + " " + section.getTime());
 
-		midLeftPanel.setBackground(color.getSilverClouds());
+		midLeftPanel.setBackground(CustomColour.getSilverClouds());
 		midLeftPanel.setLayout(new BoxLayout(midLeftPanel, BoxLayout.Y_AXIS));
 		
 		for(int i=0; i<1; i++) {
@@ -77,7 +76,7 @@ public class ScheduleGUI extends JPanel {
 			midLeftPanel.add(Box.createRigidArea(new Dimension(0,10)));
 		}
 
-		midRightPanel.setBackground(color.getSilverClouds());
+		midRightPanel.setBackground(CustomColour.getSilverClouds());
 		midRightPanel.setLayout(new BoxLayout(midRightPanel, BoxLayout.Y_AXIS));
 		
 		for(int i=0; i<1; i++) {
@@ -107,7 +106,7 @@ public class ScheduleGUI extends JPanel {
 							leftLabel[j].setMinimumSize(leftLabel[j].getPreferredSize());
 							leftLabel[j].setHorizontalAlignment(JLabel.CENTER);
 							leftLabel[j].setFont(font.getFontAbel(20,-0.05));
-							leftLabel[j].setForeground(color.getSilver());
+							leftLabel[j].setForeground(CustomColour.getSilver());
 							rowPane.add(leftLabel[j]); 
 							break;
 						case 1:
@@ -132,7 +131,7 @@ public class ScheduleGUI extends JPanel {
 							leftLabel[j].setMinimumSize(leftLabel[j].getPreferredSize());
 							leftLabel[j].setHorizontalAlignment(JLabel.CENTER);
 							leftLabel[j].setFont(font.getFontAbel(25,-0.05));
-							leftLabel[j].setForeground(color.getSilver());
+							leftLabel[j].setForeground(CustomColour.getSilver());
 							rowPane.add(leftLabel[j]); 
 							break;
 						case 1:
@@ -155,7 +154,7 @@ public class ScheduleGUI extends JPanel {
 			midUpperPanel.add(rowPane);
 		}
 
-		midMiddlePanel.setBackground(color.getSilverClouds());
+		midMiddlePanel.setBackground(CustomColour.getSilverClouds());
 		midMiddlePanel.setLayout(new BoxLayout(midMiddlePanel, BoxLayout.X_AXIS));
 		midMiddlePanel.setAlignmentX(CENTER_ALIGNMENT);
 		midMiddlePanel.add(midLeftPanel);
@@ -209,7 +208,7 @@ public class ScheduleGUI extends JPanel {
 
 	public void setFrame(Frame frame) {
 		this.frame = frame;
-		this.sb = frame.sb;
+		sb = Frame.sb;
 
 		createTopPanel();
 		createMiddlePanel();

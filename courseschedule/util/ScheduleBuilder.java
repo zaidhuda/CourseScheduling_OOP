@@ -12,10 +12,10 @@ import java.util.*;
  */
 public class ScheduleBuilder {
 
-	public static ArrayList<Course> courses = new ArrayList<>();
-	public static ArrayList<Lecturer> lecturers = new ArrayList<>();
-	public static ArrayList<Venue> venues = new ArrayList<>();
-	public static ArrayList<Section> sections = new ArrayList<>();
+	public ArrayList<Course> courses = new ArrayList<>();
+	public ArrayList<Lecturer> lecturers = new ArrayList<>();
+	public ArrayList<Venue> venues = new ArrayList<>();
+	public ArrayList<Section> sections = new ArrayList<>();
 	public final CourseComparator courseComparator = new CourseComparator();
 
 	public void generateSections(boolean generateSchedule) {
@@ -101,7 +101,7 @@ public class ScheduleBuilder {
 		}
 	}
 
-	public static ArrayList<String> filterCodes(String arg) {
+	public ArrayList<String> filterCodes(String arg) {
 		String[] strs = arg.replaceAll("\\s", "").toUpperCase().split(",");
 		ArrayList<String> tempCodes = getCourseCodes();
 		ArrayList<String> newCodes = new ArrayList<>();
@@ -111,7 +111,7 @@ public class ScheduleBuilder {
 		return newCodes;
 	}
 
-	private static ArrayList<String> getCourseCodes() {
+	private ArrayList<String> getCourseCodes() {
 		ArrayList<String> tempCodes = new ArrayList<>();
 		for (Course c : courses) {
 			tempCodes.add(c.getCode());

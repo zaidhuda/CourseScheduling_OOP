@@ -1,3 +1,4 @@
+import courseschedule.*;
 import courseschedule.gui.*;
 import courseschedule.util.*;
 
@@ -10,7 +11,6 @@ public class VenueTableGUI extends JPanel {
 	// VARIABLES FOR GENERAL USE
     public static ScheduleBuilder sb = null;
 	private Frame frame = new Frame();
-	private CustomColour color = new CustomColour();
 	private CustomFont font = new CustomFont();
 
 	// VARIABLES FOR TOP PANEL
@@ -49,11 +49,11 @@ public class VenueTableGUI extends JPanel {
 		topPanel = new JPanel();
 
 		topPanel.setBorder(BorderFactory.createEmptyBorder());
-		topPanel.setBackground(color.getLighterBlue());
+		topPanel.setBackground(CustomColour.getLighterBlue());
 
 		textLabel = new JLabel("VENUE");
 
-		textLabel.setForeground(color.getSilverClouds());
+		textLabel.setForeground(CustomColour.getSilverClouds());
 		textLabel.setFont(font.getFontAbel(48));
 
 		topPanel.add(textLabel);
@@ -76,7 +76,7 @@ public class VenueTableGUI extends JPanel {
 	}
 
 	public void createHeaderPanel() {
-		containerHeader.setBackground(color.getDarkerBlue());
+		containerHeader.setBackground(CustomColour.getDarkerBlue());
 		containerHeader.setLayout(new BoxLayout(containerHeader, BoxLayout.X_AXIS));
 		containerHeader.setPreferredSize(new Dimension(900, 20));
 		containerHeader.setMinimumSize(getPreferredSize());
@@ -86,7 +86,7 @@ public class VenueTableGUI extends JPanel {
 
 		TableButton tb = new TableButton(header, of.getOffset());
 		tb.setPreferredSize(new Dimension(900,20));
-		tb.setForeground(color.getSilverClouds());
+		tb.setForeground(CustomColour.getSilverClouds());
 		containerHeader.add(tb);
 	}
 
@@ -106,14 +106,14 @@ public class VenueTableGUI extends JPanel {
 		// scrollPanel.getHorizontalScrollBar().setUI(new CustomScrollBarUI(2));
 		scrollPanel.setHorizontalScrollBar(null);
 
-		containerRow.setBackground(color.getSilverClouds());
+		containerRow.setBackground(CustomColour.getSilverClouds());
 		containerRow.add(scrollPanel);
 	}
 
 	public void createBottomPanel() {
 		bottomPanel = new JPanel();
 
-		bottomPanel.setBackground(color.getSilverClouds());
+		bottomPanel.setBackground(CustomColour.getSilverClouds());
 
 		backBtn = new RoundedButton("BACK", 0);
 		addBtn = new RoundedButton("ADD VENUE", 1);
@@ -149,14 +149,17 @@ public class VenueTableGUI extends JPanel {
 			}
 
 			if(e.getSource() == addBtn) {
-				// print schedule lists
+				VenueGUI v = new VenueGUI(new Venue());
+				v.setFrame(frame);
+				frame.setContentPane(v);
+				frame.pack();
 			}
 		}
 	}
 
 	public void setFrame(Frame frame) {
 		this.frame = frame;
-		this.sb = frame.sb;
+		sb = Frame.sb;
 
 		if(!sb.venues.isEmpty())
 			label = sb.getVenues();

@@ -7,7 +7,6 @@ import javax.swing.*;
 
 public class MainGUI extends JPanel {
     public static ScheduleBuilder sb = null;
-	private CustomColour color = new CustomColour();
 	private CustomFont font = new CustomFont();
 	private Frame frame = new Frame();
 
@@ -42,7 +41,7 @@ public class MainGUI extends JPanel {
 			setLayout(new BoxLayout(this, BoxLayout.X_AXIS));
 			label = new JLabel("Main Menu");
 			label.setFont(font.getFontSegoe(48));
-			label.setForeground(color.getSilver());
+			label.setForeground(CustomColour.silver);
 
 			add(Box.createRigidArea(new Dimension(25,80)));
 			add(label);
@@ -55,7 +54,7 @@ public class MainGUI extends JPanel {
 
 		public Panel2() {
 			setLayout(new BoxLayout(this, BoxLayout.X_AXIS));
-			setBackground(color.getSilverClouds());
+			setBackground(CustomColour.silverclouds);
 			setButton();
 			setTile();
 
@@ -71,8 +70,8 @@ public class MainGUI extends JPanel {
 			btn[0] = new SquareButton("COURSE", "add course to be generated.");
 			btn[1] = new SquareButton("LECTURER", "assign lecturer to course.");
 
-			btn[0].setCustomColor(color.getLighterGreen());
-			btn[1].setCustomColor(color.getLighterBlue());
+			btn[0].setCustomColor(CustomColour.lightergreen);
+			btn[1].setCustomColor(CustomColour.lighterblue);
 
 			for(int i=0; i<2; i++) {
 				btn[i].addActionListener(new ButtonListener());
@@ -89,7 +88,7 @@ public class MainGUI extends JPanel {
 
 			for(int i=0; i<2; i++) {
 				imgLabel[i].setOpaque(true);
-				imgLabel[i].setBackground(color.getNightBlue());
+				imgLabel[i].setBackground(CustomColour.nightblue);
 				imgLabel[i].setPreferredSize(new Dimension(170,196));
 				imgLabel[i].setMinimumSize(new Dimension(170,196));
 				imgLabel[i].setMaximumSize(new Dimension(170,196));
@@ -121,7 +120,7 @@ public class MainGUI extends JPanel {
 
 		public Panel3() {
 			setLayout(new BoxLayout(this, BoxLayout.X_AXIS));
-			setBackground(color.getSilverClouds());
+			setBackground(CustomColour.silverclouds);
 			setButton();
 			setTile();
 
@@ -137,8 +136,8 @@ public class MainGUI extends JPanel {
 			btn[0] = new SquareButton("VENUE", "venues to be assigned.");
 			btn[1] = new SquareButton("GENERATE", "generate the schedule.");
 
-			btn[0].setCustomColor(color.getLighterRed());
-			btn[1].setCustomColor(color.getTurqoise());
+			btn[0].setCustomColor(CustomColour.lighterred);
+			btn[1].setCustomColor(CustomColour.turqoise);
 
 			for(int i=0; i<2; i++) {
 				btn[i].addActionListener(new ButtonListener());
@@ -155,7 +154,7 @@ public class MainGUI extends JPanel {
 
 			for(int i=0; i<2; i++) {
 				imgLabel[i].setOpaque(true);
-				imgLabel[i].setBackground(color.getNightBlue());
+				imgLabel[i].setBackground(CustomColour.nightblue);
 				imgLabel[i].setPreferredSize(new Dimension(170,196));
 				imgLabel[i].setMinimumSize(new Dimension(170,196));
 				imgLabel[i].setMaximumSize(new Dimension(170,196));

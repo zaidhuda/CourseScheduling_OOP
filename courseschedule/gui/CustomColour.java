@@ -1,74 +1,73 @@
 package courseschedule.gui;
 
-import java.awt.*;
-import java.util.*;
+import java.awt.Color;
 
 public class CustomColour {
-	private int intValue;
-	private ArrayList<Color> custom = new ArrayList<>();
 
-	public CustomColour() {
-		intValue = Integer.parseInt("e74c3c", 16);
-		custom.add(new Color(intValue));
+	public static Color lighterred = new Color(Integer.parseInt("e74c3c", 16));
+	public static Color LighterRed = lighterred;
 
-		intValue = Integer.parseInt("3498db", 16);
-		custom.add(new Color(intValue));
+	public static Color lighterblue = new Color(Integer.parseInt("3498db", 16));
+	public static Color LighterBlue = lighterblue;
 
-		intValue = Integer.parseInt("ecf0f1", 16);
-		custom.add(new Color(intValue));
+	public static Color silverclouds = new Color(Integer.parseInt("ecf0f1", 16));
+	public static Color SilverClouds = silverclouds;
 
-		intValue = Integer.parseInt("d3dadf", 16);
-		custom.add(new Color(intValue));
+	public static Color silvergray = new Color(Integer.parseInt("d3dadf", 16));
+	public static Color SilverGray = silvergray;
 
-		intValue = Integer.parseInt("bdc3c7", 16);
-		custom.add(new Color(intValue));
+	public static Color silver = new Color(Integer.parseInt("bdc3c7", 16));
+	public static Color Silver = silver;
 
-		intValue = Integer.parseInt("2c3e50", 16);
-		custom.add(new Color(intValue));
+	public static Color nightblue = new Color(Integer.parseInt("2c3e50", 16));
+	public static Color NightBlue = nightblue;
 
-		intValue = Integer.parseInt("2ecc71", 16);
-		custom.add(new Color(intValue));
+	public static Color lightergreen = new Color(Integer.parseInt("2ecc71", 16));
+	public static Color LighterGreen = lightergreen;
 
-		intValue = Integer.parseInt("1abc9c", 16);
-		custom.add(new Color(intValue));
+	public static Color turqoise = new Color(Integer.parseInt("1abc9c", 16));
+	public static Color Turqoise = turqoise;
 
-		intValue = Integer.parseInt("2980b9", 16);
-		custom.add(new Color(intValue));
+	public static Color darkerblue = new Color(Integer.parseInt("2980b9", 16));
+	public static Color DarkBlue = darkerblue;
+
+	public static Color get(String hex) {
+		return new Color(Integer.parseInt(hex, 16));
 	}
 
-	public Color getLighterRed() {
-		return custom.get(0);
+	public static Color getLighterRed() {
+		return lighterred;
 	}
 
-	public Color getLighterBlue() {
-		return custom.get(1);
+	public static Color getLighterBlue() {
+		return lighterblue;
 	}
 
-	public Color getSilverClouds() {
-		return custom.get(2);
+	public static Color getSilverClouds() {
+		return silverclouds;
 	}
 
-	public Color getSilverGray() {
-		return custom.get(3);
+	public static Color getSilverGray() {
+		return silvergray;
 	}
 
-	public Color getSilver() {
-		return custom.get(4);
+	public static Color getSilver() {
+		return silver;
 	}
 
-	public Color getNightBlue() {
-		return custom.get(5);
+	public static Color getNightBlue() {
+		return nightblue;
 	}
 
-	public Color getLighterGreen() {
-		return custom.get(6);
+	public static Color getLighterGreen() {
+		return lightergreen;
 	}
 
-	public Color getTurqoise() {
-		return custom.get(7);
+	public static Color getTurqoise() {
+		return turqoise;
 	}
 
-	public Color getDarkerBlue() {
-		return custom.get(8);
+	public static Color getDarkerBlue() {
+		return darkerblue;
 	}
 }

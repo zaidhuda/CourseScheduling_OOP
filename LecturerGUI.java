@@ -9,7 +9,6 @@ import javax.swing.*;
 public class LecturerGUI extends JPanel {
 	// VARIABLES FOR GENERAL USE
     public static ScheduleBuilder sb = null;
-	private CustomColour color = new CustomColour();
 	private CustomFont font = new CustomFont();
 	private Frame frame = new Frame();
 
@@ -36,22 +35,20 @@ public class LecturerGUI extends JPanel {
 
 	public LecturerGUI(Lecturer lecturer) {
 		this.lecturer = lecturer;
-		//if (!lecturer.getName().equals("TO BE DETERMINED")) this.lecturer = lecturer;
-		//else this.lecturer = new Lecturer();
 		setLayout(new BorderLayout());
 	}
 
 	public void createTopPanel() {
 		topPanel = new JPanel();
 
-		topPanel.setBackground(color.getNightBlue());
+		topPanel.setBackground(CustomColour.nightblue);
 		topPanel.setPreferredSize(new Dimension(900, 70));
 		topPanel.setMinimumSize(getPreferredSize());
 		topPanel.setMaximumSize(getPreferredSize());
 
 		textLabel = new JLabel("LECTURER");
 
-		textLabel.setForeground(color.getSilverClouds());
+		textLabel.setForeground(CustomColour.silverclouds);
 		textLabel.setFont(font.getFontAbel(48));
 
 		topPanel.add(textLabel);
@@ -65,7 +62,7 @@ public class LecturerGUI extends JPanel {
 		midLeftPanel = new JPanel();
 		midRightPanel = new JPanel();
 
-		midLeftPanel.setBackground(color.getSilverClouds());
+		midLeftPanel.setBackground(CustomColour.silverclouds);
 		midLeftPanel.setLayout(new BoxLayout(midLeftPanel, BoxLayout.Y_AXIS));
 		
 		for(int i=0; i<1; i++) {
@@ -76,7 +73,7 @@ public class LecturerGUI extends JPanel {
 			midLeftPanel.add(Box.createRigidArea(new Dimension(0,10)));
 		}
 
-		midRightPanel.setBackground(color.getSilverClouds());
+		midRightPanel.setBackground(CustomColour.silverclouds);
 		midRightPanel.setLayout(new BoxLayout(midRightPanel, BoxLayout.Y_AXIS));
 		
 		for(int i=0; i<1; i++) {
@@ -87,7 +84,7 @@ public class LecturerGUI extends JPanel {
 			midRightPanel.add(Box.createRigidArea(new Dimension(0,10)));
 		}
 
-		midUpperPanel.setBackground(color.getSilverClouds());
+		midUpperPanel.setBackground(CustomColour.silverclouds);
 		midUpperPanel.setLayout(new BoxLayout(midUpperPanel, BoxLayout.X_AXIS));
 		midUpperPanel.setAlignmentX(CENTER_ALIGNMENT);
 		midUpperPanel.add(midLeftPanel);
@@ -108,7 +105,7 @@ public class LecturerGUI extends JPanel {
 		bottomPanel = new JPanel();
 		backBtn = new RoundedButton("BACK", 0);
 		removeBtn = new RoundedButton("REMOVE", 0);
-		addBtn = new RoundedButton("ADD LECTURER", 1);
+		addBtn = new RoundedButton("SAVE LECTURER", 1);
 
 		backBtn.setFont(font.getFontPTSans(15, Font.BOLD, -0.07));
 		backBtn.addActionListener(new ButtonListener());
@@ -139,9 +136,10 @@ public class LecturerGUI extends JPanel {
 				String name = mltextField[0].getText();
 				String specialization = mrtextField[0].getText();
 
-				if(!(name.equals("")) && !(specialization.equals(""))) {
+				if(!name.equals("")) {
 					lecturer.setName(name);
-					lecturer.setCourses(ScheduleBuilder.filterCodes(specialization));
+					lecturer.setCourses(sb.filterCodes(specialization));
+					lecturer.setAvailability(midLowerPanel.getAvailability());
 					sb.add(lecturer);
 				}
 
