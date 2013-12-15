@@ -18,6 +18,8 @@ public class LecturerGUI extends JPanel {
 	private JLabel textLabel;
 
 	// VARIABLES FOR MID PANELS
+
+	private final JPanel midLowerPanelContainer = new JPanel();
 	private JPanel middlePanel, midUpperPanel, midLeftPanel, midRightPanel;
 	private TimePicker midLowerPanel;
 	private Lecturer lecturer;
@@ -80,15 +82,19 @@ public class LecturerGUI extends JPanel {
 		
 		for(int i=0; i<1; i++) {
 			mrtextField[i] = new FieldButton();
-			mrtextField[i].setText("Courses");
+			mrtextField[i].setText(lecturer.detailsArray()[1]);
 			mrtextField[i].addActionListener(new ActionListener() {
 				@Override
 				public void actionPerformed(ActionEvent e) {
-					ArrayList<String> lCourses = new ArrayList<>(lecturer.getCourses());
-					coursesLister = new CoursesList(sb, lCourses, 3);
-					middlePanel.add(coursesLister);
-					middlePanel.revalidate();
-					middlePanel.repaint();
+					if (coursesLister.isVisible()) {
+						midLowerPanel.setVisible(true);
+						coursesLister.setVisible(false);
+					} else {
+						midLowerPanel.setVisible(false);
+						coursesLister.setVisible(true);
+					}
+					midLowerPanelContainer.revalidate();
+					midLowerPanelContainer.repaint();
 				}
 			});
 			midRightPanel.add(mrtextLabel[i]);
@@ -108,8 +114,10 @@ public class LecturerGUI extends JPanel {
 		middlePanel.setLayout(new BoxLayout(middlePanel, BoxLayout.PAGE_AXIS));
 		middlePanel.add(Box.createRigidArea(new Dimension(0,10)));
 		middlePanel.add(midUpperPanel);
-		middlePanel.add(midLowerPanel);
-
+		midLowerPanelContainer.add(midLowerPanel);
+		midLowerPanelContainer.add(coursesLister);
+		coursesLister.setVisible(false);
+		middlePanel.add(midLowerPanelContainer);
 		add(middlePanel, BorderLayout.CENTER);
 	}
 
@@ -173,6 +181,8 @@ public class LecturerGUI extends JPanel {
 		this.frame = frame;
 		sb = Frame.sb;
 
+		ArrayList<String> lCourses = new ArrayList<>(lecturer.getCourses());
+		coursesLister = new CoursesList(sb, lCourses, 3);
 		createTopPanel();
 		createMiddlePanel();
 		createBottomPanel();
