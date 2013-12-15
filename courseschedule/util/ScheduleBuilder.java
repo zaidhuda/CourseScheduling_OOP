@@ -48,7 +48,7 @@ public class ScheduleBuilder {
 	}
 
 	public void generateSection(boolean generateSchedule, Course course, int required, int count) {
-		for (int i = count; i < required+count; ++i) {
+		for (int i = count; i < required + count; ++i) {
 			sections.add(new Section(i + 1, course, new Lecturer(), new Venue()));
 		}
 
@@ -80,11 +80,11 @@ public class ScheduleBuilder {
 				exist = true;
 				break;
 			}
-		if (!exist){
+		if (!exist) {
 			courses.add(o);
 		} else {
-			for (Course c : courses){
-				if (!c.equals(o) && o.getCode().equals(c.getCode())){
+			for (Course c : courses) {
+				if (!c.equals(o) && o.getCode().equals(c.getCode())) {
 					courses.remove(o);
 					break;
 				}
@@ -124,9 +124,9 @@ public class ScheduleBuilder {
 		}
 	}
 
-	public Lecturer getLecturerByName(String name){
+	public Lecturer getLecturerByName(String name) {
 		for (Lecturer l : lecturers)
-			if(l.getName().equals(name))
+			if (l.getName().equals(name))
 				return l;
 		return null;
 	}
@@ -155,9 +155,9 @@ public class ScheduleBuilder {
 		}
 	}
 
-	public Venue getVenueByName(String name){
+	public Venue getVenueByName(String name) {
 		for (Venue v : venues)
-			if(v.getName().equals(name))
+			if (v.getName().equals(name))
 				return v;
 		return null;
 	}
@@ -177,10 +177,10 @@ public class ScheduleBuilder {
 		return tempCodes;
 	}
 
-	public ArrayList<Course> getCourses(String[] codes){
+	public ArrayList<Course> getCourses(String[] codes) {
 		ArrayList<Course> tempCourses = new ArrayList<>();
 		ArrayList<String> tempCodes = new ArrayList<>(Arrays.asList(codes));
-		for (Course c : courses){
+		for (Course c : courses) {
 			if (tempCodes.contains(c.getCode()))
 				tempCourses.add(c);
 		}
@@ -274,42 +274,53 @@ public class ScheduleBuilder {
 		return null;
 	}
 
-	public void fixClash(Lecturer lecturer, boolean[][] conflicts){
+	public Section findSection(int day, int time, Lecturer theLecturer, Venue theVenue) {
+		for (Section s : sections) {
+			if (s.getDay() == day && s.getTime() == time)
+				if (s.getLecturer().equals(theLecturer) || s.getVenue().equals(theVenue))
+					return s;
+		}
+		return null;
+	}
+
+	public void fixClash(Lecturer lecturer, boolean[][] conflicts) {
 		if (lecturers.contains(lecturer))
-			for (int i=0;i<ROW;i++)
-				for (int j=0;j<COL;j++)
-					if (conflicts[i][j]){
+			for (int i = 0; i < ROW; i++)
+				for (int j = 0; j < COL; j++)
+					if (conflicts[i][j]) {
 						Section s = getClassAt(i, j, lecturer);
-						if (s != null) s.generateSchedule(true);
+						if (s != null)
+							s.generateSchedule(true);
 					}
 	}
 
-	public void fixClash(Venue venue, boolean[][] conflicts){
+	public void fixClash(Venue venue, boolean[][] conflicts) {
 		if (venues.contains(venue))
-			for (int i=0;i<ROW;i++)
-				for (int j=0;j<COL;j++)
-					if (conflicts[i][j]){
+			for (int i = 0; i < ROW; i++)
+				for (int j = 0; j < COL; j++)
+					if (conflicts[i][j]) {
 						Section s = getClassAt(i, j, venue);
-						if (s != null) s.generateSchedule(true);
+						if (s != null)
+							s.generateSchedule(true);
 					}
 	}
 
-	public void fixCourseSections(Course course, int newRequired){
+	public void fixCourseSections(Course course, int newRequired) {
 		//if (!getAssignedLecturers(course).isEmpty() && !getAssignedVenues(course).isEmpty()) {
-			ArrayList<Section> tempSections = getSectionOf(course);
-			int count = tempSections.size();
-			if (count != newRequired) {
-				if (newRequired < tempSections.size()){
-					sections.removeAll(tempSections);
-					for (int i=tempSections.size();i>newRequired;i--){
-						tempSections.remove(i-1);
-					}
-					for (Section s : tempSections)
-						sections.add(s);
-				} else {
-					generateSection(true, course, newRequired - count, count);
+		ArrayList<Section> tempSections = getSectionOf(course);
+		int count = tempSections.size();
+		if (count != newRequired) {
+			if (newRequired < tempSections.size()) {
+				sections.removeAll(tempSections);
+				for (int i = tempSections.size(); i > newRequired; i--) {
+					tempSections.remove(i - 1);
 				}
+				for (Section s : tempSections)
+					sections.add(s);
+			} else {
+				generateSection(true, course, newRequired - count, count);
 			}
+		}
 		//}
 	}
 
@@ -352,7 +363,7 @@ public class ScheduleBuilder {
 		return tempVenues;
 	}
 
-	public ArrayList<Section> getSectionOf(Course course){
+	public ArrayList<Section> getSectionOf(Course course) {
 		ArrayList<Section> tempSections = new ArrayList<>();
 		for (Section s : sections)
 			if (s.getCourse().equals(course))

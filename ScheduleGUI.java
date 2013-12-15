@@ -4,6 +4,7 @@ import courseschedule.util.*;
 
 import java.awt.*;
 import java.awt.event.*;
+import java.util.*;
 import javax.swing.*;
 
 public class ScheduleGUI extends JPanel {
@@ -17,6 +18,9 @@ public class ScheduleGUI extends JPanel {
 	private JLabel textLabel;
 
 	// VARIABLES FOR MID PANELS
+	private final JPanel midLowerPanelContainer = new JPanel();
+	LecturerList LecturerLister = null;
+	VenueList VenueLister = null;
 	private JPanel middlePanel, midUpperPanel, midMiddlePanel, midLeftPanel, midRightPanel;
 	private TimePicker midLowerPanel;
 	private Section section;
@@ -24,11 +28,11 @@ public class ScheduleGUI extends JPanel {
 	private Venue venue;
 
 	// MIDLEFTPANEL'S 
-	private CustomField[] mltextField = new CustomField[1];
+	private FieldButton[] mltextField = new FieldButton[1];
 	private CustomLabel[] mltextLabel = {new CustomLabel("LECTURER")};
 
 	// MIDRIGHTPANEL'S
-	private CustomField[] mrtextField = new CustomField[1];
+	private FieldButton[] mrtextField = new FieldButton[1];
 	private CustomLabel[] mrtextLabel = {new CustomLabel("VENUE")};
 
 	// VARIABLES FOR BOTTOM PANEL
@@ -70,8 +74,27 @@ public class ScheduleGUI extends JPanel {
 		midLeftPanel.setLayout(new BoxLayout(midLeftPanel, BoxLayout.Y_AXIS));
 		
 		for(int i=0; i<1; i++) {
-			mltextField[i] = new CustomField();
-			mltextField[i].setText(section.detailsArray()[6]);
+			mltextField[i] = new FieldButton(section.detailsArray()[6]);
+			//mltextField[i].setText(section.detailsArray()[6]);
+			LecturerLister.setButton(mltextField[0]);
+			LecturerLister.setTheTimePicker(midLowerPanel);
+			mltextField[i].addActionListener(new ActionListener() {
+				@Override
+				public void actionPerformed(ActionEvent e) {
+					if (LecturerLister.isVisible()) {
+						midLowerPanel.reset(section.getDay(), section.getTime(), sb.getAvailableSlots(LecturerLister.getLecturer(), VenueLister.getVenue()));
+						midLowerPanel.setVisible(true);
+						LecturerLister.setVisible(false);
+						VenueLister.setVisible(false);
+					} else {
+						LecturerLister.setVisible(true);
+						midLowerPanel.setVisible(false);
+						VenueLister.setVisible(false);
+					}
+					midLowerPanelContainer.revalidate();
+					midLowerPanelContainer.repaint();
+				}
+			});
 			midLeftPanel.add(mltextLabel[i]);
 			midLeftPanel.add(mltextField[i]);
 			midLeftPanel.add(Box.createRigidArea(new Dimension(0,10)));
@@ -81,8 +104,27 @@ public class ScheduleGUI extends JPanel {
 		midRightPanel.setLayout(new BoxLayout(midRightPanel, BoxLayout.Y_AXIS));
 		
 		for(int i=0; i<1; i++) {
-			mrtextField[i] = new CustomField();
-			mrtextField[i].setText(section.detailsArray()[7]);
+			mrtextField[i] = new FieldButton(section.detailsArray()[7]);
+			//mltextField[i].setText(section.detailsArray()[7]);
+			VenueLister.setButton(mrtextField[0]);
+			mrtextField[i].addActionListener(new ActionListener() {
+				@Override
+				public void actionPerformed(ActionEvent e) {
+					if (VenueLister.isVisible()) {
+						midLowerPanel.reset(section.getDay(), section.getTime(), sb.getAvailableSlots(LecturerLister.getLecturer(), VenueLister.getVenue()));
+						midLowerPanel.setVisible(true);
+						VenueLister.setVisible(false);
+						LecturerLister.setVisible(false);
+					} else {
+						midLowerPanel.setVisible(false);
+						LecturerLister.setVisible(false);
+						VenueLister.setVisible(true);
+						VenueLister.setLocation(0,0);
+					}
+					midLowerPanelContainer.revalidate();
+					midLowerPanelContainer.repaint();
+				}
+			});
 			midRightPanel.add(mrtextLabel[i]);
 			midRightPanel.add(mrtextField[i]);
 			midRightPanel.add(Box.createRigidArea(new Dimension(0,10)));
@@ -138,7 +180,7 @@ public class ScheduleGUI extends JPanel {
 						case 1:
 							textLabel[j] = new CustomLabel(section.detailsArray()[j+1]);
 							textLabel[j].setFont(font.getFontAbel(25,-0.05));
-							textLabel[j].setPreferredSize(new Dimension(287,26));
+							textLabel[j].setPreferredSize(new Dimension(600,26));
 							rowPane.add(textLabel[j]); 
 							rowPane.add(Box.createRigidArea(new Dimension(30,0)));
 							break;
@@ -169,7 +211,14 @@ public class ScheduleGUI extends JPanel {
 		middlePanel.add(midUpperPanel);
 		middlePanel.add(Box.createRigidArea(new Dimension(0,10)));
 		middlePanel.add(midMiddlePanel);
-		middlePanel.add(midLowerPanel);
+		//middlePanel.add(midLowerPanel);
+
+		midLowerPanelContainer.add(midLowerPanel);
+		midLowerPanelContainer.add(LecturerLister);
+		midLowerPanelContainer.add(VenueLister);
+		LecturerLister.setVisible(false);
+		VenueLister.setVisible(false);
+		middlePanel.add(midLowerPanelContainer);
 
 		add(middlePanel, BorderLayout.CENTER);
 	}
@@ -194,14 +243,23 @@ public class ScheduleGUI extends JPanel {
 
 	private class ButtonListener implements ActionListener {
 		public void actionPerformed(ActionEvent e) {
+			if(e.getSource() == saveBtn) {
+				int day = midLowerPanel.getDay(), time = midLowerPanel.getTime();
+				section.setLecturer(LecturerLister.getLecturer());
+				section.setVenue(VenueLister.getVenue());
+				if (midLowerPanel.hasConflict()){
+					Section s = sb.findSection(day, time, LecturerLister.getLecturer(), VenueLister.getVenue());
+					if (s != null) s.generateSchedule(true);
+					System.out.println(s);
+				}
+				section.setDayAndTime(day, time);
+				e.setSource(backBtn);
+			}
+
 			if(e.getSource() == backBtn) {
 				ScheduleTableGUI s = new ScheduleTableGUI();
 				s.setFrame(frame);
 				frame.setContentPane(s);
-			}
-
-			if(e.getSource() == saveBtn) {
-				// Some save commands
 			}
 
 			frame.revalidate();
@@ -212,6 +270,11 @@ public class ScheduleGUI extends JPanel {
 	public void setFrame(Frame frame) {
 		this.frame = frame;
 		sb = Frame.sb;
+
+		lecturer = section.getLecturer();
+		venue = section.getVenue();
+		LecturerLister = new LecturerList(sb, section.getCourse(), section.getLecturer(), 1);
+		VenueLister = new VenueList(sb, section.getCourse(), section.getVenue(), 1);
 
 		createTopPanel();
 		createMiddlePanel();

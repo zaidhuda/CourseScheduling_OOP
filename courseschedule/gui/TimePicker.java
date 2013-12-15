@@ -34,6 +34,18 @@ public class TimePicker extends JPanel {
 		this(day, time, null, slots);
 	}
 
+	public void reset(int day, int time, int[][] slots) {
+		this.day = day;
+		this.time = time;
+
+		selectMany = false;
+
+		this.slots[0] = Arrays.copyOf(slots[0], COL);
+		this.slots[1] = Arrays.copyOf(slots[1], COL);
+		removeAll();
+		drawTable();
+	}
+
 	public TimePicker(int day, int time, boolean[][] availability, int[][] slots) {
 		this.day = day;
 		this.time = time;
@@ -238,6 +250,7 @@ public class TimePicker extends JPanel {
 				return hasConflict;
 			}
 		}
+		hasConflict = false;
 		return true;
 	}
 
@@ -259,10 +272,10 @@ public class TimePicker extends JPanel {
 
 	public boolean[][] getConflict() {
 		boolean[][] conflicts = new boolean[ROW][COL];
-		for (int i=0;i<ROW;i++){
+		for (int i = 0; i < ROW; i++) {
 			//Arrays.fill(conflicts[i], true);
-			for (int j=0;j<COL;j++){
-				if (!oriAvailability[i][j] && availability[i][j] != oriAvailability[i][j]){
+			for (int j = 0; j < COL; j++) {
+				if (!oriAvailability[i][j] && availability[i][j] != oriAvailability[i][j]) {
 					conflicts[i][j] = true;
 				}
 			}
