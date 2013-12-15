@@ -1,21 +1,21 @@
 package courseschedule.gui;
 
-import java.awt.*;
 import javax.swing.*;
-import courseschedule.gui.*;
+import java.awt.*;
 
 public class FieldButton extends HoveringButton {
 	private CustomFont font = new CustomFont();
 
 	private String label;
-	public FieldButton(String label){
+
+	public FieldButton(String label) {
 		super();
 		this.label = label;
 		setCursor(new Cursor(Cursor.HAND_CURSOR));
 		setBackground(CustomColour.silvergray);
-		setBorder(BorderFactory.createCompoundBorder(BorderFactory.createEmptyBorder(),BorderFactory.createEmptyBorder(10,10,10,10)));
+		setBorder(BorderFactory.createCompoundBorder(BorderFactory.createEmptyBorder(), BorderFactory.createEmptyBorder(10, 10, 10, 10)));
 		setAlignmentX(JTextField.CENTER_ALIGNMENT);
-		setFont(font.getFontAbel(25,-0.05));
+		setFont(font.getFontAbel(25, -0.05));
 		setForeground(CustomColour.silverclouds);
 	}
 
@@ -33,10 +33,9 @@ public class FieldButton extends HoveringButton {
 		g.drawRect(0, 0, getWidth(), getHeight());
 		g.fillRect(0, 0, getWidth(), getHeight());
 
-		if(hovered) {
+		if (hovered) {
 			g.setColor(CustomColour.silver);
-		}
-		else {
+		} else {
 			g.setColor(CustomColour.silverclouds);
 		}
 		// draw the label centered in the button

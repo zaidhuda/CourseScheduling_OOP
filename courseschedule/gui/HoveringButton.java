@@ -10,11 +10,11 @@ import java.awt.event.*;
  * Time: 2:26 PM
  * Date: 12/15/13.
  */
-public class HoveringButton extends JComponent{
+public class HoveringButton extends JComponent {
 	ActionListener actionListener;
 	protected boolean hovered = false;
 
-	public HoveringButton(){
+	public HoveringButton() {
 		enableEvents(AWTEvent.MOUSE_EVENT_MASK);
 	}
 
@@ -71,8 +71,7 @@ public class HoveringButton extends JComponent{
 
 			case MouseEvent.MOUSE_RELEASED:
 				if (actionListener != null) {
-					actionListener.actionPerformed(new ActionEvent(
-							this, ActionEvent.ACTION_PERFORMED, null));
+					actionListener.actionPerformed(new ActionEvent(this, ActionEvent.ACTION_PERFORMED, null));
 				}
 				// render myself normal again
 				break;

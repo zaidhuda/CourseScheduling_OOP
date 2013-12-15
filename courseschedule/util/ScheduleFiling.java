@@ -3,7 +3,6 @@ package courseschedule.util;
 import courseschedule.*;
 
 import java.io.*;
-import java.util.*;
 
 /**
  * Created by Diaz

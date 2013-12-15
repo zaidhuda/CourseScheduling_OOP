@@ -81,7 +81,7 @@ abstract class Support {
 	public void removeCourse(String arg) {
 		arg = arg.replaceAll("\\s", "");
 		for (Course c : courses)
-			if (arg.equalsIgnoreCase(c.getCode())){
+			if (arg.equalsIgnoreCase(c.getCode())) {
 				courses.remove(c);
 				break;
 			}

@@ -186,7 +186,7 @@ public class Section {
 			if (lecturer.getSpecializations().contains(course.getCode()))
 				tempLecturers.add(lecturer);
 
-		if (tempLecturers.isEmpty()){
+		if (tempLecturers.isEmpty()) {
 			setLecturer(new Lecturer());
 			return;
 		}
