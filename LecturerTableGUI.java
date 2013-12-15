@@ -115,7 +115,7 @@ public class LecturerTableGUI extends JPanel {
 		bottomPanel.setBackground(CustomColour.silverclouds);
 
 		backBtn = new RoundedButton("BACK", 0);
-		addBtn = new RoundedButton("ADD LECTURER", 1);
+		addBtn = new RoundedButton("ADD", 1);
 
 		backBtn.setFont(font.getFontPTSans(15, Font.BOLD, -0.07));
 		backBtn.addActionListener(new ButtonListener());

@@ -230,11 +230,9 @@ public class Section {
 
 	public void generateSchedule(boolean random) {
 		if (venue != null && lecturer != null) {
-			boolean lecturerOccupied, venueUsed, lecturerFound = true, venueFound = true;
+			boolean lecturerOccupied, venueUsed, lecturerFound = false, venueFound = false;
 			String str = "Success. ";
-
-			if (day != -1 || time != -1)
-				setUsing(day, time, false);
+			int oldDay = day, oldTime = time;
 
 			int count = 0;
 
@@ -248,6 +246,8 @@ public class Section {
 						if (random)
 							i -= 12;
 						if (!setDayAndTime(i)) {
+							if (oldDay != -1 || oldTime != -1)
+								setUsing(oldDay, oldTime, false);
 							str = "Failed. ";
 							if (!venueFound)
 								str += "Not enough venue for " + course.getCode();
@@ -271,6 +271,9 @@ public class Section {
 			} while (lecturerOccupied || venueUsed);
 
 			setUsing(day, time, true);
+
+			if (oldDay != -1 || oldTime != -1)
+				setUsing(oldDay, oldTime, false);
 
 			if (studentLimit > venue.getStudentLimit())
 				str += "Student exceeds venue capacity.";

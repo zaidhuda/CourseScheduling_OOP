@@ -19,7 +19,7 @@ public class CourseTableGUI extends JPanel {
 
 	// VARIABLES FOR MID PANELS
 	private JPanel middlePanel;
-	private ArrayList<TableButton> list = new ArrayList<TableButton>();
+	private ArrayList<TableButton> list = new ArrayList<>();
 	private JScrollPane scrollPanel;
 	private OffsetFinder of;
 
@@ -119,7 +119,7 @@ public class CourseTableGUI extends JPanel {
 		bottomPanel.setBackground(CustomColour.silverclouds);
 
 		backBtn = new RoundedButton("BACK", 0);
-		addBtn = new RoundedButton("ADD COURSE", 1);
+		addBtn = new RoundedButton("ADD", 1);
 
 		backBtn.setFont(font.getFontPTSans(15, Font.BOLD, -0.07));
 		backBtn.addActionListener(new ButtonListener());

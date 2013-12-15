@@ -4,6 +4,7 @@ import courseschedule.util.*;
 
 import java.awt.*;
 import java.awt.event.*;
+import java.util.*;
 import javax.swing.*;
 
 public class LecturerGUI extends JPanel {
@@ -20,13 +21,14 @@ public class LecturerGUI extends JPanel {
 	private JPanel middlePanel, midUpperPanel, midLeftPanel, midRightPanel;
 	private TimePicker midLowerPanel;
 	private Lecturer lecturer;
+	CoursesList coursesLister = null;
 
 	// MIDLEFTPANEL'S 
 	private CustomField[] mltextField = new CustomField[1];
 	private CustomLabel[] mltextLabel = {new CustomLabel("LECTURER NAME")};
 
 	// MIDRIGHTPANEL'S
-	private CustomField[] mrtextField = new CustomField[1];
+	private FieldButton[] mrtextField = new FieldButton[1];
 	private CustomLabel[] mrtextLabel = {new CustomLabel("SPECIALIZATION")};
 
 	// VARIABLES FOR BOTTOM PANEL
@@ -77,8 +79,18 @@ public class LecturerGUI extends JPanel {
 		midRightPanel.setLayout(new BoxLayout(midRightPanel, BoxLayout.Y_AXIS));
 		
 		for(int i=0; i<1; i++) {
-			mrtextField[i] = new CustomField();
-			mrtextField[i].setText(lecturer.detailsArray()[1]);
+			mrtextField[i] = new FieldButton();
+			mrtextField[i].setText("Courses");
+			mrtextField[i].addActionListener(new ActionListener() {
+				@Override
+				public void actionPerformed(ActionEvent e) {
+					ArrayList<String> lCourses = new ArrayList<>(lecturer.getCourses());
+					coursesLister = new CoursesList(sb, lCourses, 3);
+					middlePanel.add(coursesLister);
+					middlePanel.revalidate();
+					middlePanel.repaint();
+				}
+			});
 			midRightPanel.add(mrtextLabel[i]);
 			midRightPanel.add(mrtextField[i]);
 			midRightPanel.add(Box.createRigidArea(new Dimension(0,10)));
@@ -105,7 +117,7 @@ public class LecturerGUI extends JPanel {
 		bottomPanel = new JPanel();
 		backBtn = new RoundedButton("BACK", 0);
 		removeBtn = new RoundedButton("REMOVE", 0);
-		addBtn = new RoundedButton("SAVE LECTURER", 1);
+		addBtn = new RoundedButton("SAVE", 1);
 
 		backBtn.setFont(font.getFontPTSans(15, Font.BOLD, -0.07));
 		backBtn.addActionListener(new ButtonListener());
@@ -134,12 +146,14 @@ public class LecturerGUI extends JPanel {
 
 			if(e.getSource() == addBtn) {
 				String name = mltextField[0].getText();
-				String specialization = mrtextField[0].getText();
 
 				if(!name.equals("")) {
+					boolean[][] availability = midLowerPanel.getAvailability();
+					boolean[][] conflicts = midLowerPanel.getConflict();
+					lecturer.setAvailability(availability);
+					sb.fixClash(lecturer, conflicts);
 					lecturer.setName(name);
-					lecturer.setCourses(sb.filterCodes(specialization));
-					lecturer.setAvailability(midLowerPanel.getAvailability());
+					if (coursesLister != null) lecturer.setCourses(coursesLister.getCourses());
 					sb.add(lecturer);
 				}
 

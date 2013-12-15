@@ -124,9 +124,11 @@ public class SquareButton extends JComponent {
      */
     @Override
     public boolean contains(int x, int y) {
-        int mx = getSize().width / 2;
-        int my = getSize().height / 2;
-        return (((mx - x) * (mx - x) + (my - y) * (my - y)) <= mx * mx);
+	    int mx = getSize().width;
+	    int my = getSize().height;
+	    boolean inX = x >= 0 && x <= mx;
+	    boolean inY = y >= 0 && y <= my;
+	    return (inX && inY);
     }
 
     /*
@@ -142,7 +144,7 @@ public class SquareButton extends JComponent {
             case MouseEvent.MOUSE_RELEASED:
                 if (actionListener != null) {
                     actionListener.actionPerformed(new ActionEvent(
-                            this, ActionEvent.ACTION_PERFORMED, label1));
+                            this, ActionEvent.ACTION_PERFORMED, null));
                 }
                 // render myself normal again
                 break;
