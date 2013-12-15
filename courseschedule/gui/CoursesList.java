@@ -1,9 +1,12 @@
+package courseschedule.gui;
+
 import courseschedule.gui.*;
 import courseschedule.util.*;
 
 import java.awt.*;
 import java.awt.event.*;
 import javax.swing.*;
+import java.awt.image.*;
 import java.util.*;
 
 public class CoursesList extends JPanel {
@@ -30,7 +33,7 @@ public class CoursesList extends JPanel {
 
 		JPanel row = new JPanel();
 		JScrollPane scrollPanel = new JScrollPane(row);
-		scrollPanel.setPreferredSize(new Dimension(600, 280));
+		scrollPanel.setPreferredSize(new Dimension(600, 220));
 		scrollPanel.setBorder(BorderFactory.createEmptyBorder());
 		scrollPanel.getVerticalScrollBar().setUI(new CustomScrollBarUI(1));
 		scrollPanel.setHorizontalScrollBar(null);
@@ -49,19 +52,7 @@ public class CoursesList extends JPanel {
 		}
 
 		containerRow.add(scrollPanel);
-
-		JPanel bottomPanel = new JPanel();
-		RoundedButton backBtn = new RoundedButton("BACK", 0);
-
-		CustomFont font = new CustomFont();
-		backBtn.setFont(font.getFontPTSans(15, Font.BOLD, -0.07));
-
-		bottomPanel.add(backBtn);
-		bottomPanel.add(Box.createRigidArea(new Dimension(10,0)));
-		add(bottomPanel, BorderLayout.SOUTH);
-
 		add(containerRow, BorderLayout.NORTH);
-		add(bottomPanel, BorderLayout.SOUTH);
 	}
 
 	private class ButtonListener implements ActionListener {
