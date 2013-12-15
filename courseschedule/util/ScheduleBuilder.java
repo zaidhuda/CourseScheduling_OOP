@@ -1,5 +1,6 @@
 package courseschedule.util;
 
+import com.sun.xml.internal.bind.v2.runtime.reflect.opt.*;
 import courseschedule.*;
 
 import java.util.*;
@@ -11,7 +12,8 @@ import java.util.*;
  * Date: 12/8/13.
  */
 public class ScheduleBuilder {
-
+	private final int ROW = 2;
+	private final int COL = 6;
 	public ArrayList<Course> courses = new ArrayList<>();
 	public ArrayList<Lecturer> lecturers = new ArrayList<>();
 	public ArrayList<Venue> venues = new ArrayList<>();
@@ -128,6 +130,15 @@ public class ScheduleBuilder {
 		return str;
 	}
 
+	public String[][] getCodeandTitle() {
+		String[][] str = new String[courses.size()][];
+		for (int i = 0; i < courses.size(); i++) {
+			String[] arr = courses.get(i).getCodeandTitle();
+			str[i] = arr;
+		}
+		return str;
+	}
+
 	public String[][] getLecturers() {
 		String[][] str = new String[lecturers.size()][];
 		for (int i = 0; i < lecturers.size(); i++) {
@@ -223,6 +234,26 @@ public class ScheduleBuilder {
 			}
 		}
 		return null;
+	}
+
+	public void fixClash(Lecturer lecturer, boolean[][] conflicts){
+		if (lecturers.contains(lecturer))
+			for (int i=0;i<ROW;i++)
+				for (int j=0;j<COL;j++)
+					if (conflicts[i][j]){
+						Section s = getClassAt(i, j, lecturer);
+						if (s != null) s.generateSchedule(true);
+					}
+	}
+
+	public void fixClash(Venue venue, boolean[][] conflicts){
+		if (venues.contains(venue))
+			for (int i=0;i<ROW;i++)
+				for (int j=0;j<COL;j++)
+					if (conflicts[i][j]){
+						Section s = getClassAt(i, j, venue);
+						if (s != null) s.generateSchedule(true);
+					}
 	}
 
 	public void forceReSchedule(int newDay, int newTime, Section theSection) {

@@ -105,7 +105,7 @@ public class VenueGUI extends JPanel {
 		bottomPanel = new JPanel();
 		backBtn = new RoundedButton("BACK", 0);
 		removeBtn = new RoundedButton("REMOVE", 0);
-		addBtn = new RoundedButton("SAVE VENUE", 1);
+		addBtn = new RoundedButton("SAVE", 1);
 
 		backBtn.setFont(font.getFontPTSans(15, Font.BOLD, -0.07));
 		backBtn.addActionListener(new ButtonListener());
@@ -137,6 +137,10 @@ public class VenueGUI extends JPanel {
 				String specialization = mrtextField[0].getText();
 
 				if(!name.equals("")) {
+					boolean[][] availability = midLowerPanel.getAvailability();
+					boolean[][] conflicts = midLowerPanel.getConflict();
+					venue.setAvailability(availability);
+					sb.fixClash(venue, conflicts);
 					venue.setName(name);
 					venue.setCourses(sb.filterCodes(specialization));
 					sb.add(venue);

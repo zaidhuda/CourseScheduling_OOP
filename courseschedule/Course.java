@@ -110,6 +110,13 @@ public class Course {
 		return str;
 	}
 
+	public String[] getCodeandTitle() {
+		String[] str = new String[2];
+		str[0] = getCode();
+		str[1] = getTitle();
+		return str;
+	}
+
 	public String toString() {
 		return getCode() + " " + getTitle() + " " + getCredit();
 	}

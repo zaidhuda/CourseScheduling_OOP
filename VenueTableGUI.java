@@ -116,7 +116,7 @@ public class VenueTableGUI extends JPanel {
 		bottomPanel.setBackground(CustomColour.getSilverClouds());
 
 		backBtn = new RoundedButton("BACK", 0);
-		addBtn = new RoundedButton("ADD VENUE", 1);
+		addBtn = new RoundedButton("ADD", 1);
 
 		backBtn.setFont(font.getFontPTSans(15, Font.BOLD, -0.07));
 		backBtn.addActionListener(new ButtonListener());

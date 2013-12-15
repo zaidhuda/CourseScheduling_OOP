@@ -141,9 +141,11 @@ public class RoundedButton extends JComponent {
      */
     @Override
     public boolean contains(int x, int y) {
-        int mx = getSize().width / 2;
-        int my = getSize().height / 2;
-        return (((mx - x) * (mx - x) + (my - y) * (my - y)) <= mx * mx);
+	    int mx = getSize().width;
+	    int my = getSize().height;
+	    boolean inX = x >= 0 && x <= mx;
+	    boolean inY = y >= 0 && y <= my;
+	    return (inX && inY);
     }
 
     /**
@@ -151,7 +153,6 @@ public class RoundedButton extends JComponent {
      */
     @Override
     public void processMouseEvent(MouseEvent e) {
-        Graphics g;
         switch (e.getID()) {
             case MouseEvent.MOUSE_PRESSED:
 
@@ -175,7 +176,7 @@ public class RoundedButton extends JComponent {
                 break;
 
             case MouseEvent.MOUSE_EXITED:
-                if (hovered == true) {
+                if (hovered) {
                     // Cancel! Don't send action event.
                     hovered = false;
 

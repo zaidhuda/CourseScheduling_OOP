@@ -11,11 +11,11 @@ public class TimePicker extends JPanel {
 	private int SIZE = 94;
 	private int day = -1;
 	private int time = -1;
-	public int SPACE = 0;
 	private int[][] slots = null;
 	//
 
 	private boolean[][] availability;
+	private boolean[][] oriAvailability;
 	private boolean selectMany;
 	private boolean hasConflict = false;
 	private boolean obeyConflict = true;
@@ -25,7 +25,6 @@ public class TimePicker extends JPanel {
 	private ButtonListener bl = new ButtonListener();
 
 	private CustomFont font = new CustomFont();
-	private CustomColour color = new CustomColour();
 
 	public TimePicker(boolean[][] availability) {
 		this(-1, -1, availability, null);
@@ -45,6 +44,7 @@ public class TimePicker extends JPanel {
 			this.availability = new boolean[ROW][COL];
 			this.availability[0] = Arrays.copyOf(availability[0], COL);
 			this.availability[1] = Arrays.copyOf(availability[1], COL);
+			oriAvailability = availability;
 		} else {
 			this.slots = new int[ROW][COL];
 			this.slots[0] = Arrays.copyOf(slots[0], COL);
@@ -59,68 +59,68 @@ public class TimePicker extends JPanel {
 		button = new SButton[ROW * COL];
 		String[] str = {"<html><p align=right>MONDAY<br>WEDNESDAY</p></html>", "<html><p align=right>TUESDAY<br>THURSDAY</p></html>", "0830", "1000", "1130", "1400", "1530", "1700"};
 
-		for (int i = 0; i < (ROW + 1); ++i) {
-			JPanel rowPane = new JPanel();
+		JPanel rowPane = new JPanel();
+		rowPane.setLayout(new BoxLayout(rowPane, BoxLayout.LINE_AXIS));
+		rowPane.add(Box.createRigidArea(new Dimension((SIZE - 25), 0)));
+		for (int j = 0; j < COL; j++) {
+			JLabel timeLabel = new JLabel(str[j + 2]);
+			timeLabel.setPreferredSize(new Dimension(SIZE, (SIZE - 65)));
+			timeLabel.setMaximumSize(timeLabel.getPreferredSize());
+			timeLabel.setMinimumSize(timeLabel.getPreferredSize());
+			timeLabel.setVerticalAlignment(JLabel.BOTTOM);
+			timeLabel.setFont(font.getFontAbel(18, -0.05));
+			timeLabel.setForeground(CustomColour.silver);
+			rowPane.add(timeLabel);
+			if (j == 2)
+				rowPane.add(Box.createRigidArea(new Dimension(30, 0)));
+			else
+				rowPane.add(Box.createRigidArea(new Dimension(3, 0)));
+		}
+		rowPane.add(Box.createRigidArea(new Dimension((SIZE - 25), 0)));
+		add(rowPane);
+
+		for (int i = 0; i < ROW; ++i) {
+			rowPane = new JPanel();
 			rowPane.setLayout(new BoxLayout(rowPane, BoxLayout.LINE_AXIS));
-			if (i == 0) {
-				rowPane.add(Box.createRigidArea(new Dimension((SIZE - 25), 0)));
-				for (int j = 0; j < COL; j++) {
-					JLabel timeLabel = new JLabel(str[j + 2]);
-					timeLabel.setPreferredSize(new Dimension(SIZE, (SIZE - 65)));
-					timeLabel.setMaximumSize(timeLabel.getPreferredSize());
-					timeLabel.setMinimumSize(timeLabel.getPreferredSize());
-					timeLabel.setVerticalAlignment(JLabel.BOTTOM);
-					timeLabel.setFont(font.getFontAbel(18, -0.05));
-					timeLabel.setForeground(CustomColour.silver);
-					rowPane.add(timeLabel);
-					if (j == 2)
-						rowPane.add(Box.createRigidArea(new Dimension(30, 0)));
-					else
-						rowPane.add(Box.createRigidArea(new Dimension(3, 0)));
+			JLabel dayLabel = new JLabel(str[i]);
+			dayLabel.setPreferredSize(new Dimension((SIZE - 25), SIZE));
+			dayLabel.setMaximumSize(dayLabel.getPreferredSize());
+			dayLabel.setMinimumSize(dayLabel.getPreferredSize());
+			dayLabel.setVerticalAlignment(JLabel.BOTTOM);
+			dayLabel.setVerticalTextPosition(JLabel.BOTTOM);
+			dayLabel.setForeground(CustomColour.silver);
+			// dayLabel.setFont(font.getFontAbel(15)); //SLOWS DOWN PERFORMANCE
+			rowPane.add(dayLabel);
+
+			for (int j = 0; j < COL; ++j) {
+				int k = (i * COL) + j;
+				button[k] = new SButton();
+				button[k].putClientProperty("index", k);
+				button[k].addActionListener(bl);
+
+				if (selectMany) {
+					setColor(button[k], availability[i][j] ? 0 : 3);
+				} else {
+					setColor(button[k], slots[i][j]);
 				}
-				rowPane.add(Box.createRigidArea(new Dimension((SIZE - 25), 0)));
-				add(rowPane);
-			} else {
-				JLabel dayLabel = new JLabel(str[i - 1]);
-				dayLabel.setPreferredSize(new Dimension((SIZE - 25), SIZE));
-				dayLabel.setMaximumSize(dayLabel.getPreferredSize());
-				dayLabel.setMinimumSize(dayLabel.getPreferredSize());
-				dayLabel.setVerticalAlignment(JLabel.BOTTOM);
-				dayLabel.setVerticalTextPosition(JLabel.BOTTOM);
-				dayLabel.setForeground(CustomColour.silver);
-				// dayLabel.setFont(font.getFontAbel(15)); //SLOWS DOWN PERFORMANCE
-				rowPane.add(dayLabel);
+				button[k].putClientProperty("original", false);
 
-				for (int j = 0; j < COL; ++j) {
-					int k = ((i - 1) * 6) + j;
-					button[k] = new SButton();
-					button[k].putClientProperty("index", k);
-					button[k].addActionListener(bl);
+				rowPane.add(button[k]);
 
-					if (selectMany) {
-						setColor(button[k], availability[i - 1][j] ? 0 : 3);
-					} else {
-						setColor(button[k], slots[i - 1][j]);
-					}
-					button[k].putClientProperty("original", false);
-
-					rowPane.add(button[k]);
-
-					if (j == 2)
-						rowPane.add(Box.createRigidArea(new Dimension(30, 0)));
-					else
-						rowPane.add(Box.createRigidArea(new Dimension(3, 0)));
-				}
-				rowPane.add(Box.createRigidArea(dayLabel.getPreferredSize()));
-				add(rowPane);
-				add(Box.createRigidArea(new Dimension(0, 3)));
+				if (j == 2)
+					rowPane.add(Box.createRigidArea(new Dimension(30, 0)));
+				else
+					rowPane.add(Box.createRigidArea(new Dimension(3, 0)));
 			}
+			rowPane.add(Box.createRigidArea(dayLabel.getPreferredSize()));
+			add(rowPane);
+			add(Box.createRigidArea(new Dimension(0, 3)));
 		}
 
 		if (!selectMany && (day != -1 && time != -1)) {
-			button[(day * 6) + time].putClientProperty("original", true);
-			button[(day * 6) + time].setBackground(Color.green);
-			button[(day * 6) + time].setEnabled(false);
+			button[(day * COL) + time].putClientProperty("original", true);
+			button[(day * COL) + time].setBackground(Color.green);
+			button[(day * COL) + time].setEnabled(false);
 		}
 
 		setLayout(new BoxLayout(this, BoxLayout.PAGE_AXIS));
@@ -180,8 +180,8 @@ public class TimePicker extends JPanel {
 		public void actionPerformed(ActionEvent e) {
 			JButton currentButton = (JButton) e.getSource();
 			final int index = (int) currentButton.getClientProperty("index");
-			day = (index < 6) ? 0 : 1;
-			time = index % 6;
+			day = (index < COL) ? 0 : 1;
+			time = index % COL;
 
 			if (selectMany) {
 				Color btnBack = currentButton.getBackground();
@@ -201,7 +201,6 @@ public class TimePicker extends JPanel {
 							currentButton.setBackground(Color.white);
 							availability[day][time] = !availability[day][time];
 						}
-				System.out.println(Arrays.deepToString(availability));
 			} else
 				if (obeyConflict()) {
 					for (JButton btn : button) {
@@ -220,8 +219,8 @@ public class TimePicker extends JPanel {
 
 	private boolean obeyConflict() {
 		hasConflict = false;
-		int avail = (int) button[(day * 6) + time].getClientProperty("availability");
-		if (avail != 0 && !(boolean) button[(day * 6) + time].getClientProperty("original")) {
+		int avail = (int) button[(day * COL) + time].getClientProperty("availability");
+		if (avail != 0 && !(boolean) button[(day * COL) + time].getClientProperty("original")) {
 			String note = null;
 			switch (avail) {
 				case 1:
@@ -256,6 +255,19 @@ public class TimePicker extends JPanel {
 
 	public boolean[][] getAvailability() {
 		return availability;
+	}
+
+	public boolean[][] getConflict() {
+		boolean[][] conflicts = new boolean[ROW][COL];
+		for (int i=0;i<ROW;i++){
+			//Arrays.fill(conflicts[i], true);
+			for (int j=0;j<COL;j++){
+				if (!oriAvailability[i][j] && availability[i][j] != oriAvailability[i][j]){
+					conflicts[i][j] = true;
+				}
+			}
+		}
+		return conflicts;
 	}
 
 	public boolean hasConflict() {
