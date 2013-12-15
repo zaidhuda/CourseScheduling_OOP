@@ -77,8 +77,8 @@ public class ScheduleFiling {
 			case LECTURER: { // TODO try combine with venue below
 
 				boolean[][] bool = new boolean[2][6];
-				String[] c = splits[1].replaceAll("\\[", "").replaceAll("]", "").split(", ");
-				String[] b = splits[2].replaceAll("\\[", "").replaceAll("]", "").split(", ");
+				String[] c = splits[1].replaceAll("[\\[\\]]", "").split(", ");
+				String[] b = splits[2].replaceAll("[\\[\\]]", "").split(", ");
 
 				for (int i = 0; i < 2; i++)
 					for (int j = 0; j < 6; j++)
@@ -94,8 +94,8 @@ public class ScheduleFiling {
 			case VENUE: {
 
 				boolean[][] bool = new boolean[2][6];
-				String[] c = splits[1].replaceAll("\\[", "").replaceAll("]", "").split(", ");
-				String[] b = splits[2].replaceAll("\\[", "").replaceAll("]", "").split(", ");
+				String[] c = splits[1].replaceAll("[\\[\\]]", "").split(", ");
+				String[] b = splits[2].replaceAll("[\\[\\]]", "").split(", ");
 
 				for (int i = 0; i < 2; i++)
 					for (int j = 0; j < 6; j++)

@@ -30,7 +30,7 @@ public class DropList extends JPanel {
 	public DropList(ScheduleBuilder sb, ArrayList<String> lCourses, int limit) {
 		this.sb = sb;
 		this.lCourses = lCourses;
-		this.limit = (limit != -1) ? limit : sb.courses.size();
+		this.limit = (limit != -1) ? limit : sb.courses.size()+1;
 		label = sb.getCodeandTitle();
 		makeParts();
 	}
@@ -121,11 +121,10 @@ public class DropList extends JPanel {
 					if (lCourses.contains(code)) {
 						lCourses.remove(code);
 						list.get(i).setBackground(CustomColour.silverclouds);
-					} else
-						if (lCourses.size() < limit) {
-							lCourses.add(code);
-							list.get(i).setBackground(CustomColour.silvergray);
-						}
+					} else if (lCourses.size() < limit) {
+						lCourses.add(code);
+						list.get(i).setBackground(CustomColour.silvergray);
+					}
 					Collections.sort(lCourses);
 					theInvoker.setLabel(lCourses.toString().replaceAll("[\\[\\]]", ""));
 				}

@@ -166,7 +166,6 @@ public class LecturerGUI extends JPanel {
 					if (coursesLister != null) lecturer.setCourses(coursesLister.getCourses());
 					sb.add(lecturer);
 				}
-
 				e.setSource(backBtn);
 			}
 			

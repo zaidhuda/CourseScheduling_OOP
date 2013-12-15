@@ -31,7 +31,7 @@ public class VenueTableGUI extends JPanel {
 	private JPanel containerRow = new JPanel();
 	private JPanel row = new JPanel();
 	private String[][] label = {
-		{ "LAB 6" },
+		{ "", "" },
 		// { "LAB 6" },
 		// { "LAB 6" },
 	};

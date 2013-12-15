@@ -31,7 +31,7 @@ public class LecturerTableGUI extends JPanel {
 	private JPanel containerRow = new JPanel();
 	private JPanel row = new JPanel();
 	private String[][] label = {
-		{ "Dr Suriani" },
+		{ "", "" },
 		// { "Dr Suriani" },
 		// { "Dr Suriani" },
 	};

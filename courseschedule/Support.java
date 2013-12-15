@@ -174,7 +174,7 @@ abstract class Support {
 	public String[] detailsArray() {
 		String[] str = new String[2];
 		str[0] = getName();
-		str[1] = getCourses().toString().replaceAll("\\[", "").replaceAll("]", "");
+		str[1] = getCourses().toString().replaceAll("[\\[\\]]", "");
 		return str;
 	}
 

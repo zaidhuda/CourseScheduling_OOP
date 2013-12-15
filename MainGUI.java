@@ -98,15 +98,19 @@ public class MainGUI extends JPanel {
 		private class ButtonListener implements ActionListener {
 			public void actionPerformed(ActionEvent e) {
 				if(e.getSource() == btn[0]) {
-					CourseTableGUI c = new CourseTableGUI();
-					c.setFrame(frame);
-					frame.setContentPane(c);
+						CourseTableGUI c = new CourseTableGUI();
+						c.setFrame(frame);
+						frame.setContentPane(c);
 				}
 
 				if(e.getSource() == btn[1]) {
-					LecturerTableGUI l = new LecturerTableGUI();
-					l.setFrame(frame);
-					frame.setContentPane(l);
+					if (!sb.courses.isEmpty()){
+						LecturerTableGUI l = new LecturerTableGUI();
+						l.setFrame(frame);
+						frame.setContentPane(l);
+					} else {
+						JOptionPane.showMessageDialog(null, "Create at least one Course first");
+					}
 				}
 				frame.revalidate();
 				frame.repaint();
@@ -164,15 +168,24 @@ public class MainGUI extends JPanel {
 		private class ButtonListener implements ActionListener {
 			public void actionPerformed(ActionEvent e) {
 				if(e.getSource() == btn[0]) {
-					VenueTableGUI v = new VenueTableGUI();
-					v.setFrame(frame);
-					frame.setContentPane(v);
+					if (!sb.courses.isEmpty()){
+						VenueTableGUI v = new VenueTableGUI();
+						v.setFrame(frame);
+						frame.setContentPane(v);
+					} else {
+						JOptionPane.showMessageDialog(null, "Create at least one Course first");
+					}
 				}
 
 				if(e.getSource() == btn[1]) {
-					ScheduleTableGUI st = new ScheduleTableGUI();
-					st.setFrame(frame);
-					frame.setContentPane(st);
+					if (!sb.courses.isEmpty() || !sb.lecturers.isEmpty() || !sb.venues.isEmpty()){
+						ScheduleTableGUI st = new ScheduleTableGUI();
+						st.setFrame(frame);
+						frame.setContentPane(st);
+
+					} else {
+						JOptionPane.showMessageDialog(null, "Create at least one Course, Lecturer and Venue first");
+					}
 				}
 
 				frame.revalidate();

@@ -13,7 +13,7 @@ public class CoursesList extends DropList {
 
 	public ArrayList<Course> getCourses() {
 		Collections.sort(lCourses);
-		String[] c = lCourses.toString().replaceAll("\\[", "").replaceAll("]", "").split(", ");
+		String[] c = lCourses.toString().replaceAll("[\\[\\] ]", "").split(",");
 		return sb.getCourses(c);
 	}
 }

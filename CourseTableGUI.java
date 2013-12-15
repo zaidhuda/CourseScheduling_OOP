@@ -31,7 +31,7 @@ public class CourseTableGUI extends JPanel {
 	private JPanel containerRow = new JPanel();
 	private JPanel row = new JPanel();
 	private String[][] label = {
-		{ "CSC1100",  "Elements Of Programming",  "3",  "4" },
+		{ "",  "",  "",  "" },
 		// { "CSC1102",  "Web Programming",  "3",  "1" },
 		// { "CSC1103",  "Object Oriented Programming",  "3",  "2" },
 	};

@@ -29,7 +29,7 @@ public class VenueGUI extends JPanel {
 	private CustomLabel[] mltextLabel = {new CustomLabel("VENUE NAME")};
 
 	// MIDRIGHTPANEL'S
-	private static final FieldButton[] mrtextField = new FieldButton[1];
+	private FieldButton[] mrtextField = new FieldButton[1];
 	private CustomLabel[] mrtextLabel = {new CustomLabel("COURSE LIST")};
 
 	// VARIABLES FOR BOTTOM PANEL
@@ -166,7 +166,6 @@ public class VenueGUI extends JPanel {
 					if (coursesLister != null) venue.setCourses(coursesLister.getCourses());
 					sb.add(venue);
 				}
-
 				e.setSource(backBtn);
 			}
 
