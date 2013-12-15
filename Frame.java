@@ -13,7 +13,7 @@ public class Frame extends JFrame {
 	public void initFrame() {
 		setTitle("Course Scheduling App");
 		setVisible(true);
-		setDefaultCloseOperation(EXIT_ON_CLOSE);
+		setDefaultCloseOperation(WindowConstants.DISPOSE_ON_CLOSE);
 		sf.load();
 	}
 
@@ -36,7 +36,7 @@ public class Frame extends JFrame {
 		MainGUI s = new MainGUI();
 		// CourseGUI s = new CourseGUI();
 		Frame frame = new Frame();
-		
+
 		frame.initFrame();
 		frame.setContentPane(s);
 		frame.pack();

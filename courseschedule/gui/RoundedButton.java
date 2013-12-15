@@ -1,16 +1,11 @@
 package courseschedule.gui;
 
 import java.awt.*;
-import java.awt.event.*;
-import javax.swing.*;
 
-public class RoundedButton extends JComponent {
+public class RoundedButton extends HoveringButton {
 
-    ActionListener actionListener;     // Post action events to listeners
     String label;                      // The Button's text
-    int code;
-    private CustomColour color = new CustomColour();
-    protected boolean hovered = false; // true if the button is detented.
+	Color c;
 
     /**
      * Constructs a RoundedButton with no label.
@@ -26,13 +21,11 @@ public class RoundedButton extends JComponent {
      */
     public RoundedButton(String label) {
         this.label = label;
-        enableEvents(AWTEvent.MOUSE_EVENT_MASK);
     }
 
     public RoundedButton(String label, int code) {
         this.label = label;
-        this.code = code;
-        enableEvents(AWTEvent.MOUSE_EVENT_MASK);
+	    c = (code == 0)? CustomColour.lighterred : CustomColour.lighterblue;
         setCursor(new Cursor(Cursor.HAND_CURSOR));
     }
 
@@ -64,32 +57,12 @@ public class RoundedButton extends JComponent {
 
         // paint the interior of the button
         if(hovered) {
-            if(code == 0)
-                g.setColor(CustomColour.lighterred.brighter());
-            if(code == 1)
-                g.setColor(CustomColour.lighterblue.brighter());
+            g.setColor(c.brighter());
         }
         else {
-            if(code == 0)
-                g.setColor(CustomColour.lighterred);
-            if(code == 1)
-                g.setColor(CustomColour.lighterblue);
+	        g.setColor(c);
         }
         g.fillRoundRect(0, 0, getWidth() - 1, getHeight() - 1, 15, 15);
-
-        // draw the perimeter of the button
-        if(hovered) {
-            if(code == 0)
-                g.setColor(CustomColour.lighterred.brighter());
-            if(code == 1)
-                g.setColor(CustomColour.lighterblue.brighter());
-        }
-        else {
-            if(code == 0)
-                g.setColor(CustomColour.lighterred);
-            if(code == 1)
-                g.setColor(CustomColour.lighterblue);
-        }
         g.drawRoundRect(0, 0, getWidth() - 1, getHeight() - 1, 15, 15);
 
         // draw the label centered in the button
@@ -105,87 +78,5 @@ public class RoundedButton extends JComponent {
 
     public Dimension getPreferredSize() {
         return new Dimension(141, 42);
-    }
-
-    public Dimension getMinimumSize() {
-        return getPreferredSize();
-    }
-
-    public Dimension getMaximumSize() {
-        return getPreferredSize();
-    }
-
-    /**
-     * Adds the specified action listener to receive action events from this
-     * button.
-     *
-     * @param listener the action listener
-     */
-    public void addActionListener(ActionListener listener) {
-        actionListener = AWTEventMulticaster.add(actionListener, listener);
-        enableEvents(AWTEvent.MOUSE_EVENT_MASK);
-    }
-
-    /**
-     * Removes the specified action listener so it no longer receives action
-     * events from this button.
-     *
-     * @param listener the action listener
-     */
-    public void removeActionListener(ActionListener listener) {
-        actionListener = AWTEventMulticaster.remove(actionListener, listener);
-    }
-
-    /**
-     * Determine if click was inside round button.
-     */
-    @Override
-    public boolean contains(int x, int y) {
-	    int mx = getSize().width;
-	    int my = getSize().height;
-	    boolean inX = x >= 0 && x <= mx;
-	    boolean inY = y >= 0 && y <= my;
-	    return (inX && inY);
-    }
-
-    /**
-     * Paints the button and distribute an action event to all listeners.
-     */
-    @Override
-    public void processMouseEvent(MouseEvent e) {
-        switch (e.getID()) {
-            case MouseEvent.MOUSE_PRESSED:
-
-                break;
-
-            case MouseEvent.MOUSE_RELEASED:
-                if (actionListener != null) {
-                    actionListener.actionPerformed(new ActionEvent(
-                            this, ActionEvent.ACTION_PERFORMED, label));
-                }
-                // render myself normal again
-                break;
-
-            case MouseEvent.MOUSE_ENTERED:
-                // render myself inverted....
-                hovered = true;
-
-                // Repaint might flicker a bit. To avoid this, you can use
-                // double buffering (see the Gauge example).
-                repaint();
-                break;
-
-            case MouseEvent.MOUSE_EXITED:
-                if (hovered) {
-                    // Cancel! Don't send action event.
-                    hovered = false;
-
-                    // Repaint might flicker a bit. To avoid this, you can use
-                    // double buffering (see the Gauge example).
-                    repaint();
-                }
-                break;
-        }
-        super.processMouseEvent(e);
     }
 }

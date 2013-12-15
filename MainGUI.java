@@ -101,15 +101,15 @@ public class MainGUI extends JPanel {
 					CourseTableGUI c = new CourseTableGUI();
 					c.setFrame(frame);
 					frame.setContentPane(c);
-					frame.pack();
 				}
 
 				if(e.getSource() == btn[1]) {
 					LecturerTableGUI l = new LecturerTableGUI();
 					l.setFrame(frame);
 					frame.setContentPane(l);
-					frame.pack();
 				}
+				frame.revalidate();
+				frame.repaint();
 			}
 		}
 	}
@@ -167,15 +167,16 @@ public class MainGUI extends JPanel {
 					VenueTableGUI v = new VenueTableGUI();
 					v.setFrame(frame);
 					frame.setContentPane(v);
-					frame.pack();
 				}
 
 				if(e.getSource() == btn[1]) {
 					ScheduleTableGUI st = new ScheduleTableGUI();
 					st.setFrame(frame);
 					frame.setContentPane(st);
-					frame.pack();
 				}
+
+				frame.revalidate();
+				frame.repaint();
 			}
 		}
 	}

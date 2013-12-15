@@ -86,7 +86,7 @@ public class ScheduleFiling {
 						bool[i][j] = Boolean.parseBoolean(b[(i * 6) + j]);
 
 				Lecturer lecturer = new Lecturer(splits[0]);
-				lecturer.addCourses(new ArrayList<>(Arrays.asList(c)));
+				lecturer.setCourses(sb.getCourses(c));
 				lecturer.setAvailability(bool);
 				sb.add(lecturer);
 				break;
@@ -103,7 +103,7 @@ public class ScheduleFiling {
 						bool[i][j] = Boolean.parseBoolean(b[(i * 6) + j]);
 
 				Venue venue = new Venue(splits[0], bool);
-				venue.addCourses(new ArrayList<>(Arrays.asList(c)));
+				venue.setCourses(sb.getCourses(c));
 				venue.setStudentLimit(Integer.parseInt(splits[3]));
 				sb.add(venue);
 				break;

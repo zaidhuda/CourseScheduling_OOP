@@ -80,8 +80,8 @@ public class LecturerGUI extends JPanel {
 		midRightPanel.setLayout(new BoxLayout(midRightPanel, BoxLayout.Y_AXIS));
 		
 		for(int i=0; i<1; i++) {
-			mrtextField[i] = new FieldButton();
-			mrtextField[i].setText(lecturer.detailsArray()[1]);
+			mrtextField[i] = new FieldButton(lecturer.detailsArray()[1]);
+			//mrtextField[i].setText(lecturer.detailsArray()[1]);
 			mrtextField[i].addActionListener(new ActionListener() {
 				@Override
 				public void actionPerformed(ActionEvent e) {
@@ -173,8 +173,10 @@ public class LecturerGUI extends JPanel {
 				LecturerTableGUI l = new LecturerTableGUI();
 				l.setFrame(frame);
 				frame.setContentPane(l);
-				frame.pack();
 			}
+
+			frame.revalidate();
+			frame.repaint();
 		}
 	}
 

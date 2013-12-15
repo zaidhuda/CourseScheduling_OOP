@@ -37,27 +37,27 @@ public class Lecturer extends Support {
 		Arrays.fill(availability[1], true);
 	}
 
-	public Lecturer(String name, String specialization) {
+	public Lecturer(String name, Course specialization) {
 		setName(name);
 		addCourse(specialization);
 		Arrays.fill(availability[0], true);
 		Arrays.fill(availability[1], true);
 	}
 
-	public Lecturer(String name, ArrayList<String> specialization) {
+	public Lecturer(String name, ArrayList<Course> specialization) {
 		setName(name);
 		addCourses(specialization);
 		Arrays.fill(availability[0], true);
 		Arrays.fill(availability[1], true);
 	}
 
-	public Lecturer(String name, String specialization, boolean[][] availability) {
+	public Lecturer(String name, Course specialization, boolean[][] availability) {
 		setName(name);
 		addCourse(specialization);
 		setAvailability(availability);
 	}
 
-	public Lecturer(String name, ArrayList<String> specialization, boolean[][] availability) {
+	public Lecturer(String name, ArrayList<Course> specialization, boolean[][] availability) {
 		setName(name);
 		addCourses(specialization);
 		setAvailability(availability);

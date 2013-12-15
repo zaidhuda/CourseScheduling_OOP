@@ -61,12 +61,20 @@ public class ScheduleBuilder {
 	public void add(Course o) {
 		boolean exist = false;
 		for (Course c : courses)
-			if (c.equals(o)) {
+			if (o.getCode().equals(c.getCode())) {
 				exist = true;
 				break;
 			}
-		if (!exist)
+		if (!exist){
 			courses.add(o);
+		} else {
+			for (Course c : courses){
+				if (!c.equals(o) && o.getCode().equals(c.getCode())){
+					courses.remove(o);
+					break;
+				}
+			}
+		}
 	}
 
 	public void add(Lecturer o) {
@@ -103,6 +111,35 @@ public class ScheduleBuilder {
 		}
 	}
 
+	public void remove(Course o) {
+		ArrayList<Section> tempSections = new ArrayList<>();
+		for (Section s : sections)
+			if (s.getCourse().equals(o))
+				tempSections.add(s);
+		for (Lecturer l : lecturers)
+			if (l.getCourses().contains(o.getCode()))
+				l.removeCourse(o.getCode());
+		for (Venue v : venues)
+			if (v.getCourses().contains(o.getCode()))
+				v.removeCourse(o.getCode());
+		sections.removeAll(tempSections);
+		courses.remove(o);
+	}
+
+	public void remove(Lecturer o) {
+		for (Section s : sections)
+			if (s.getLecturer().equals(o))
+				s.setLecturer(new Lecturer());
+		lecturers.remove(o);
+	}
+
+	public void remove(Venue o) {
+		for (Section s : sections)
+			if (s.getVenue().equals(o))
+				s.setVenue(new Venue());
+		venues.remove(o);
+	}
+
 	public ArrayList<String> filterCodes(String arg) {
 		String[] strs = arg.replaceAll("\\s", "").toUpperCase().split(",");
 		ArrayList<String> tempCodes = getCourseCodes();
@@ -119,6 +156,16 @@ public class ScheduleBuilder {
 			tempCodes.add(c.getCode());
 		}
 		return tempCodes;
+	}
+
+	public ArrayList<Course> getCourses(String[] codes){
+		ArrayList<Course> tempCourses = new ArrayList<>();
+		ArrayList<String> tempCodes = new ArrayList<>(Arrays.asList(codes));
+		for (Course c : courses){
+			if (tempCodes.contains(c.getCode()))
+				tempCourses.add(c);
+		}
+		return tempCourses;
 	}
 
 	public String[][] getCourses() {
@@ -164,35 +211,6 @@ public class ScheduleBuilder {
 			str[i] = arr;
 		}
 		return str;
-	}
-
-	public void remove(Course o) {
-		ArrayList<Section> tempSections = new ArrayList<>();
-		for (Section s : sections)
-			if (s.getCourse().equals(o))
-				tempSections.add(s);
-		for (Lecturer l : lecturers)
-			if (l.getCourses().contains(o.getCode()))
-				l.removeCourse(o.getCode());
-		for (Venue v : venues)
-			if (v.getCourses().contains(o.getCode()))
-				v.removeCourse(o.getCode());
-		sections.removeAll(tempSections);
-		courses.remove(o);
-	}
-
-	public void remove(Lecturer o) {
-		for (Section s : sections)
-			if (s.getLecturer().equals(o))
-				s.setLecturer(new Lecturer());
-		lecturers.remove(o);
-	}
-
-	public void remove(Venue o) {
-		for (Section s : sections)
-			if (s.getVenue().equals(o))
-				s.setVenue(new Venue());
-		venues.remove(o);
 	}
 
 	public static int[][] getAvailableSlots(Lecturer lecturer, Venue venue) {

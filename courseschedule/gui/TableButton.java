@@ -1,15 +1,15 @@
 package courseschedule.gui;
 
 import java.awt.*;
+import java.awt.event.*;
 import javax.swing.*;
 
-public class TableButton extends JButton {
+public class TableButton extends HoveringButton {
 
     private String[] label;                      // The Button's text.
     private double[] columnWidth;
     private Dimension dimension = new Dimension(900,40);
     private CustomFont font = new CustomFont();
-    private Color colour;
 
     /*
     constructors
@@ -17,10 +17,7 @@ public class TableButton extends JButton {
     public TableButton(String[] label, double[] columnWidth) {
         this.label = label;
         this.columnWidth = columnWidth;
-        enableEvents(AWTEvent.MOUSE_EVENT_MASK);
-        setContentAreaFilled(false);
         setBorder(BorderFactory.createEmptyBorder());
-        setForeground(CustomColour.nightblue);
         setFont(font.getFontAbel(15));
         setCursor(new Cursor(Cursor.HAND_CURSOR));
     }
@@ -30,7 +27,15 @@ public class TableButton extends JButton {
     paints the SquareButton
      */
     public void paintComponent(Graphics g) {
+	    g.setColor(CustomColour.SilverClouds);
+	    g.drawRect(0, 0, getWidth(), getHeight());
+	    g.fillRect(0, 0, getWidth(), getHeight());
 
+	    if (hovered){
+		    g.setColor(CustomColour.lighterblue);
+	    } else {
+		    g.setColor(CustomColour.nightblue);
+	    }
         // draw the label according to design in the button
         Font f = getFont();
         if (f != null) {
@@ -50,13 +55,5 @@ public class TableButton extends JButton {
 
     public Dimension getPreferredSize() {
         return dimension;
-    }
-
-    public Dimension getMinimumSize() {
-        return getPreferredSize();
-    }
-
-    public Dimension getMaximumSize() {
-        return getPreferredSize();
     }
 }
