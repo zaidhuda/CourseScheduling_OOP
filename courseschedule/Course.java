@@ -87,7 +87,8 @@ public class Course {
 
 		Course that = (Course) other;
 
-		return this.code.equalsIgnoreCase(that.code);
+		return this.code.equalsIgnoreCase(that.code) &&
+				this.title.equalsIgnoreCase(that.title);
 	}
 
 	public int compareTo(Course other) {

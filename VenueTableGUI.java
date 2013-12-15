@@ -138,22 +138,22 @@ public class VenueTableGUI extends JPanel {
 					VenueGUI v = new VenueGUI(sb.venues.get(i));
 					v.setFrame(frame);
 					frame.setContentPane(v);
-					frame.pack();
 				}
 
 			if(e.getSource() == backBtn) {
 				MainGUI m = new MainGUI();
 				m.setFrame(frame);
 				frame.setContentPane(m);
-				frame.pack();
 			}
 
 			if(e.getSource() == addBtn) {
 				VenueGUI v = new VenueGUI(new Venue());
 				v.setFrame(frame);
 				frame.setContentPane(v);
-				frame.pack();
 			}
+
+			frame.revalidate();
+			frame.repaint();
 		}
 	}
 

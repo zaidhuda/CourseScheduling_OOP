@@ -1,5 +1,6 @@
 package courseschedule.gui;
 
+import courseschedule.*;
 import courseschedule.gui.*;
 import courseschedule.util.*;
 
@@ -12,6 +13,7 @@ import java.util.*;
 public class CoursesList extends JPanel {
 	private ArrayList<TableButton> list = new ArrayList<>();
 	private ArrayList<String> lCourses = new ArrayList<>();
+	private ScheduleBuilder sb;
 
 	private final JFrame frame = new JFrame();
 	private String[][] label;
@@ -20,6 +22,7 @@ public class CoursesList extends JPanel {
 	int limit;
 
 	public CoursesList(ScheduleBuilder sb, ArrayList<String> lCourses, int limit) {
+		this.sb = sb;
 		this.lCourses = lCourses;
 		this.limit = limit;
 		setLayout(new BorderLayout());
@@ -33,7 +36,7 @@ public class CoursesList extends JPanel {
 
 		JPanel row = new JPanel();
 		JScrollPane scrollPanel = new JScrollPane(row);
-		scrollPanel.setPreferredSize(new Dimension(600, 220));
+		scrollPanel.setPreferredSize(new Dimension(604, 250));
 		scrollPanel.setBorder(BorderFactory.createEmptyBorder());
 		scrollPanel.getVerticalScrollBar().setUI(new CustomScrollBarUI(1));
 		scrollPanel.setHorizontalScrollBar(null);
@@ -69,8 +72,9 @@ public class CoursesList extends JPanel {
 		}
 	}
 
-	public ArrayList<String> getCourses(){
+	public ArrayList<Course> getCourses(){
 		Collections.sort(lCourses);
-		return lCourses;
+		String[] c = lCourses.toString().replaceAll("\\[", "").replaceAll("]", "").split(", ");
+		return sb.getCourses(c);
 	}
 }

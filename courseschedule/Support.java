@@ -5,7 +5,8 @@ import java.util.*;
 abstract class Support {
 	protected String name;
 	protected boolean[][] availability = new boolean[2][6];
-	protected ArrayList<String> courses = new ArrayList<>();
+	//protected ArrayList<String> courses = new ArrayList<>();
+	protected ArrayList<Course> courses = new ArrayList<>();
 
 	/**
 	 * Receives a string and save to name.
@@ -32,15 +33,15 @@ abstract class Support {
 	 *
 	 * @param arg the desired course code to be added to courses array list
 	 */
-	public void addCourse(String arg) {
-		arg = arg.replaceAll("\\s", "").toUpperCase();
-		if (!courses.contains(arg)) {
-			if (!(this instanceof Lecturer))
-				courses.add(arg);
-			else
-				if (courses.size() < 3)
-					courses.add(arg);
+	public void addCourse(Course arg) {
+		if (courses.contains(arg)) {
+			return;
 		}
+		if (!(this instanceof Lecturer))
+			courses.add(arg);
+		else
+			if (courses.size() < 3)
+				courses.add(arg);
 	}
 
 	/**
@@ -49,26 +50,27 @@ abstract class Support {
 	 *
 	 * @param args array list of the desired course code to be added to courses list
 	 */
-	public void addCourses(ArrayList<String> args) {
-		for (String arg : args)
+	public void addCourses(ArrayList<Course> args) {
+		for (Course arg : args)
 			addCourse(arg);
 	}
 
-	public void setCourses(ArrayList<String> args) {
+	public void setCourses(ArrayList<Course> args) {
 		courses.clear();
-		for (String arg : args) {
-			arg = arg.replaceAll("\\s", "").toUpperCase();
-			if (!(this instanceof Lecturer))
-				courses.add(arg);
-			else
-				if (courses.size() < 3)
-					courses.add(arg);
+		for (Course c : args) {
+			if (this instanceof Lecturer) {
+				courses.add(c);
+				if (args.indexOf(c) == 2)
+					return;
+			} else {
+				courses.add(c);
+			}
 		}
 	}
 
-	public void setCourses(String arg) {
-		String[] str = arg.replaceAll("\\s", "").toUpperCase().split(",");
-		courses = new ArrayList<>(Arrays.asList(str));
+	public void setCourse(Course arg) {
+		courses.clear();
+		courses.add(arg);
 	}
 
 	/**
@@ -77,8 +79,12 @@ abstract class Support {
 	 * @param arg the course code to be removed from courses array list.
 	 */
 	public void removeCourse(String arg) {
-		arg = arg.replaceAll("\\s", "").toUpperCase();
-		courses.remove(arg);
+		arg = arg.replaceAll("\\s", "");
+		for (Course c : courses)
+			if (arg.equalsIgnoreCase(c.getCode())){
+				courses.remove(c);
+				break;
+			}
 	}
 
 	/**
@@ -87,9 +93,13 @@ abstract class Support {
 	 * @param args the course codes to be removed from courses array list.
 	 */
 	public void removeCourses(ArrayList<String> args) {
-		for (String arg : args) {
-			removeCourse(arg);
-		}
+		for (String str : args)
+			str = str.toUpperCase();
+		ArrayList<Course> tempCourses = new ArrayList<>();
+		for (Course c : courses)
+			if (args.contains(c.getCode()))
+				tempCourses.add(c);
+		courses.removeAll(tempCourses);
 	}
 
 	/**
@@ -98,7 +108,10 @@ abstract class Support {
 	 * @return courses array list
 	 */
 	public ArrayList<String> getCourses() {
-		return courses;
+		ArrayList<String> tempList = new ArrayList<>();
+		for (Course c : courses)
+			tempList.add(c.getCode());
+		return tempList;
 	}
 
 	/**

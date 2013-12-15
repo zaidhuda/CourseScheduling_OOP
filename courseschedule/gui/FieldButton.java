@@ -4,26 +4,42 @@ import java.awt.*;
 import javax.swing.*;
 import courseschedule.gui.*;
 
-public class FieldButton extends JButton {
+public class FieldButton extends HoveringButton {
 	private CustomFont font = new CustomFont();
-
-	public FieldButton(){
+	private String label;
+	public FieldButton(String label){
 		super();
-
+		this.label = label;
 		setCursor(new Cursor(Cursor.HAND_CURSOR));
-
-		// set background colour
 		setBackground(CustomColour.silvergray);
-
-		// creates outer border and inner border(for indentation)
 		setBorder(BorderFactory.createCompoundBorder(BorderFactory.createEmptyBorder(),BorderFactory.createEmptyBorder(10,10,10,10)));
-
-		// fix alignment problem in Y.AXIS Box Layout
 		setAlignmentX(JTextField.CENTER_ALIGNMENT);
-
-		// set text font & colour
 		setFont(font.getFontAbel(25,-0.05));
 		setForeground(CustomColour.silverclouds);
+	}
+
+	public void paintComponent(Graphics g) {
+		// super.paintComponent(g);
+
+		// paint the interior of the button
+		g.setColor(CustomColour.silvergray);
+		g.drawRect(0, 0, getWidth(), getHeight());
+		g.fillRect(0, 0, getWidth(), getHeight());
+
+		if(hovered) {
+			g.setColor(CustomColour.silver);
+		}
+		else {
+			g.setColor(CustomColour.silverclouds);
+		}
+		// draw the label centered in the button
+		Font f = getFont();
+		if (f != null) {
+			FontMetrics fm = getFontMetrics(getFont());
+			Graphics2D g2d = (Graphics2D) g;
+			g2d.setRenderingHint(RenderingHints.KEY_TEXT_ANTIALIASING, RenderingHints.VALUE_TEXT_ANTIALIAS_LCD_HRGB);
+			g2d.drawString(label, 10, 34);
+		}
 	}
 
 	@Override

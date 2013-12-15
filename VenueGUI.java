@@ -80,8 +80,8 @@ public class VenueGUI extends JPanel {
 		midRightPanel.setLayout(new BoxLayout(midRightPanel, BoxLayout.Y_AXIS));
 		
 		for(int i=0; i<1; i++) {
-			mrtextField[i] = new FieldButton();
-			mrtextField[i].setText(venue.detailsArray()[1]);
+			mrtextField[i] = new FieldButton(venue.detailsArray()[1]);
+			//mrtextField[i].setText(venue.detailsArray()[1]);
 			mrtextField[i].addActionListener(new ActionListener() {
 				@Override
 				public void actionPerformed(ActionEvent e) {
@@ -155,7 +155,6 @@ public class VenueGUI extends JPanel {
 
 			if(e.getSource() == addBtn) {
 				String name = mltextField[0].getText();
-				String specialization = mrtextField[0].getText();
 
 				if(!name.equals("")) {
 					boolean[][] availability = midLowerPanel.getAvailability();
@@ -174,8 +173,10 @@ public class VenueGUI extends JPanel {
 				VenueTableGUI v = new VenueTableGUI();
 				v.setFrame(frame);
 				frame.setContentPane(v);
-				frame.pack();
 			}
+
+			frame.revalidate();
+			frame.repaint();
 		}
 	}
 

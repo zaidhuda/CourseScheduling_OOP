@@ -141,22 +141,22 @@ public class CourseTableGUI extends JPanel {
 					CourseGUI c = new CourseGUI(sb.courses.get(i));
 					c.setFrame(frame);
 					frame.setContentPane(c);
-					frame.pack();
 				}
 
 			if(e.getSource() == backBtn) {
 				MainGUI m = new MainGUI();
 				m.setFrame(frame);
 				frame.setContentPane(m);
-				frame.pack();
 			}
 
 			if(e.getSource() == addBtn) {
 				CourseGUI c = new CourseGUI(new Course(""));
 				c.setFrame(frame);
 				frame.setContentPane(c);
-				frame.pack();
 			}
+
+			frame.revalidate();
+			frame.repaint();
 		}
 	}
 

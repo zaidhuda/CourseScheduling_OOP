@@ -140,19 +140,20 @@ public class ScheduleTableGUI extends JPanel {
 					ScheduleGUI s = new ScheduleGUI(sb.sections.get(i));
 					s.setFrame(frame);
 					frame.setContentPane(s);
-					frame.pack();
 				}
 
 			if(e.getSource() == backBtn) {
 				MainGUI m = new MainGUI();
 				m.setFrame(frame);
 				frame.setContentPane(m);
-				frame.pack();
 			}
 
 			if(e.getSource() == printBtn) {
 				// print schedule lists
 			}
+
+			frame.revalidate();
+			frame.repaint();
 		}
 	}
 

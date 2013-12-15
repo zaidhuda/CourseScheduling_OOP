@@ -137,22 +137,22 @@ public class LecturerTableGUI extends JPanel {
 					LecturerGUI l = new LecturerGUI(sb.lecturers.get(i));
 					l.setFrame(frame);
 					frame.setContentPane(l);
-					frame.pack();
 				}
 
 			if(e.getSource() == backBtn) {
 				MainGUI m = new MainGUI();
 				m.setFrame(frame);
 				frame.setContentPane(m);
-				frame.pack();
 			}
 
 			if(e.getSource() == addBtn) {
 				LecturerGUI l = new LecturerGUI(new Lecturer());
 				l.setFrame(frame);
 				frame.setContentPane(l);
-				frame.pack();
 			}
+
+			frame.revalidate();
+			frame.repaint();
 		}
 	}
 

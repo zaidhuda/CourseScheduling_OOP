@@ -197,12 +197,14 @@ public class ScheduleGUI extends JPanel {
 				ScheduleTableGUI s = new ScheduleTableGUI();
 				s.setFrame(frame);
 				frame.setContentPane(s);
-				frame.pack();
 			}
 
 			if(e.getSource() == saveBtn) {
 				// Some save commands
 			}
+
+			frame.revalidate();
+			frame.repaint();
 		}
 	}
 

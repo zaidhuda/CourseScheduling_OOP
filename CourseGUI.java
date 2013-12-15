@@ -101,7 +101,7 @@ public class CourseGUI extends JPanel {
 		bottomPanel = new JPanel();
 		backBtn = new RoundedButton("BACK", 0);
 		removeBtn = new RoundedButton("REMOVE", 0);
-		addBtn = new RoundedButton("ADD COURSE", 1);
+		addBtn = new RoundedButton("SAVE", 1);
 
 		backBtn.setFont(font.getFontPTSans(15, Font.BOLD, -0.07));
 		backBtn.addActionListener(new ButtonListener());
@@ -129,22 +129,24 @@ public class CourseGUI extends JPanel {
 			}
 
 			if(e.getSource() == addBtn) {
-				// for(int i=0; i<2; i++) {
-				// 	if(!(mrtextField[i].getText().equals("")) && !(mltextField[i].getText().equals(""))) {
-				// 		switch(i) {
-				// 			case 0: 
-				// 				break;
-				// 			case 1:
-				// 				break;
-				// 		}
+				String code = mltextField[0].getText(),
+						title = mltextField[1].getText();
+				int credit = 1,
+					reqSec = 1;
 
-				// 	}
-				// }
-				// course.setCode()
-				// course.setTitle()
-				// course.setCredit()
-				// course.setRequiredSections()
-				// sb.add(course);
+				try {
+					credit = Integer.parseInt(mrtextField[0].getText().replaceAll("[^0-9 ]", ""));
+					reqSec = Integer.parseInt(mrtextField[1].getText().replaceAll("[^0-9 ]", ""));
+				} catch (Exception ex) {
+				}
+
+				if(!(code.equals(""))){
+					course.setCode(code);
+					course.setCredit(credit);
+					course.setTitle(title);
+					course.setRequiredSections(reqSec);
+					sb.add(course);
+				}
 				e.setSource(backBtn);
 			}
 
@@ -152,8 +154,10 @@ public class CourseGUI extends JPanel {
 				CourseTableGUI c = new CourseTableGUI();
 				c.setFrame(frame);
 				frame.setContentPane(c);
-				frame.pack();
 			}
+
+			frame.revalidate();
+			frame.repaint();
 		}
 	}
 
