@@ -159,7 +159,7 @@ public class ScheduleTableGUI extends JPanel {
 
 	public void setFrame(Frame frame) {
 		this.frame = frame;
-		this.sb = frame.sb;
+		sb = Frame.sb;
 
 		if(!sb.sections.isEmpty())
 			label = sb.getSections();

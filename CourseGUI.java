@@ -137,7 +137,7 @@ public class CourseGUI extends JPanel {
 				try {
 					credit = Integer.parseInt(mrtextField[0].getText().replaceAll("[^0-9 ]", ""));
 					reqSec = Integer.parseInt(mrtextField[1].getText().replaceAll("[^0-9 ]", ""));
-				} catch (Exception ex) {
+				} catch (Exception ignored) {
 				}
 
 				if(!(code.equals(""))){
@@ -145,6 +145,7 @@ public class CourseGUI extends JPanel {
 					course.setCredit(credit);
 					course.setTitle(title);
 					course.setRequiredSections(reqSec);
+					sb.fixCourseSections(course, reqSec);
 					sb.add(course);
 				}
 				e.setSource(backBtn);
