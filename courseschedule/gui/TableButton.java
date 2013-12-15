@@ -10,6 +10,7 @@ public class TableButton extends HoveringButton {
     private double[] columnWidth;
     private Dimension dimension = new Dimension(900,40);
     private CustomFont font = new CustomFont();
+	private Color bg = CustomColour.SilverClouds;
 
     /*
     constructors
@@ -22,12 +23,17 @@ public class TableButton extends HoveringButton {
         setCursor(new Cursor(Cursor.HAND_CURSOR));
     }
 
+	public void setBackground(Color newBG){
+		bg = newBG;
+		revalidate();
+		repaint();
+	}
 
     /*
     paints the SquareButton
      */
     public void paintComponent(Graphics g) {
-	    g.setColor(CustomColour.SilverClouds);
+	    g.setColor(bg);
 	    g.drawRect(0, 0, getWidth(), getHeight());
 	    g.fillRect(0, 0, getWidth(), getHeight());
 

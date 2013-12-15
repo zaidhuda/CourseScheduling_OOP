@@ -92,6 +92,21 @@ public class ScheduleBuilder {
 		}
 	}
 
+	public void remove(Course o) {
+		ArrayList<Section> tempSections = new ArrayList<>();
+		for (Section s : sections)
+			if (s.getCourse().equals(o))
+				tempSections.add(s);
+		for (Lecturer l : lecturers)
+			if (l.getCourses().contains(o.getCode()))
+				l.removeCourse(o.getCode());
+		for (Venue v : venues)
+			if (v.getCourses().contains(o.getCode()))
+				v.removeCourse(o.getCode());
+		sections.removeAll(tempSections);
+		courses.remove(o);
+	}
+
 	public void add(Lecturer o) {
 		boolean exist = false;
 		for (Lecturer l : lecturers)
@@ -107,6 +122,20 @@ public class ScheduleBuilder {
 					if (!o.getCourses().contains(s.getCourse().getCode()))
 						s.setLecturer(new Lecturer());
 		}
+	}
+
+	public Lecturer getLecturerByName(String name){
+		for (Lecturer l : lecturers)
+			if(l.getName().equals(name))
+				return l;
+		return null;
+	}
+
+	public void remove(Lecturer o) {
+		for (Section s : sections)
+			if (s.getLecturer().equals(o))
+				s.setLecturer(new Lecturer());
+		lecturers.remove(o);
 	}
 
 	public void add(Venue o) {
@@ -126,26 +155,11 @@ public class ScheduleBuilder {
 		}
 	}
 
-	public void remove(Course o) {
-		ArrayList<Section> tempSections = new ArrayList<>();
-		for (Section s : sections)
-			if (s.getCourse().equals(o))
-				tempSections.add(s);
-		for (Lecturer l : lecturers)
-			if (l.getCourses().contains(o.getCode()))
-				l.removeCourse(o.getCode());
+	public Venue getVenueByName(String name){
 		for (Venue v : venues)
-			if (v.getCourses().contains(o.getCode()))
-				v.removeCourse(o.getCode());
-		sections.removeAll(tempSections);
-		courses.remove(o);
-	}
-
-	public void remove(Lecturer o) {
-		for (Section s : sections)
-			if (s.getLecturer().equals(o))
-				s.setLecturer(new Lecturer());
-		lecturers.remove(o);
+			if(v.getName().equals(name))
+				return v;
+		return null;
 	}
 
 	public void remove(Venue o) {
@@ -281,20 +295,22 @@ public class ScheduleBuilder {
 	}
 
 	public void fixCourseSections(Course course, int newRequired){
-		ArrayList<Section> tempSections = getSectionOf(course);
-		int count = tempSections.size();
-		if (count != newRequired) {
-			if (newRequired < tempSections.size()){
-				sections.removeAll(tempSections);
-				for (int i=tempSections.size();i>newRequired;i--){
-					tempSections.remove(i-1);
+		//if (!getAssignedLecturers(course).isEmpty() && !getAssignedVenues(course).isEmpty()) {
+			ArrayList<Section> tempSections = getSectionOf(course);
+			int count = tempSections.size();
+			if (count != newRequired) {
+				if (newRequired < tempSections.size()){
+					sections.removeAll(tempSections);
+					for (int i=tempSections.size();i>newRequired;i--){
+						tempSections.remove(i-1);
+					}
+					for (Section s : tempSections)
+						sections.add(s);
+				} else {
+					generateSection(true, course, newRequired - count, count);
 				}
-				for (Section s : tempSections)
-					sections.add(s);
-			} else {
-				generateSection(true, course, newRequired - count, count);
 			}
-		}
+		//}
 	}
 
 	public void forceReSchedule(int newDay, int newTime, Section theSection) {
@@ -318,8 +334,8 @@ public class ScheduleBuilder {
 		}
 	}
 
-	public ArrayList<Lecturer> getAssignedLecturers(Section theSection) {
-		String courseCode = theSection.getCourse().getCode();
+	public ArrayList<Lecturer> getAssignedLecturers(Course course) {
+		String courseCode = course.getCode();
 		ArrayList<Lecturer> tempLecturers = new ArrayList<>();
 		for (Lecturer l : lecturers)
 			if (l.getCourses().contains(courseCode))
@@ -327,8 +343,8 @@ public class ScheduleBuilder {
 		return tempLecturers;
 	}
 
-	public ArrayList<Venue> getAssignedVenues(Section theSection) {
-		String courseCode = theSection.getCourse().getCode();
+	public ArrayList<Venue> getAssignedVenues(Course course) {
+		String courseCode = course.getCode();
 		ArrayList<Venue> tempVenues = new ArrayList<>();
 		for (Venue v : venues)
 			if (v.getCourses().contains(courseCode))

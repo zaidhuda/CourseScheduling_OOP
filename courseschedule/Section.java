@@ -186,6 +186,11 @@ public class Section {
 			if (lecturer.getSpecializations().contains(course.getCode()))
 				tempLecturers.add(lecturer);
 
+		if (tempLecturers.isEmpty()){
+			setLecturer(new Lecturer());
+			return;
+		}
+
 		if (random) {
 			int r = (int) (Math.random() * tempLecturers.size());
 			setLecturer(tempLecturers.get(r));
@@ -213,6 +218,11 @@ public class Section {
 			courses = v.getCourses();
 			if (courses.contains(course.getCode()))
 				tempVenues.add(v);
+		}
+
+		if (tempVenues.isEmpty()) {
+			setVenue(new Venue());
+			return;
 		}
 
 		if (random) {

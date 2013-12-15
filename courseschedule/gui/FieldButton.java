@@ -6,6 +6,7 @@ import courseschedule.gui.*;
 
 public class FieldButton extends HoveringButton {
 	private CustomFont font = new CustomFont();
+
 	private String label;
 	public FieldButton(String label){
 		super();
@@ -16,6 +17,12 @@ public class FieldButton extends HoveringButton {
 		setAlignmentX(JTextField.CENTER_ALIGNMENT);
 		setFont(font.getFontAbel(25,-0.05));
 		setForeground(CustomColour.silverclouds);
+	}
+
+	public void setLabel(String label) {
+		this.label = label;
+		revalidate();
+		repaint();
 	}
 
 	public void paintComponent(Graphics g) {

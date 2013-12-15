@@ -26,7 +26,7 @@ import java.util.*;
 public class Lecturer extends Support {
 
 	public Lecturer() {
-		setName("TO BE DETERMINED");
+		setName("TBD");
 		Arrays.fill(availability[0], true);
 		Arrays.fill(availability[1], true);
 	}

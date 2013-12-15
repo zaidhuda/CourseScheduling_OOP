@@ -85,6 +85,7 @@ public class LecturerGUI extends JPanel {
 			mrtextField[i].addActionListener(new ActionListener() {
 				@Override
 				public void actionPerformed(ActionEvent e) {
+					coursesLister.setButton(mrtextField[0]);
 					if (coursesLister.isVisible()) {
 						midLowerPanel.setVisible(true);
 						coursesLister.setVisible(false);

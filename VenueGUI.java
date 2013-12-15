@@ -29,7 +29,7 @@ public class VenueGUI extends JPanel {
 	private CustomLabel[] mltextLabel = {new CustomLabel("VENUE NAME")};
 
 	// MIDRIGHTPANEL'S
-	private FieldButton[] mrtextField = new FieldButton[1];
+	private static final FieldButton[] mrtextField = new FieldButton[1];
 	private CustomLabel[] mrtextLabel = {new CustomLabel("COURSE LIST")};
 
 	// VARIABLES FOR BOTTOM PANEL
@@ -85,6 +85,7 @@ public class VenueGUI extends JPanel {
 			mrtextField[i].addActionListener(new ActionListener() {
 				@Override
 				public void actionPerformed(ActionEvent e) {
+					coursesLister.setButton(mrtextField[0]);
 					if (coursesLister.isVisible()) {
 						midLowerPanel.setVisible(true);
 						coursesLister.setVisible(false);
@@ -185,7 +186,7 @@ public class VenueGUI extends JPanel {
 		sb = Frame.sb;
 
 		ArrayList<String> lCourses = new ArrayList<>(venue.getCourses());
-		coursesLister = new CoursesList(sb, lCourses, 3);
+		coursesLister = new CoursesList(sb, lCourses, -1);
 
 		createTopPanel();
 		createMiddlePanel();

@@ -20,6 +20,8 @@ public class ScheduleGUI extends JPanel {
 	private JPanel middlePanel, midUpperPanel, midMiddlePanel, midLeftPanel, midRightPanel;
 	private TimePicker midLowerPanel;
 	private Section section;
+	private Lecturer lecturer;
+	private Venue venue;
 
 	// MIDLEFTPANEL'S 
 	private CustomField[] mltextField = new CustomField[1];
@@ -63,7 +65,6 @@ public class ScheduleGUI extends JPanel {
 		midLowerPanel = new TimePicker(section.getDay(),section.getTime(),slots);
 		midLeftPanel = new JPanel();
 		midRightPanel = new JPanel();
-		System.out.println(section.getDay() + " " + section.getTime());
 
 		midLeftPanel.setBackground(CustomColour.getSilverClouds());
 		midLeftPanel.setLayout(new BoxLayout(midLeftPanel, BoxLayout.Y_AXIS));

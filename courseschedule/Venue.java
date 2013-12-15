@@ -30,7 +30,7 @@ public class Venue extends Support {
 	private int studentLimit = 30;
 
 	public Venue() {
-		setName("TO BE DETERMINED");
+		setName("TBD");
 		Arrays.fill(availability[0], true);
 		Arrays.fill(availability[1], true);
 	}
