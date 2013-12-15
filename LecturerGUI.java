@@ -18,12 +18,11 @@ public class LecturerGUI extends JPanel {
 	private JLabel textLabel;
 
 	// VARIABLES FOR MID PANELS
-
 	private final JPanel midLowerPanelContainer = new JPanel();
+	CoursesList coursesLister = null;
 	private JPanel middlePanel, midUpperPanel, midLeftPanel, midRightPanel;
 	private TimePicker midLowerPanel;
 	private Lecturer lecturer;
-	CoursesList coursesLister = null;
 
 	// MIDLEFTPANEL'S 
 	private CustomField[] mltextField = new CustomField[1];
@@ -114,10 +113,12 @@ public class LecturerGUI extends JPanel {
 		middlePanel.setLayout(new BoxLayout(middlePanel, BoxLayout.PAGE_AXIS));
 		middlePanel.add(Box.createRigidArea(new Dimension(0,10)));
 		middlePanel.add(midUpperPanel);
+
 		midLowerPanelContainer.add(midLowerPanel);
 		midLowerPanelContainer.add(coursesLister);
 		coursesLister.setVisible(false);
 		middlePanel.add(midLowerPanelContainer);
+
 		add(middlePanel, BorderLayout.CENTER);
 	}
 
@@ -183,6 +184,7 @@ public class LecturerGUI extends JPanel {
 
 		ArrayList<String> lCourses = new ArrayList<>(lecturer.getCourses());
 		coursesLister = new CoursesList(sb, lCourses, 3);
+
 		createTopPanel();
 		createMiddlePanel();
 		createBottomPanel();
