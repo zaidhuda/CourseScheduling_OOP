@@ -78,23 +78,25 @@ public class ScheduleGUI extends JPanel {
 			//mltextField[i].setText(section.detailsArray()[6]);
 			LecturerLister.setButton(mltextField[0]);
 			LecturerLister.setTheTimePicker(midLowerPanel);
-			mltextField[i].addActionListener(new ActionListener() {
-				@Override
-				public void actionPerformed(ActionEvent e) {
-					if (LecturerLister.isVisible()) {
-						midLowerPanel.reset(section.getDay(), section.getTime(), sb.getAvailableSlots(LecturerLister.getLecturer(), VenueLister.getVenue()));
-						midLowerPanel.setVisible(true);
-						LecturerLister.setVisible(false);
-						VenueLister.setVisible(false);
-					} else {
-						LecturerLister.setVisible(true);
-						midLowerPanel.setVisible(false);
-						VenueLister.setVisible(false);
+			if (sb.getAssignedLecturers(section.getCourse()) != null){
+				mltextField[i].addActionListener(new ActionListener() {
+					@Override
+					public void actionPerformed(ActionEvent e) {
+						if (LecturerLister.isVisible()) {
+							midLowerPanel.reset(section.getDay(), section.getTime(), sb.getAvailableSlots(LecturerLister.getLecturer(), VenueLister.getVenue()));
+							midLowerPanel.setVisible(true);
+							LecturerLister.setVisible(false);
+							VenueLister.setVisible(false);
+						} else {
+							LecturerLister.setVisible(true);
+							midLowerPanel.setVisible(false);
+							VenueLister.setVisible(false);
+						}
+						midLowerPanelContainer.revalidate();
+						midLowerPanelContainer.repaint();
 					}
-					midLowerPanelContainer.revalidate();
-					midLowerPanelContainer.repaint();
-				}
-			});
+				});
+			}
 			midLeftPanel.add(mltextLabel[i]);
 			midLeftPanel.add(mltextField[i]);
 			midLeftPanel.add(Box.createRigidArea(new Dimension(0,10)));
@@ -106,10 +108,11 @@ public class ScheduleGUI extends JPanel {
 		for(int i=0; i<1; i++) {
 			mrtextField[i] = new FieldButton(section.detailsArray()[7]);
 			//mltextField[i].setText(section.detailsArray()[7]);
-			VenueLister.setButton(mrtextField[0]);
-			mrtextField[i].addActionListener(new ActionListener() {
-				@Override
-				public void actionPerformed(ActionEvent e) {
+			if (sb.getAssignedVenues(section.getCourse()) != null){
+				VenueLister.setButton(mrtextField[0]);
+				mrtextField[i].addActionListener(new ActionListener() {
+					@Override
+					public void actionPerformed(ActionEvent e) {
 					if (VenueLister.isVisible()) {
 						midLowerPanel.reset(section.getDay(), section.getTime(), sb.getAvailableSlots(LecturerLister.getLecturer(), VenueLister.getVenue()));
 						midLowerPanel.setVisible(true);
@@ -123,8 +126,9 @@ public class ScheduleGUI extends JPanel {
 					}
 					midLowerPanelContainer.revalidate();
 					midLowerPanelContainer.repaint();
-				}
-			});
+					}
+				});
+			}
 			midRightPanel.add(mrtextLabel[i]);
 			midRightPanel.add(mrtextField[i]);
 			midRightPanel.add(Box.createRigidArea(new Dimension(0,10)));
@@ -214,10 +218,14 @@ public class ScheduleGUI extends JPanel {
 		//middlePanel.add(midLowerPanel);
 
 		midLowerPanelContainer.add(midLowerPanel);
-		midLowerPanelContainer.add(LecturerLister);
-		midLowerPanelContainer.add(VenueLister);
-		LecturerLister.setVisible(false);
-		VenueLister.setVisible(false);
+		if (sb.getAssignedLecturers(section.getCourse()) != null){
+			midLowerPanelContainer.add(LecturerLister);
+			LecturerLister.setVisible(false);
+		}
+		if (sb.getAssignedVenues(section.getCourse()) != null){
+			midLowerPanelContainer.add(VenueLister);
+			VenueLister.setVisible(false);
+		}
 		middlePanel.add(midLowerPanelContainer);
 
 		add(middlePanel, BorderLayout.CENTER);
@@ -273,8 +281,10 @@ public class ScheduleGUI extends JPanel {
 
 		lecturer = section.getLecturer();
 		venue = section.getVenue();
-		LecturerLister = new LecturerList(sb, section.getCourse(), section.getLecturer(), 1);
-		VenueLister = new VenueList(sb, section.getCourse(), section.getVenue(), 1);
+		if (sb.getAssignedLecturers(section.getCourse()) != null)
+			LecturerLister = new LecturerList(sb, section.getCourse(), section.getLecturer(), 1);
+		if (sb.getAssignedVenues(section.getCourse()) != null)
+			VenueLister = new VenueList(sb, section.getCourse(), section.getVenue(), 1);
 
 		createTopPanel();
 		createMiddlePanel();

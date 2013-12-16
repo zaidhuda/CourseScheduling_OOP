@@ -18,7 +18,7 @@ public class DropList extends JPanel {
 	protected ArrayList<TableButton> list = new ArrayList<>();
 	protected ArrayList<String> lCourses = new ArrayList<>();
 	protected ScheduleBuilder sb;
-	protected String[][] label;
+	protected String[][] label = {{"",""}};
 	protected int limit;
 	protected FieldButton theInvoker = new FieldButton("");
 	protected JPanel theContainer;

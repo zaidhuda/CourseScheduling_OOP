@@ -164,11 +164,11 @@ public class CourseTableGUI extends JPanel {
 		this.frame = frame;
 		sb = Frame.sb;
 
-		if(!sb.courses.isEmpty())
-			label = sb.getCourses();
-
 		createTopPanel();
-		createMiddlePanel();
+		if(!sb.courses.isEmpty()){
+			label = sb.getCourses();
+			createMiddlePanel();
+		}
 		createBottomPanel();
 	}
 }

@@ -8,6 +8,12 @@ abstract class Support {
 	//protected ArrayList<String> courses = new ArrayList<>();
 	protected ArrayList<Course> courses = new ArrayList<>();
 
+	public Support() {
+		setName("TBD");
+		Arrays.fill(availability[0], true);
+		Arrays.fill(availability[1], true);
+	}
+
 	/**
 	 * Receives a string and save to name.
 	 *

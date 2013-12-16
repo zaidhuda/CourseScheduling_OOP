@@ -160,11 +160,11 @@ public class LecturerTableGUI extends JPanel {
 		this.frame = frame;
 		sb = Frame.sb;
 
-		if(!sb.lecturers.isEmpty())
-			label = sb.getLecturers();
-
 		createTopPanel();
-		createMiddlePanel();
+		if(!sb.lecturers.isEmpty()){
+			label = sb.getLecturers();
+			createMiddlePanel();
+		}
 		createBottomPanel();
 	}
 }

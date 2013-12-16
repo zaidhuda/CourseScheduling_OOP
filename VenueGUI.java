@@ -82,21 +82,23 @@ public class VenueGUI extends JPanel {
 		for(int i=0; i<1; i++) {
 			mrtextField[i] = new FieldButton(venue.detailsArray()[1]);
 			//mrtextField[i].setText(venue.detailsArray()[1]);
-			mrtextField[i].addActionListener(new ActionListener() {
-				@Override
-				public void actionPerformed(ActionEvent e) {
-					coursesLister.setButton(mrtextField[0]);
-					if (coursesLister.isVisible()) {
-						midLowerPanel.setVisible(true);
-						coursesLister.setVisible(false);
-					} else {
-						midLowerPanel.setVisible(false);
-						coursesLister.setVisible(true);
+			if (sb.getCourses().length > 0){
+				mrtextField[i].addActionListener(new ActionListener() {
+					@Override
+					public void actionPerformed(ActionEvent e) {
+						coursesLister.setButton(mrtextField[0]);
+						if (coursesLister.isVisible()) {
+							midLowerPanel.setVisible(true);
+							coursesLister.setVisible(false);
+						} else {
+							midLowerPanel.setVisible(false);
+							coursesLister.setVisible(true);
+						}
+						midLowerPanelContainer.revalidate();
+						midLowerPanelContainer.repaint();
 					}
-					midLowerPanelContainer.revalidate();
-					midLowerPanelContainer.repaint();
-				}
-			});
+				});
+			}
 			midRightPanel.add(mrtextLabel[i]);
 			midRightPanel.add(mrtextField[i]);
 			midRightPanel.add(Box.createRigidArea(new Dimension(0,10)));
@@ -116,8 +118,10 @@ public class VenueGUI extends JPanel {
 		middlePanel.add(midUpperPanel);
 
 		midLowerPanelContainer.add(midLowerPanel);
-		midLowerPanelContainer.add(coursesLister);
-		coursesLister.setVisible(false);
+		if (coursesLister != null){
+			midLowerPanelContainer.add(coursesLister);
+			coursesLister.setVisible(false);
+		}
 		middlePanel.add(midLowerPanelContainer);
 
 		add(middlePanel, BorderLayout.CENTER);
@@ -185,7 +189,7 @@ public class VenueGUI extends JPanel {
 		sb = Frame.sb;
 
 		ArrayList<String> lCourses = new ArrayList<>(venue.getCourses());
-		coursesLister = new CoursesList(sb, lCourses, -1);
+		if (sb.getCourses().length > 0) coursesLister = new CoursesList(sb, lCourses, 3);
 
 		createTopPanel();
 		createMiddlePanel();

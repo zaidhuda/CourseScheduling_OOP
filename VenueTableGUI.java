@@ -161,11 +161,11 @@ public class VenueTableGUI extends JPanel {
 		this.frame = frame;
 		sb = Frame.sb;
 
-		if(!sb.venues.isEmpty())
-			label = sb.getVenues();
-
 		createTopPanel();
-		createMiddlePanel();
+		if(!sb.venues.isEmpty()){
+			label = sb.getVenues();
+			createMiddlePanel();
+		}
 		createBottomPanel();
 	}
 }
