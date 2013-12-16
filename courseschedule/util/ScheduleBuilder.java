@@ -319,7 +319,14 @@ public class ScheduleBuilder {
 			if (newRequired < tempSections.size()) {
 				sections.removeAll(tempSections);
 				for (int i = tempSections.size(); i > newRequired; i--) {
-					tempSections.remove(i - 1);
+					int newIndex = i - 1;
+					Section s = tempSections.get(newIndex);
+					int day = s.getDay(), time = s.getTime();
+					if (s.getLecturer() != null)
+						s.getLecturer().setAvailabilityAt(day, time, true);
+					if (s.getVenue() != null)
+						s.getVenue().setAvailabilityAt(day, time, true);
+					tempSections.remove(newIndex);
 				}
 				for (Section s : tempSections)
 					sections.add(s);
