@@ -336,6 +336,8 @@ public class Section {
 		str[4] = getDay_inWords();
 		str[5] = getTime_inWords();
 		str[6] = getLecturer().getName();
+		String[] newName = str[6].split(" ");
+		str[6] = newName[0] + ((newName.length > 1)? " " + newName[1] : "");
 		str[7] = getVenue().getName();
 		str[8] = Integer.toString(getStudentLimit());
 		return str;

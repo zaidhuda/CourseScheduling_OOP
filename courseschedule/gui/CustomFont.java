@@ -26,7 +26,7 @@ public class CustomFont {
 		attributes.put(TextAttribute.TRACKING, letterSpacing);
 
 		try {
-			font = Font.createFont(Font.TRUETYPE_FONT, new File("courseschedule/gui/font/Abel-Regular.ttf"));
+			font = Font.createFont(Font.TRUETYPE_FONT, new File("font/Abel-Regular.ttf"));
 			font = font.deriveFont(style, size);
 			font = font.deriveFont(attributes);
 		}
@@ -70,7 +70,7 @@ public class CustomFont {
 		attributes.put(TextAttribute.TRACKING, letterSpacing);
 		
 		try {
-			font = Font.createFont(Font.TRUETYPE_FONT, new File("courseschedule/gui/font/segoeuil_3.ttf"));
+			font = Font.createFont(Font.TRUETYPE_FONT, new File("font/segoeuil_3.ttf"));
 			font = font.deriveFont(style, size);
 			font = font.deriveFont(attributes);
 		}
@@ -115,11 +115,11 @@ public class CustomFont {
 
 		try {
 			if(style == Font.BOLD) {
-				font = Font.createFont(Font.TRUETYPE_FONT, new File("courseschedule/gui/font/PT_SansBold.ttf"));
+				font = Font.createFont(Font.TRUETYPE_FONT, new File("font/PT_SansBold.ttf"));
 				font = font.deriveFont(Font.PLAIN, size);
 			}
 			else {
-				font = Font.createFont(Font.TRUETYPE_FONT, new File("courseschedule/gui/font/PT_SansRegular.ttf"));
+				font = Font.createFont(Font.TRUETYPE_FONT, new File("font/PT_SansRegular.ttf"));
 				font = font.deriveFont(style, size);
 			}
 			font = font.deriveFont(attributes);

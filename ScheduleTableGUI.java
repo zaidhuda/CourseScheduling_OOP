@@ -150,7 +150,7 @@ public class ScheduleTableGUI extends JPanel {
 			}
 
 			if(e.getSource() == printBtn) {
-				// print schedule lists
+				Frame.sf.exportHTML();
 			}
 
 			frame.revalidate();
