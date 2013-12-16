@@ -1,18 +1,19 @@
+
 import java.awt.*;
 import java.awt.event.*;
 import javax.swing.*;
 
 public class SquareButton extends JComponent {
 
-    private ActionListener actionListener;     // Post action events to listeners.
-    private String label1, label2;                      // The Button's text.
+    private ActionListener actionListener;
+    private String label1, label2;
     private Font[] font = new Font[2];
     private Color color;
     private CustomColour custom = new CustomColour();
-    protected boolean hovered = false; // true if the mouse is over the button.
+    protected boolean hovered = false;
 
     /*
-    constructors
+    Constructors
      */
     public SquareButton() {
         this("","");
@@ -25,6 +26,7 @@ public class SquareButton extends JComponent {
     public SquareButton(String label, String label2) {
         label1 = label;
         this.label2 = label2;
+        setCursor(new Cursor(Cursor.HAND_CURSOR));
         enableEvents(AWTEvent.MOUSE_EVENT_MASK);
     }
 
@@ -67,6 +69,9 @@ public class SquareButton extends JComponent {
         }
     }
 
+    /*
+    Setter methods
+    */
     public void setFontUpperLabel(Font font) {
         this.font[0] = font;
     }
@@ -79,6 +84,9 @@ public class SquareButton extends JComponent {
         color = c;
     }
 
+    /*
+    Getter methods
+    */
     public Font getFontUpperLabel() {
         return font[0];
     }
@@ -103,24 +111,15 @@ public class SquareButton extends JComponent {
         return getPreferredSize();
     }
 
-    /*
-    Adds the specified action listener to receive action events from this button.
-     */
     public void addActionListener(ActionListener listener) {
         actionListener = AWTEventMulticaster.add(actionListener, listener);
         enableEvents(AWTEvent.MOUSE_EVENT_MASK);
     }
 
-    /*
-    Removes the specified action listener so it no longer receives action events from this button.
-     */
     public void removeActionListener(ActionListener listener) {
         actionListener = AWTEventMulticaster.remove(actionListener, listener);
     }
 
-    /*
-    Determine if click was inside round button.
-     */
     @Override
     public boolean contains(int x, int y) {
         int mx = getSize().width / 2;
@@ -128,9 +127,6 @@ public class SquareButton extends JComponent {
         return (((mx - x) * (mx - x) + (my - y) * (my - y)) <= mx * mx);
     }
 
-    /*
-    Paints the button and distribute an action event to all listeners.
-     */
     @Override
     public void processMouseEvent(MouseEvent e) {
         Graphics g;
@@ -144,25 +140,18 @@ public class SquareButton extends JComponent {
                     actionListener.actionPerformed(new ActionEvent(
                             this, ActionEvent.ACTION_PERFORMED, label1));
                 }
-                // render myself normal again
+
                 break;
 
             case MouseEvent.MOUSE_ENTERED:
-                // render myself inverted....
                 hovered = true;
 
-                // Repaint might flicker a bit. To avoid this, you can use
-                // double buffering (see the Gauge example).
                 repaint();
                 break;
 
             case MouseEvent.MOUSE_EXITED:
                 if (hovered == true) {
-                    // Cancel! Don't send action event.
                     hovered = false;
-
-                    // Repaint might flicker a bit. To avoid this, you can use
-                    // double buffering (see the Gauge example).
                     repaint();
                 }
                 break;

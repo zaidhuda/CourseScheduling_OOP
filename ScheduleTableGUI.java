@@ -1,19 +1,14 @@
-import courseschedule.*;
-import courseschedule.gui.*;
 import courseschedule.util.*;
 
 import java.awt.*;
 import java.awt.event.*;
 import javax.swing.*;
-import javax.swing.table.*;
-import javax.swing.border.*;
 import java.util.*;
 
 public class ScheduleTableGUI extends JPanel {
 	// VARIABLES FOR GENERAL USE
     public static ScheduleBuilder sb = null;
 	private Frame frame = new Frame();
-	private CustomColour color = new CustomColour();
 	private CustomFont font = new CustomFont();
 
 	// VARIABLES FOR TOP PANEL
@@ -22,7 +17,7 @@ public class ScheduleTableGUI extends JPanel {
 
 	// VARIABLES FOR MID PANELS
 	private JPanel middlePanel;
-	private ArrayList<TableButton> list = new ArrayList<TableButton>();
+	private ArrayList<TableButton> list = new ArrayList<>();
 	private JScrollPane scrollPanel;
 	private OffsetFinder of;
 
@@ -55,11 +50,11 @@ public class ScheduleTableGUI extends JPanel {
 		topPanel = new JPanel();
 
 		topPanel.setBorder(BorderFactory.createEmptyBorder());
-		topPanel.setBackground(color.getLighterBlue());
+		topPanel.setBackground(CustomColour.getLighterBlue());
 
 		textLabel = new JLabel("SCHEDULE");
 
-		textLabel.setForeground(color.getSilverClouds());
+		textLabel.setForeground(CustomColour.getSilverClouds());
 		textLabel.setFont(font.getFontAbel(48));
 
 		topPanel.add(textLabel);
@@ -82,7 +77,7 @@ public class ScheduleTableGUI extends JPanel {
 	}
 
 	public void createHeaderPanel() {
-		containerHeader.setBackground(color.getDarkerBlue());
+		containerHeader.setBackground(CustomColour.getDarkerBlue());
 		containerHeader.setLayout(new BoxLayout(containerHeader, BoxLayout.X_AXIS));
 		containerHeader.setPreferredSize(new Dimension(900, 20));
 		containerHeader.setMinimumSize(getPreferredSize());
@@ -92,7 +87,8 @@ public class ScheduleTableGUI extends JPanel {
 
 		TableButton tb = new TableButton(header, of.getOffset());
 		tb.setPreferredSize(new Dimension(900,20));
-		tb.setForeground(color.getSilverClouds());
+		tb.setIsHeader(true);
+		tb.setForeground(CustomColour.getSilverClouds());
 		containerHeader.add(tb);
 	}
 
@@ -111,15 +107,16 @@ public class ScheduleTableGUI extends JPanel {
 		scrollPanel.getVerticalScrollBar().setUI(new CustomScrollBarUI(1));
 		// scrollPanel.getHorizontalScrollBar().setUI(new CustomScrollBarUI(2));
 		scrollPanel.setHorizontalScrollBar(null);
+		scrollPanel.getVerticalScrollBar().setUnitIncrement(16);
 
-		containerRow.setBackground(color.getSilverClouds());
+		containerRow.setBackground(CustomColour.getSilverClouds());
 		containerRow.add(scrollPanel);
 	}
 
 	public void createBottomPanel() {
 		bottomPanel = new JPanel();
 
-		bottomPanel.setBackground(color.getSilverClouds());
+		bottomPanel.setBackground(CustomColour.getSilverClouds());
 
 		backBtn = new RoundedButton("BACK", 0);
 		printBtn = new RoundedButton("PRINT", 1);
@@ -144,31 +141,32 @@ public class ScheduleTableGUI extends JPanel {
 					ScheduleGUI s = new ScheduleGUI(sb.sections.get(i));
 					s.setFrame(frame);
 					frame.setContentPane(s);
-					frame.pack();
 				}
 
 			if(e.getSource() == backBtn) {
 				MainGUI m = new MainGUI();
 				m.setFrame(frame);
 				frame.setContentPane(m);
-				frame.pack();
 			}
 
 			if(e.getSource() == printBtn) {
 				// print schedule lists
 			}
+
+			frame.revalidate();
+			frame.repaint();
 		}
 	}
 
 	public void setFrame(Frame frame) {
 		this.frame = frame;
-		this.sb = frame.sb;
-
-		if(!sb.sections.isEmpty())
-			label = sb.getSections();
+		sb = Frame.sb;
 
 		createTopPanel();
-		createMiddlePanel();
+		if(!sb.sections.isEmpty()){
+			label = sb.getSections();
+			createMiddlePanel();
+		}
 		createBottomPanel();
 	}
 }

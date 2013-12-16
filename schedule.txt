@@ -1,20 +1,65 @@
 courses
-CSC1100;Elements of Programming;3;3
-CSC1102;Web Programming Fundamental;3;1
-CSC1103;Object Oriented Programming;3;2
+CSC1100;ELEMENTS OF PROGRAMMING;3;4
+CSC1102;WEB PROGRAMMING FUNDAMENTAL;3;1
+CSC1103;OBJECT ORIENTED PROGRAMMING;3;4
+CSC1401;INTRODUCTION TO COMPUTER ORGANIZATION;3;3
+CSC1700;DISCRETE MATHEMATICS;3;4
+CSC1703;ELEMENTARY STATISTICS;3;1
+CSC1705;CALCULUS I;3;4
+CSC2101;DATA STRUCTURE & ALGORITHM;3;2
+CSC2103;WEB PROGRAMMING;3;1
+CSC2201;COMPUTER NETWORKING;3;1
+CSC2401;DIGITAL SYSTEMS FUNDAMENTAL;3;1
+CSC2601;IT SECURITY I;3;1
+CSC2704;INTRODUCTION TO MATHEMATICAL STATISTICS;3;1
+CSC2705;CALCULUS II;3;1
+CSC3301;PRINCIPLES OF ARTIFICIAL INTELLIGENCE;3;1
+CSC3401;OPERATING SYSTEM;3;2
+CSC3402;COMPUTER ARCHITECTURE & ASSEMBLY LANGUAGE;3;1
+CSC3501;SOFTWARE ENGINEERING;3;2
+CSC3502;ALGORITHM ANALYSIS & DESIGN;3;1
+CSC4201;NETWORKS & SYSTEM ADMINISTRATION;3;1
+CSC4202;ADVANCED NETWORKS;3;1
+CSC4204;WIRELESS COMMUNICATION;3;1
+CSC4205;NETWORK PROGRAMMING;3;1
+CSC4207;SIGNALS AND SYSTEMS;3;1
+CSC4308;MACHINE LEARNING;3;1
+CSC4407;THEORY OF AUTOMATA;3;1
+CSC4504;REQUIREMENTS ENGINEERING;3;1
+CSC4505;SOFTWARE TESTING;3;1
+CSC4602;COMPUTER FORENSIC;3;1
+CSC4604;CRYPTOGRAPHY;3;1
+CSC4901;INDUSTRIAL ATTACHMENT;6;10
+CSC4902;FINAL YEAR PROJECT;3;10
 lecturers
-DR SURIANI;[CSC1100];[[true, true, true, true, true, true], [true, true, true, false, true, true]]
-DR AMELIA;[CSC1100];[[true, true, true, true, true, true], [true, true, false, true, true, true]]
-DR RIZAL;[CSC1102];[[true, true, true, true, true, true], [true, false, true, false, true, true]]
-DR AZLIN;[CSC1103];[[true, true, false, true, true, true], [true, true, true, true, false, true]]
-DR NORSAREMAH;[CSC1100, CSC1102, CSC1103];[[true, true, true, false, true, true], [true, false, true, true, true, true]]
+SURIANI BT. SULAIMAN;[CSC1100, CSC3301];[[true, true, true, true, true, true], [true, true, true, true, true, true]]
+DR. AMELIA RITAHANI BT. ISMAIL;[CSC1100, CSC4308];[[true, true, true, true, true, true], [true, true, true, true, true, true]]
+DR. AZLIN BINTI NORDIN;[CSC1103, CSC4504];[[true, true, true, true, true, true], [true, true, true, true, true, true]]
+DR. NORSAREMAH BT. SALLEH;[CSC1103];[[true, true, true, true, true, true], [true, true, true, true, true, true]]
+DR. M.M. HAFIZUR RAHMAN;[CSC1401, CSC4207];[[true, true, true, true, true, true], [true, true, true, true, true, true]]
+DR. FARRUH SHAHIDI;[CSC1700, CSC2704];[[true, true, true, true, true, true], [true, true, true, true, true, true]]
+DR. SHERZOD TURAEV;[CSC1700, CSC3502, CSC4407];[[true, true, true, true, true, true], [true, true, true, true, true, true]]
+DR. MESSIKH AZEDDINE;[CSC1700, CSC1705];[[true, true, true, true, true, true], [true, true, true, true, true, true]]
+ASSOC.PROF.DR. IMAD FAKHRI TAHA ;[CSC2101, CSC4604];[[true, true, true, true, true, true], [true, true, true, true, true, true]]
+DR. RIZAL BIN MOHD. NOR;[CSC2103, CSC3401];[[true, true, true, true, true, true], [true, true, true, true, true, true]]
+ZULKEFLI BIN MUHAMMED YUSOF;[CSC2201, CSC4202];[[true, true, true, true, true, true], [true, true, true, true, true, true]]
+PROFESSOR DR. ABDUL WAHAB;[CSC2401];[[true, true, true, true, true, true], [true, true, true, true, true, true]]
+ASSOC.PROF NORMAZIAH;[CSC2601, CSC4602];[[true, true, true, true, true, true], [true, true, true, true, true, true]]
+DR. MOHAMED RIDZA WAHIDDIN;[CSC2705];[[true, true, true, true, true, true], [true, true, true, true, true, true]]
+DR. NORMI SHAM;[CSC3501, CSC4505];[[true, true, true, true, true, true], [true, true, true, true, true, true]]
+DR. AL-SAKIB KHAN PATHAN;[CSC4201, CSC4204, CSC4205];[[true, true, true, true, true, true], [true, true, true, true, true, true]]
 venues
-LAB 3;[CSC1102];[[true, true, true, true, true, true], [true, true, true, false, true, true]];30
-LAB 6;[CSC1100, CSC1103];[[true, true, false, false, true, true], [true, false, false, false, true, true]];30
+ICT TEACH LAB 6 L3C;[CSC1100, CSC1103];[[true, true, true, true, true, true], [true, true, true, true, true, true]];30
+ICT LR 3 LEVEL 1C;[CSC1401, CSC1700, CSC1703, CSC4505];[[true, true, true, true, true, true], [true, true, true, true, true, true]];30
+ICT LR 4 LEVEL 1C;[CSC1700, CSC1705, CSC4204];[[true, true, true, true, true, true], [true, true, true, true, true, true]];30
+ICT LR 5 LEVEL 1C;[CSC1705, CSC4202, CSC4407];[[true, true, true, true, true, true], [true, true, true, true, true, true]];30
+ICT TEACH LAB 4 L3C;[CSC2101, CSC3301, CSC4602, CSC4604];[[true, true, true, true, true, true], [true, true, true, true, true, true]];30
+ICT TEACH LAB 5 L3C;[CSC2103];[[true, true, true, true, true, true], [true, true, true, true, true, true]];30
+ICT LR 2 LEVEL 1D;[CSC2201];[[true, true, true, true, true, true], [true, true, true, true, true, true]];30
+ICT LR 19 LEVEL 4C;[CSC2401];[[true, true, true, true, true, true], [true, true, true, true, true, true]];30
+ICT LR 11 LEVEL 2C;[CSC2601, CSC2705, CSC3501, CSC3502, CSC4308, CSC4505];[[true, true, true, true, true, true], [true, true, true, true, true, true]];30
+ICT LR 12 LEVEL 2C;[CSC2704];[[true, true, true, true, true, true], [true, true, true, true, true, true]];30
+ICT LR 6 LEVEL 1D;[CSC3401];[[true, true, true, true, true, true], [true, true, true, true, true, true]];30
+ICT LR 1 LEVEL 1C;[CSC3402];[[true, true, true, true, true, true], [true, true, true, true, true, true]];30
+ICT TEACH LAB 3 L3C;[CSC4201, CSC4205];[[true, true, true, true, true, true], [true, true, true, true, true, true]];30
 sections
-1;0;3;30;CSC1100;DR NORSAREMAH;LAB 6;Success.
-2;1;3;30;CSC1100;DR SURIANI;LAB 6;Success.
-3;1;2;30;CSC1100;DR AMELIA;LAB 6;Success.
-1;1;3;30;CSC1102;DR RIZAL;LAB 3;Success.
-1;0;2;30;CSC1103;DR AZLIN;LAB 6;Success.
-2;1;1;30;CSC1103;DR NORSAREMAH;LAB 6;Success.

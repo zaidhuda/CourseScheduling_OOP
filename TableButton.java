@@ -1,18 +1,18 @@
+
 import java.awt.*;
 import java.awt.event.*;
 import javax.swing.*;
 
-public class TableButton extends JButton {
+public class TableButton extends JButton implements MouseListener {
 
-    private String[] label;                      // The Button's text.
+    private String[] label;                 
     private double[] columnWidth;
     private Dimension dimension = new Dimension(900,40);
     private CustomFont font = new CustomFont();
-    private CustomColour color = new CustomColour();
-    private Color colour;
+    private boolean isHeader = false;
 
     /*
-    constructors
+    Constructors
      */
     public TableButton(String[] label, double[] columnWidth) {
         this.label = label;
@@ -20,14 +20,15 @@ public class TableButton extends JButton {
         enableEvents(AWTEvent.MOUSE_EVENT_MASK);
         setContentAreaFilled(false);
         setBorder(BorderFactory.createEmptyBorder());
-        setForeground(color.getNightBlue());
         setFont(font.getFontAbel(15));
+        setForeground(CustomColour.getNightBlue());
         setCursor(new Cursor(Cursor.HAND_CURSOR));
+        addMouseListener(this);
     }
 
 
     /*
-    paints the SquareButton
+    paints the TableButton
      */
     public void paintComponent(Graphics g) {
 
@@ -44,10 +45,26 @@ public class TableButton extends JButton {
         }
     }
 
+    public void mouseEntered (MouseEvent event) { if(!isHeader) setForeground(CustomColour.getLighterBlue()); }
+    public void mouseExited (MouseEvent event) { if(!isHeader) setForeground(CustomColour.getNightBlue()); }
+    public void mousePressed (MouseEvent event) {}
+    public void mouseClicked (MouseEvent event) {}
+    public void mouseReleased (MouseEvent event) {}
+
+    /*
+    Setter methods
+    */
+    public void setIsHeader(Boolean isHeader) {
+        this.isHeader = isHeader;
+    }
+
     public void setPreferredSize(Dimension dimension) {
         this.dimension = dimension;
     }
 
+    /*
+    Getter methods
+    */
     public Dimension getPreferredSize() {
         return dimension;
     }

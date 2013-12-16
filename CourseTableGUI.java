@@ -1,19 +1,15 @@
 import courseschedule.*;
-import courseschedule.gui.*;
 import courseschedule.util.*;
 
 import java.awt.*;
 import java.awt.event.*;
 import javax.swing.*;
-import javax.swing.table.*;
-import javax.swing.border.*;
 import java.util.*;
 
 public class CourseTableGUI extends JPanel {
 	// VARIABLES FOR GENERAL USE
     public static ScheduleBuilder sb = null;
 	private Frame frame = new Frame();
-	private CustomColour color = new CustomColour();
 	private CustomFont font = new CustomFont();
 
 	// VARIABLES FOR TOP PANEL
@@ -22,7 +18,7 @@ public class CourseTableGUI extends JPanel {
 
 	// VARIABLES FOR MID PANELS
 	private JPanel middlePanel;
-	private ArrayList<TableButton> list = new ArrayList<TableButton>();
+	private ArrayList<TableButton> list = new ArrayList<>();
 	private JScrollPane scrollPanel;
 	private OffsetFinder of;
 
@@ -34,7 +30,7 @@ public class CourseTableGUI extends JPanel {
 	private JPanel containerRow = new JPanel();
 	private JPanel row = new JPanel();
 	private String[][] label = {
-		{ "CSC1100",  "Elements Of Programming",  "3",  "4" },
+		{ "",  "",  "",  "" },
 		// { "CSC1102",  "Web Programming",  "3",  "1" },
 		// { "CSC1103",  "Object Oriented Programming",  "3",  "2" },
 	};
@@ -55,11 +51,11 @@ public class CourseTableGUI extends JPanel {
 		topPanel = new JPanel();
 
 		topPanel.setBorder(BorderFactory.createEmptyBorder());
-		topPanel.setBackground(color.getLighterBlue());
+		topPanel.setBackground(CustomColour.lighterblue);
 
 		textLabel = new JLabel("COURSE");
 
-		textLabel.setForeground(color.getSilverClouds());
+		textLabel.setForeground(CustomColour.silverclouds);
 		textLabel.setFont(font.getFontAbel(48));
 
 		topPanel.add(textLabel);
@@ -82,7 +78,7 @@ public class CourseTableGUI extends JPanel {
 	}
 
 	public void createHeaderPanel() {
-		containerHeader.setBackground(color.getDarkerBlue());
+		containerHeader.setBackground(CustomColour.darkerblue);
 		containerHeader.setLayout(new BoxLayout(containerHeader, BoxLayout.X_AXIS));
 		containerHeader.setPreferredSize(new Dimension(900, 20));
 		containerHeader.setMinimumSize(getPreferredSize());
@@ -92,7 +88,8 @@ public class CourseTableGUI extends JPanel {
 
 		TableButton tb = new TableButton(header, of.getOffset());
 		tb.setPreferredSize(new Dimension(900,20));
-		tb.setForeground(color.getSilverClouds());
+		tb.setIsHeader(true);
+		tb.setForeground(CustomColour.silverclouds);
 		containerHeader.add(tb);
 	}
 
@@ -106,23 +103,24 @@ public class CourseTableGUI extends JPanel {
 			row.add(list.get(i));
 		}
 
-		scrollPanel.setPreferredSize(new Dimension(850,331));
+		scrollPanel.setPreferredSize(new Dimension(900,331));
 		scrollPanel.setBorder(BorderFactory.createEmptyBorder());
 		scrollPanel.getVerticalScrollBar().setUI(new CustomScrollBarUI(1));
 		// scrollPanel.getHorizontalScrollBar().setUI(new CustomScrollBarUI(2));
 		scrollPanel.setHorizontalScrollBar(null);
+		scrollPanel.getVerticalScrollBar().setUnitIncrement(16);
 
-		containerRow.setBackground(color.getSilverClouds());
+		containerRow.setBackground(CustomColour.silverclouds);
 		containerRow.add(scrollPanel);
 	}
 
 	public void createBottomPanel() {
 		bottomPanel = new JPanel();
 
-		bottomPanel.setBackground(color.getSilverClouds());
+		bottomPanel.setBackground(CustomColour.silverclouds);
 
 		backBtn = new RoundedButton("BACK", 0);
-		addBtn = new RoundedButton("ADD COURSE", 1);
+		addBtn = new RoundedButton("ADD", 1);
 
 		backBtn.setFont(font.getFontPTSans(15, Font.BOLD, -0.07));
 		backBtn.addActionListener(new ButtonListener());
@@ -144,34 +142,34 @@ public class CourseTableGUI extends JPanel {
 					CourseGUI c = new CourseGUI(sb.courses.get(i));
 					c.setFrame(frame);
 					frame.setContentPane(c);
-					frame.pack();
 				}
 
 			if(e.getSource() == backBtn) {
 				MainGUI m = new MainGUI();
 				m.setFrame(frame);
 				frame.setContentPane(m);
-				frame.pack();
 			}
 
 			if(e.getSource() == addBtn) {
 				CourseGUI c = new CourseGUI(new Course(""));
 				c.setFrame(frame);
 				frame.setContentPane(c);
-				frame.pack();
 			}
+
+			frame.revalidate();
+			frame.repaint();
 		}
 	}
 
 	public void setFrame(Frame frame) {
 		this.frame = frame;
-		this.sb = frame.sb;
-
-		if(!sb.courses.isEmpty())
-			label = sb.getCourses();
+		sb = Frame.sb;
 
 		createTopPanel();
-		createMiddlePanel();
+		if(!sb.courses.isEmpty()){
+			label = sb.getCourses();
+			createMiddlePanel();
+		}
 		createBottomPanel();
 	}
 }

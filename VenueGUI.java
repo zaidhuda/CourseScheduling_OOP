@@ -1,16 +1,14 @@
 import courseschedule.*;
-import courseschedule.gui.*;
 import courseschedule.util.*;
 
 import java.awt.*;
 import java.awt.event.*;
-import javax.swing.*;
 import java.util.*;
+import javax.swing.*;
 
 public class VenueGUI extends JPanel {
 	// VARIABLES FOR GENERAL USE
     public static ScheduleBuilder sb = null;
-	private CustomColour color = new CustomColour();
 	private CustomFont font = new CustomFont();
 	private Frame frame = new Frame();
 
@@ -19,6 +17,8 @@ public class VenueGUI extends JPanel {
 	private JLabel textLabel;
 
 	// VARIABLES FOR MID PANELS
+	private final JPanel midLowerPanelContainer = new JPanel();
+	CoursesList coursesLister = null;
 	private JPanel middlePanel, midUpperPanel, midLeftPanel, midRightPanel;
 	private TimePicker midLowerPanel;
 	private Venue venue;
@@ -28,7 +28,7 @@ public class VenueGUI extends JPanel {
 	private CustomLabel[] mltextLabel = {new CustomLabel("VENUE NAME")};
 
 	// MIDRIGHTPANEL'S
-	private CustomField[] mrtextField = new CustomField[1];
+	private FieldButton[] mrtextField = new FieldButton[1];
 	private CustomLabel[] mrtextLabel = {new CustomLabel("COURSE LIST")};
 
 	// VARIABLES FOR BOTTOM PANEL
@@ -43,14 +43,14 @@ public class VenueGUI extends JPanel {
 	public void createTopPanel() {
 		topPanel = new JPanel();
 
-		topPanel.setBackground(color.getNightBlue());
+		topPanel.setBackground(CustomColour.getNightBlue());
 		topPanel.setPreferredSize(new Dimension(900, 70));
 		topPanel.setMinimumSize(getPreferredSize());
 		topPanel.setMaximumSize(getPreferredSize());
 
 		textLabel = new JLabel("VENUE");
 
-		textLabel.setForeground(color.getSilverClouds());
+		textLabel.setForeground(CustomColour.getSilverClouds());
 		textLabel.setFont(font.getFontAbel(48));
 
 		topPanel.add(textLabel);
@@ -64,7 +64,7 @@ public class VenueGUI extends JPanel {
 		midLeftPanel = new JPanel();
 		midRightPanel = new JPanel();
 
-		midLeftPanel.setBackground(color.getSilverClouds());
+		midLeftPanel.setBackground(CustomColour.getSilverClouds());
 		midLeftPanel.setLayout(new BoxLayout(midLeftPanel, BoxLayout.Y_AXIS));
 		
 		for(int i=0; i<1; i++) {
@@ -75,18 +75,35 @@ public class VenueGUI extends JPanel {
 			midLeftPanel.add(Box.createRigidArea(new Dimension(0,10)));
 		}
 
-		midRightPanel.setBackground(color.getSilverClouds());
+		midRightPanel.setBackground(CustomColour.getSilverClouds());
 		midRightPanel.setLayout(new BoxLayout(midRightPanel, BoxLayout.Y_AXIS));
 		
 		for(int i=0; i<1; i++) {
-			mrtextField[i] = new CustomField();
-			mrtextField[i].setText(venue.detailsArray()[1]);
+			mrtextField[i] = new FieldButton(venue.detailsArray()[1]);
+			//mrtextField[i].setText(venue.detailsArray()[1]);
+			if (sb.getCourses().length > 0){
+				mrtextField[i].addActionListener(new ActionListener() {
+					@Override
+					public void actionPerformed(ActionEvent e) {
+						coursesLister.setButton(mrtextField[0]);
+						if (coursesLister.isVisible()) {
+							midLowerPanel.setVisible(true);
+							coursesLister.setVisible(false);
+						} else {
+							midLowerPanel.setVisible(false);
+							coursesLister.setVisible(true);
+						}
+						midLowerPanelContainer.revalidate();
+						midLowerPanelContainer.repaint();
+					}
+				});
+			}
 			midRightPanel.add(mrtextLabel[i]);
 			midRightPanel.add(mrtextField[i]);
 			midRightPanel.add(Box.createRigidArea(new Dimension(0,10)));
 		}
 
-		midUpperPanel.setBackground(color.getSilverClouds());
+		midUpperPanel.setBackground(CustomColour.getSilverClouds());
 		midUpperPanel.setLayout(new BoxLayout(midUpperPanel, BoxLayout.X_AXIS));
 		midUpperPanel.setAlignmentX(CENTER_ALIGNMENT);
 		midUpperPanel.add(midLeftPanel);
@@ -98,7 +115,13 @@ public class VenueGUI extends JPanel {
 		middlePanel.setLayout(new BoxLayout(middlePanel, BoxLayout.PAGE_AXIS));
 		middlePanel.add(Box.createRigidArea(new Dimension(0,10)));
 		middlePanel.add(midUpperPanel);
-		middlePanel.add(midLowerPanel);
+
+		midLowerPanelContainer.add(midLowerPanel);
+		if (coursesLister != null){
+			midLowerPanelContainer.add(coursesLister);
+			coursesLister.setVisible(false);
+		}
+		middlePanel.add(midLowerPanelContainer);
 
 		add(middlePanel, BorderLayout.CENTER);
 	}
@@ -107,7 +130,7 @@ public class VenueGUI extends JPanel {
 		bottomPanel = new JPanel();
 		backBtn = new RoundedButton("BACK", 0);
 		removeBtn = new RoundedButton("REMOVE", 0);
-		addBtn = new RoundedButton("ADD VENUE", 1);
+		addBtn = new RoundedButton("SAVE", 1);
 
 		backBtn.setFont(font.getFontPTSans(15, Font.BOLD, -0.07));
 		backBtn.addActionListener(new ButtonListener());
@@ -134,22 +157,38 @@ public class VenueGUI extends JPanel {
 				e.setSource(backBtn);
 			}
 
+			if(e.getSource() == addBtn) {
+				String name = mltextField[0].getText();
+
+				if(!name.equals("")) {
+					boolean[][] availability = midLowerPanel.getAvailability();
+					boolean[][] conflicts = midLowerPanel.getConflict();
+					venue.setAvailability(availability);
+					sb.fixClash(venue, conflicts);
+					venue.setName(name);
+					if (coursesLister != null) venue.setCourses(coursesLister.getCourses());
+					sb.add(venue);
+				}
+				e.setSource(backBtn);
+			}
+
 			if(e.getSource() == backBtn) {
 				VenueTableGUI v = new VenueTableGUI();
 				v.setFrame(frame);
 				frame.setContentPane(v);
-				frame.pack();
 			}
 
-			if(e.getSource() == addBtn) {
-				// add records
-			}
+			frame.revalidate();
+			frame.repaint();
 		}
 	}
 
 	public void setFrame(Frame frame) {
 		this.frame = frame;
-		this.sb = frame.sb;
+		sb = Frame.sb;
+
+		ArrayList<String> lCourses = new ArrayList<>(venue.getCourses());
+		if (sb.getCourses().length > 0) coursesLister = new CoursesList(sb, lCourses, -1);
 
 		createTopPanel();
 		createMiddlePanel();

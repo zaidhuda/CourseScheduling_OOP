@@ -1,17 +1,16 @@
-import java.awt.*;
-import java.awt.event.*;
+
 import javax.swing.*;
+import java.awt.*;
 
 public class CustomComboBox extends JComboBox {
 	private CustomFont font = new CustomFont();
-	private CustomColour color = new CustomColour();
 
 	public CustomComboBox(String[] s) {
 		super(s);
 		setRenderer(new ComboBoxRenderer());
-		setBackground(color.getSilverGray());
-		setForeground(color.getSilverClouds());
-		setFont(font.getFontPTSans(15,-0.05));
+		setBackground(CustomColour.silvergray);
+		setForeground(CustomColour.silverclouds);
+		setFont(font.getFontPTSans(15, -0.05));
 		setMaximumRowCount(3);
 	}
 
@@ -24,19 +23,19 @@ public class CustomComboBox extends JComboBox {
 		// 	add(panel);
 		// }
 
-	    public Component getListCellRendererComponent(JList list, Object value, int index, boolean isSelected, boolean cellHasFocus) {
-            // String[] item = (String[]) value;
-            // label.setText(item[0]);
+		public Component getListCellRendererComponent(JList list, Object value, int index, boolean isSelected, boolean cellHasFocus) {
+			// String[] item = (String[]) value;
+			// label.setText(item[0]);
 
-            if (isSelected) {
-                setBackground(list.getSelectionBackground());
-                setForeground(list.getSelectionForeground());
-            } else {
-                setBackground(list.getBackground());
-                setForeground(list.getForeground());
-            }
+			if (isSelected) {
+				setBackground(list.getSelectionBackground());
+				setForeground(list.getSelectionForeground());
+			} else {
+				setBackground(list.getBackground());
+				setForeground(list.getForeground());
+			}
 
-            return this;
+			return this;
 		}
 	}
 }

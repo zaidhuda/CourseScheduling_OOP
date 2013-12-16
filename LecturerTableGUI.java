@@ -1,19 +1,15 @@
 import courseschedule.*;
-import courseschedule.gui.*;
 import courseschedule.util.*;
 
 import java.awt.*;
 import java.awt.event.*;
 import javax.swing.*;
-import javax.swing.table.*;
-import javax.swing.border.*;
 import java.util.*;
 
 public class LecturerTableGUI extends JPanel {
 	// VARIABLES FOR GENERAL USE
     public static ScheduleBuilder sb = null;
 	private Frame frame = new Frame();
-	private CustomColour color = new CustomColour();
 	private CustomFont font = new CustomFont();
 
 	// VARIABLES FOR TOP PANEL
@@ -34,7 +30,7 @@ public class LecturerTableGUI extends JPanel {
 	private JPanel containerRow = new JPanel();
 	private JPanel row = new JPanel();
 	private String[][] label = {
-		{ "Dr Suriani" },
+		{ "", "" },
 		// { "Dr Suriani" },
 		// { "Dr Suriani" },
 	};
@@ -51,11 +47,11 @@ public class LecturerTableGUI extends JPanel {
 		topPanel = new JPanel();
 
 		topPanel.setBorder(BorderFactory.createEmptyBorder());
-		topPanel.setBackground(color.getLighterBlue());
+		topPanel.setBackground(CustomColour.lighterblue);
 
 		textLabel = new JLabel("LECTURER");
 
-		textLabel.setForeground(color.getSilverClouds());
+		textLabel.setForeground(CustomColour.silverclouds);
 		textLabel.setFont(font.getFontAbel(48));
 
 		topPanel.add(textLabel);
@@ -78,7 +74,7 @@ public class LecturerTableGUI extends JPanel {
 	}
 
 	public void createHeaderPanel() {
-		containerHeader.setBackground(color.getDarkerBlue());
+		containerHeader.setBackground(CustomColour.darkerblue);
 		containerHeader.setLayout(new BoxLayout(containerHeader, BoxLayout.X_AXIS));
 		containerHeader.setPreferredSize(new Dimension(900, 20));
 		containerHeader.setMinimumSize(getPreferredSize());
@@ -88,7 +84,8 @@ public class LecturerTableGUI extends JPanel {
 
 		TableButton tb = new TableButton(header, of.getOffset());
 		tb.setPreferredSize(new Dimension(900,20));
-		tb.setForeground(color.getSilverClouds());
+		tb.setIsHeader(true);
+		tb.setForeground(CustomColour.silverclouds);
 		containerHeader.add(tb);
 	}
 
@@ -102,23 +99,24 @@ public class LecturerTableGUI extends JPanel {
 			row.add(list.get(i));
 		}
 
-		scrollPanel.setPreferredSize(new Dimension(850,331));
+		scrollPanel.setPreferredSize(new Dimension(900,331));
 		scrollPanel.setBorder(BorderFactory.createEmptyBorder());
 		scrollPanel.getVerticalScrollBar().setUI(new CustomScrollBarUI(1));
 		// scrollPanel.getHorizontalScrollBar().setUI(new CustomScrollBarUI(2));
 		scrollPanel.setHorizontalScrollBar(null);
+		scrollPanel.getVerticalScrollBar().setUnitIncrement(16);
 
-		containerRow.setBackground(color.getSilverClouds());
+		containerRow.setBackground(CustomColour.silverclouds);
 		containerRow.add(scrollPanel);
 	}
 
 	public void createBottomPanel() {
 		bottomPanel = new JPanel();
 
-		bottomPanel.setBackground(color.getSilverClouds());
+		bottomPanel.setBackground(CustomColour.silverclouds);
 
 		backBtn = new RoundedButton("BACK", 0);
-		addBtn = new RoundedButton("ADD LECTURER", 1);
+		addBtn = new RoundedButton("ADD", 1);
 
 		backBtn.setFont(font.getFontPTSans(15, Font.BOLD, -0.07));
 		backBtn.addActionListener(new ButtonListener());
@@ -140,34 +138,34 @@ public class LecturerTableGUI extends JPanel {
 					LecturerGUI l = new LecturerGUI(sb.lecturers.get(i));
 					l.setFrame(frame);
 					frame.setContentPane(l);
-					frame.pack();
 				}
 
 			if(e.getSource() == backBtn) {
 				MainGUI m = new MainGUI();
 				m.setFrame(frame);
 				frame.setContentPane(m);
-				frame.pack();
 			}
 
 			if(e.getSource() == addBtn) {
 				LecturerGUI l = new LecturerGUI(new Lecturer());
 				l.setFrame(frame);
 				frame.setContentPane(l);
-				frame.pack();
 			}
+
+			frame.revalidate();
+			frame.repaint();
 		}
 	}
 
 	public void setFrame(Frame frame) {
 		this.frame = frame;
-		this.sb = frame.sb;
-
-		if(!sb.lecturers.isEmpty())
-			label = sb.getLecturers();
+		sb = Frame.sb;
 
 		createTopPanel();
-		createMiddlePanel();
+		if(!sb.lecturers.isEmpty()){
+			label = sb.getLecturers();
+			createMiddlePanel();
+		}
 		createBottomPanel();
 	}
 }
