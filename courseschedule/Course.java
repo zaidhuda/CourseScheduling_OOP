@@ -25,14 +25,14 @@ package courseschedule;
 
 public class Course {
 	private String code, title = null;
-	private int credit = 0, requiredSections = 1;
+	private int credit = 3, requiredSections = 1;
 
 	public Course(String code) {
-		this(code, null, 0, 1);
+		this(code, null, 3, 1);
 	}
 
 	public Course(String code, String title) {
-		this(code, title, 0, 1);
+		this(code, title, 3, 1);
 	}
 
 	public Course(String code, String title, int credit) {

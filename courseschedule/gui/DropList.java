@@ -18,7 +18,7 @@ public class DropList extends JPanel {
 	protected ArrayList<TableButton> list = new ArrayList<>();
 	protected ArrayList<String> lCourses = new ArrayList<>();
 	protected ScheduleBuilder sb;
-	protected String[][] label = {{"",""}};
+	protected String[][] label;
 	protected int limit;
 	protected FieldButton theInvoker = new FieldButton("");
 	protected JPanel theContainer;
@@ -32,7 +32,7 @@ public class DropList extends JPanel {
 		this.lCourses = lCourses;
 		this.limit = (limit != -1) ? limit : sb.courses.size()+1;
 		label = sb.getCodeandTitle();
-		makeParts();
+		if (label.length > 0) makeParts();
 	}
 
 	public DropList(ScheduleBuilder sb, Course course, Lecturer lecturer, int limit) {
@@ -47,7 +47,7 @@ public class DropList extends JPanel {
 			str[i] = arr;
 		}
 		label = str;
-		makeParts();
+		if (label.length > 0) makeParts();
 	}
 
 	public DropList(ScheduleBuilder sb, Course course, Venue venue, int limit) {
@@ -62,7 +62,7 @@ public class DropList extends JPanel {
 			str[i] = arr;
 		}
 		label = str;
-		makeParts();
+		if (label.length > 0) makeParts();
 	}
 
 	public void makeParts() {

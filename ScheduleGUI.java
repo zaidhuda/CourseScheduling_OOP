@@ -78,7 +78,7 @@ public class ScheduleGUI extends JPanel {
 			//mltextField[i].setText(section.detailsArray()[6]);
 			LecturerLister.setButton(mltextField[0]);
 			LecturerLister.setTheTimePicker(midLowerPanel);
-			if (sb.getAssignedLecturers(section.getCourse()) != null){
+			if (!sb.getAssignedLecturers(section.getCourse()).isEmpty()){
 				mltextField[i].addActionListener(new ActionListener() {
 					@Override
 					public void actionPerformed(ActionEvent e) {
@@ -108,7 +108,7 @@ public class ScheduleGUI extends JPanel {
 		for(int i=0; i<1; i++) {
 			mrtextField[i] = new FieldButton(section.detailsArray()[7]);
 			//mltextField[i].setText(section.detailsArray()[7]);
-			if (sb.getAssignedVenues(section.getCourse()) != null){
+			if (!sb.getAssignedVenues(section.getCourse()).isEmpty()){
 				VenueLister.setButton(mrtextField[0]);
 				mrtextField[i].addActionListener(new ActionListener() {
 					@Override

@@ -108,6 +108,8 @@ public class ScheduleBuilder {
 	}
 
 	public void add(Lecturer o) {
+		if (o.getName().equals("TBD"))
+			return;
 		boolean exist = false;
 		for (Lecturer l : lecturers)
 			if (l.equals(o)) {
@@ -139,6 +141,8 @@ public class ScheduleBuilder {
 	}
 
 	public void add(Venue o) {
+		if (o.getName().equals("TBD"))
+			return;
 		boolean exist = false;
 		for (Venue v : venues)
 			if (v.equals(o)) {
@@ -305,35 +309,30 @@ public class ScheduleBuilder {
 					}
 	}
 
-	//public void fixCourseSections(Course course, int newRequired) {
-	//	ArrayList<Section> tempSections = getSectionOf(course);
-	//	int count = tempSections.size();
-	//	if (count != newRequired) {
-	//		if (newRequired < tempSections.size()) {
-	//			sections.removeAll(tempSections);
-	//			for (int i = tempSections.size(); i > newRequired; i--) {
-	//				tempSections.remove(i - 1);
-	//			}
-	//			for (Section s : tempSections)
-	//				sections.add(s);
-	//		} else {
-	//			generateSection(true, course, newRequired - count, count);
-	//		}
-	//	}
-	//}
+	public void fixCourseSections(Course course) {
+		int index = 0, newRequired = course.getRequiredSections();
+		ArrayList<Section> tempSections = getSectionOf(course);
+		for (Section s : tempSections)
+			s.setSectionNum(++index);
+		int count = tempSections.size();
+		if (count != newRequired) {
+			if (newRequired < tempSections.size()) {
+				sections.removeAll(tempSections);
+				for (int i = tempSections.size(); i > newRequired; i--) {
+					tempSections.remove(i - 1);
+				}
+				for (Section s : tempSections)
+					sections.add(s);
+			} else {
+				generateSection(true, course, newRequired - count, count);
+			}
+		}
+	}
 
 	public void fixCourseSections() {
 		Collections.sort(sections, courseComparator);
 		for (Course c : courses){
-			int count = 0;
-			int i = 0;
-			for (Section s : sections){
-				count++;
-				s.setSectionNum(++i);
-				if (!s.getCourse().equals(c))
-					break;
-			}
-			generateSection(true, c, c.getRequiredSections()-count, count);
+			fixCourseSections(c);
 		}
 	}
 

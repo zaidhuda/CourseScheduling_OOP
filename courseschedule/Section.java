@@ -114,7 +114,7 @@ public class Section {
 			case 1:
 				return "Tue/Thu";
 			default:
-				return null;
+				return "TBD";
 		}
 	}
 
@@ -137,7 +137,7 @@ public class Section {
 			case 5:
 				return "17:00 - 18:20";
 			default:
-				return null;
+				return "TBD";
 		}
 	}
 

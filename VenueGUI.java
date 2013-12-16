@@ -189,7 +189,7 @@ public class VenueGUI extends JPanel {
 		sb = Frame.sb;
 
 		ArrayList<String> lCourses = new ArrayList<>(venue.getCourses());
-		if (sb.getCourses().length > 0) coursesLister = new CoursesList(sb, lCourses, 3);
+		if (sb.getCourses().length > 0) coursesLister = new CoursesList(sb, lCourses, -1);
 
 		createTopPanel();
 		createMiddlePanel();

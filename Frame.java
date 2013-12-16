@@ -3,6 +3,7 @@ import courseschedule.gui.*;
 import courseschedule.util.*;
 
 import java.awt.*;
+import java.awt.event.*;
 import java.util.*;
 import javax.swing.*;
 
@@ -41,7 +42,14 @@ public class Frame extends JFrame {
 		frame.setContentPane(s);
 		frame.pack();
 		frame.setLocationRelativeTo(null);
-
+		frame.addWindowListener(new WindowAdapter() {
+			@Override
+			public void windowClosing(WindowEvent we) {
+				if (JOptionPane.showConfirmDialog(null, "Save?", "Exit", JOptionPane.YES_NO_OPTION) == 0)
+					sf.save();
+				System.exit(0);
+			}
+		});
 		s.setFrame(frame);
 	}
 }
