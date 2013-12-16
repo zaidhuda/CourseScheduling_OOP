@@ -32,11 +32,7 @@ public class TableButton extends HoveringButton {
 	paints the SquareButton
 	 */
 	public void paintComponent(Graphics g) {
-		if (hovered) {
-			g.setColor(CustomColour.silvergray);
-		} else {
-			g.setColor(bg);
-		}
+		g.setColor(bg);
 		g.drawRect(0, 0, getWidth(), getHeight());
 		g.fillRect(0, 0, getWidth(), getHeight());
 

@@ -27,18 +27,6 @@ public class HoveringButton extends JComponent {
 	}
 
 	/**
-	 * Determine if click was inside round button.
-	 */
-	@Override
-	public boolean contains(int x, int y) {
-		int mx = getSize().width;
-		int my = getSize().height;
-		boolean inX = x >= 0 && x <= mx;
-		boolean inY = y >= 0 && y <= my;
-		return (inX && inY);
-	}
-
-	/**
 	 * Adds the specified action listener to receive action events from this
 	 * button.
 	 *

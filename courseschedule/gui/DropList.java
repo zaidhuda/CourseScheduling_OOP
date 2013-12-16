@@ -77,10 +77,11 @@ public class DropList extends JPanel {
 
 		JPanel row = new JPanel();
 		JScrollPane scrollPanel = new JScrollPane(row);
-		scrollPanel.setPreferredSize(new Dimension(604, 250));
+		scrollPanel.setPreferredSize(new Dimension(604, 300));
 		scrollPanel.setBorder(BorderFactory.createEmptyBorder());
 		scrollPanel.getVerticalScrollBar().setUI(new CustomScrollBarUI(1));
 		scrollPanel.setHorizontalScrollBar(null);
+		scrollPanel.getVerticalScrollBar().setUnitIncrement(16);
 
 		OffsetFinder of = new OffsetFinder(label, scrollPanel);
 

@@ -105,6 +105,7 @@ public class VenueTableGUI extends JPanel {
 		scrollPanel.getVerticalScrollBar().setUI(new CustomScrollBarUI(1));
 		// scrollPanel.getHorizontalScrollBar().setUI(new CustomScrollBarUI(2));
 		scrollPanel.setHorizontalScrollBar(null);
+		scrollPanel.getVerticalScrollBar().setUnitIncrement(16);
 
 		containerRow.setBackground(CustomColour.getSilverClouds());
 		containerRow.add(scrollPanel);
