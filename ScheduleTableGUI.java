@@ -62,8 +62,7 @@ public class ScheduleTableGUI extends JPanel {
 
 	public void createMiddlePanel() {
 		middlePanel = new JPanel();
-		SpringLayout spring = new SpringLayout();
-		middlePanel.setLayout(spring);
+		middlePanel.setLayout(new BoxLayout(middlePanel, BoxLayout.PAGE_AXIS));
 
 		createHeaderPanel();
 		createTablePanel();
@@ -71,7 +70,6 @@ public class ScheduleTableGUI extends JPanel {
 		middlePanel.add(containerHeader);
 		middlePanel.add(containerRow);
 
-		spring.putConstraint(SpringLayout.NORTH, containerRow, 0, SpringLayout.SOUTH, containerHeader);
 		add(middlePanel, BorderLayout.CENTER);
 	}
 
@@ -79,8 +77,8 @@ public class ScheduleTableGUI extends JPanel {
 		containerHeader.setBackground(CustomColour.getDarkerBlue());
 		containerHeader.setLayout(new BoxLayout(containerHeader, BoxLayout.X_AXIS));
 		containerHeader.setPreferredSize(new Dimension(900, 20));
-		containerHeader.setMinimumSize(getPreferredSize());
-		containerHeader.setMaximumSize(getPreferredSize());
+		containerHeader.setMinimumSize(containerHeader.getPreferredSize());
+		containerHeader.setMaximumSize(containerHeader.getPreferredSize());
 
 		of = new OffsetFinder(label, containerHeader);
 

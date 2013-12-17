@@ -12,24 +12,18 @@ public class MainGUI extends JPanel {
 	public MainGUI() {
 		setLayout(new BorderLayout());
 
-		Panel1 panel1 = new Panel1();
+		Panel1 headerPanel = new Panel1();
 		Panel2 menuPanelTop = new Panel2();
 		Panel3 menuPanelBottom = new Panel3();
 		JPanel menuPanel = new JPanel();
-		JPanel panel2 = new JPanel();
 
 		menuPanel.setLayout(new BoxLayout(menuPanel, BoxLayout.Y_AXIS));
 		menuPanel.add(menuPanelTop);
 		menuPanel.add(Box.createRigidArea(new Dimension(0, 5)));
 		menuPanel.add(menuPanelBottom);
 
-		panel2.setLayout(new BoxLayout(panel2, BoxLayout.X_AXIS));
-		panel2.add(Box.createRigidArea(new Dimension(100, 0)));
-		panel2.add(menuPanel);
-		panel2.add(Box.createRigidArea(new Dimension(100, 0)));
-
-		add(panel1, BorderLayout.NORTH);
-		add(panel2, BorderLayout.CENTER);
+		add(headerPanel, BorderLayout.NORTH);
+		add(menuPanel, BorderLayout.CENTER);
 		add(Box.createRigidArea(new Dimension(0, 25)), BorderLayout.SOUTH);
 	}
 
