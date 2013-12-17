@@ -84,7 +84,7 @@ public class ScheduleTableGUI extends JPanel {
 
 		of = new OffsetFinder(label, containerHeader);
 
-		TableHeader tb = new TableHeader(header, of.getOffset());
+		TableHeader tb = new TableHeader(header, of);
 		tb.setPreferredSize(new Dimension(900, 20));
 		containerHeader.add(tb);
 	}
@@ -94,7 +94,7 @@ public class ScheduleTableGUI extends JPanel {
 		scrollPanel = new JScrollPane(row);
 
 		for (int i = 0; i < label.length; i++) {
-			list.add(new TableButton(label[i], of.getOffset()));
+			list.add(new TableButton(label[i], of));
 			list.get(i).addActionListener(new ButtonListener());
 			row.add(list.get(i));
 		}

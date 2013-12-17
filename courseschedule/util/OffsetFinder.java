@@ -2,6 +2,7 @@ package courseschedule.util;
 
 import javax.swing.*;
 import java.awt.*;
+import java.util.*;
 
 /**
  * Created by Diaz
@@ -10,7 +11,7 @@ import java.awt.*;
  * Date: 12/11/13.
  */
 public class OffsetFinder {
-	private int[] max = null;
+	private double[] max = null;
 	private int SIZE = -1;
 	private double[] offset = null;
 	private JComponent theContainer;
@@ -29,16 +30,13 @@ public class OffsetFinder {
 	}
 
 	private void findWidth(String[][] theTable) {
-		max = new int[theTable[0].length];
+		max = new double[theTable[0].length];
+		Arrays.fill(max, 8);
 		for (String[] aTheTable : theTable) {
 			for (int j = 0; j < aTheTable.length; j++) {
 				int length = aTheTable[j].length();
-				if (length > max[j]) {
+				if (length > max[j])
 					max[j] = length;
-				}
-				if (max[j] < 5) {
-					max[j] = 5;
-				}
 			}
 		}
 		SIZE = max.length;
@@ -48,14 +46,14 @@ public class OffsetFinder {
 		int theContainerSize = theContainer.getWidth();
 		if (theContainerSize == 0)
 			theContainerSize = (int) theContainer.getPreferredSize().getWidth();
-
 		int total = 0;
+		theContainerSize -= 20;
 		offset = new double[SIZE];
-		for (int i : max)
+		for (double i : max)
 			total += i;
 		for (int j = 0; j < SIZE; j++) {
-			max[j] *= theContainerSize / total;
-			offset[j] = max[j] / 2;
+			max[j] = max[j] / total * theContainerSize;
+			offset[j] = max[j] / 2 + 5;
 		}
 		for (int i = 0; i < SIZE; i++) {
 			for (int j = 0; j < i; j++) {
@@ -70,7 +68,8 @@ public class OffsetFinder {
 		return offset;
 	}
 
-	public int getOffset(String str, int index, Font font) {
+	public int getOffset(String str, int index, JComponent component) {
+		Font font = component.getFont();
 		FontMetrics fm = theContainer.getFontMetrics(font);
 		return (int) offset[index] - fm.stringWidth(str) / 2;
 	}

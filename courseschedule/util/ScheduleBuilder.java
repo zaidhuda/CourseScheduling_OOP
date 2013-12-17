@@ -325,13 +325,13 @@ public class ScheduleBuilder {
 	public void fixCourseSections(Course course) {
 		int index = 0, newRequired = course.getRequiredSections();
 		ArrayList<Section> tempSections = getSectionOf(course);
-		for (Section s : tempSections)
-			s.setSectionNum(++index);
 		int count = tempSections.size();
 		if (count != newRequired) {
+			for (Section s : tempSections)
+				s.setSectionNum(++index);
 			if (newRequired < tempSections.size()) {
 				sections.removeAll(tempSections);
-				for (int i = tempSections.size(); i > newRequired; i--) {
+				for (int i = count; i > newRequired; i--) {
 					int newIndex = i - 1;
 					Section s = tempSections.get(newIndex);
 					int day = s.getDay(), time = s.getTime();

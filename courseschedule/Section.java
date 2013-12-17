@@ -338,7 +338,7 @@ public class Section {
 		str[6] = getLecturer().getName();
 		String[] newName = str[6].split(" ");
 		str[6] = newName[0] + ((newName.length > 1)? " " + newName[1] : "");
-		str[7] = getVenue().getName();
+		str[7] = getVenue().getName().replaceAll("ICT ", "");
 		str[8] = Integer.toString(getStudentLimit());
 		return str;
 	}

@@ -90,7 +90,7 @@ public class DropList extends JPanel {
 
 		row.setLayout(new BoxLayout(row, BoxLayout.Y_AXIS));
 		for (int i = 0; i < label.length; i++) {
-			list.add(new TableButton(label[i], of.getOffset()));
+			list.add(new TableButton(label[i], of));
 			if (lCourses.contains(label[i][0]) || name.equals(label[i][0])) {
 				list.get(i).setColor(CustomColour.silvergray);
 			}

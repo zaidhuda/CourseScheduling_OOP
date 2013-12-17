@@ -1,20 +1,22 @@
 package courseschedule.gui;
 
+import courseschedule.util.*;
+
 import javax.swing.*;
 import java.awt.*;
 
 public class TableHeader extends JPanel {
 
 	private String[] label;
-	private double[] columnWidth;
 	private Dimension dimension = new Dimension(900, 40);
+	OffsetFinder of;
 
 	/*
 	Constructors
 	 */
-	public TableHeader(String[] label, double[] columnWidth) {
+	public TableHeader(String[] label, OffsetFinder of) {
 		this.label = label;
-		this.columnWidth = columnWidth;
+		this.of = of;
 		CustomFont font = new CustomFont();
 		setFont(font.getFontAbel(15));
 	}
@@ -32,7 +34,7 @@ public class TableHeader extends JPanel {
 
 			for (int i = 0; i < label.length; i++) {
 				g2d.setRenderingHint(RenderingHints.KEY_TEXT_ANTIALIASING, RenderingHints.VALUE_TEXT_ANTIALIAS_LCD_HRGB);
-				g2d.drawString(label[i], (int) columnWidth[i] - (fm.stringWidth(label[i]) / 2), (getHeight() / 2) + 5);
+				g2d.drawString(label[i], of.getOffset(label[i], i, this) + 4, (getHeight() / 2) + 5);
 			}
 		}
 	}
