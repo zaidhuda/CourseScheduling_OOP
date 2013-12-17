@@ -18,9 +18,6 @@ public class MainGUI extends JPanel {
 		JPanel menuPanel = new JPanel();
 
 		menuPanel.setLayout(new BoxLayout(menuPanel, BoxLayout.PAGE_AXIS));
-		menuPanel.setPreferredSize(new Dimension(1185,690));
-		menuPanel.setMaximumSize(menuPanel.getPreferredSize());
-		menuPanel.setMinimumSize(menuPanel.getPreferredSize());
 		menuPanel.add(headerPanel);
 		menuPanel.add(menuPanelTop);
 		menuPanel.add(Box.createRigidArea(new Dimension(0, 5)));
