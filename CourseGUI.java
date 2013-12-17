@@ -2,13 +2,12 @@ import courseschedule.*;
 import courseschedule.gui.*;
 import courseschedule.util.*;
 
+import javax.swing.*;
 import java.awt.*;
 import java.awt.event.*;
-import javax.swing.*;
 
 public class CourseGUI extends JPanel {
 	// VARIABLES FOR GENERAL USE
-    public static ScheduleBuilder sb = null;
 	private CustomFont font = new CustomFont();
 	private Frame frame = new Frame();
 
@@ -23,11 +22,11 @@ public class CourseGUI extends JPanel {
 
 	// MIDLEFTPANEL'S 
 	private CustomField[] mltextField = new CustomField[2];
-	private CustomLabel[] mltextLabel = {new CustomLabel("COURSE CODE"),new CustomLabel("COURSE TITLE")};
+	private CustomLabel[] mltextLabel = {new CustomLabel("COURSE CODE"), new CustomLabel("COURSE TITLE")};
 
 	// MIDRIGHTPANEL'S
 	private CustomField[] mrtextField = new CustomField[2];
-	private CustomLabel[] mrtextLabel = {new CustomLabel("CREDIT HOUR"),new CustomLabel("REQUIRED SECTIONS")};
+	private CustomLabel[] mrtextLabel = {new CustomLabel("CREDIT HOUR"), new CustomLabel("REQUIRED SECTIONS")};
 
 	// VARIABLES FOR BOTTOM PANEL
 	private JPanel bottomPanel;
@@ -63,35 +62,35 @@ public class CourseGUI extends JPanel {
 
 		midLeftPanel.setBackground(CustomColour.silverclouds);
 		midLeftPanel.setLayout(new BoxLayout(midLeftPanel, BoxLayout.Y_AXIS));
-		
-		for(int i=0; i<2; i++) {
+
+		for (int i = 0; i < 2; i++) {
 			mltextField[i] = new CustomField();
 			mltextField[i].setText(course.detailsArray()[i]);
 			midLeftPanel.add(mltextLabel[i]);
 			midLeftPanel.add(mltextField[i]);
-			midLeftPanel.add(Box.createRigidArea(new Dimension(0,15)));
+			midLeftPanel.add(Box.createRigidArea(new Dimension(0, 15)));
 		}
 
 		midRightPanel.setBackground(CustomColour.silverclouds);
 		midRightPanel.setLayout(new BoxLayout(midRightPanel, BoxLayout.Y_AXIS));
-		
-		for(int i=0; i<2; i++) {
+
+		for (int i = 0; i < 2; i++) {
 			mrtextField[i] = new CustomField();
-			mrtextField[i].setText(course.detailsArray()[i+2]);
+			mrtextField[i].setText(course.detailsArray()[i + 2]);
 			midRightPanel.add(mrtextLabel[i]);
 			midRightPanel.add(mrtextField[i]);
-			midRightPanel.add(Box.createRigidArea(new Dimension(0,15)));
+			midRightPanel.add(Box.createRigidArea(new Dimension(0, 15)));
 		}
 
 		midUpperPanel.setBackground(CustomColour.silverclouds);
 		midUpperPanel.setLayout(new BoxLayout(midUpperPanel, BoxLayout.X_AXIS));
 		midUpperPanel.setAlignmentX(CENTER_ALIGNMENT);
 		midUpperPanel.add(midLeftPanel);
-		midUpperPanel.add(Box.createRigidArea(new Dimension(30,0)));
+		midUpperPanel.add(Box.createRigidArea(new Dimension(30, 0)));
 		midUpperPanel.add(midRightPanel);
 
 		middlePanel.setLayout(new BoxLayout(middlePanel, BoxLayout.PAGE_AXIS));
-		middlePanel.add(Box.createRigidArea(new Dimension(0,30)));
+		middlePanel.add(Box.createRigidArea(new Dimension(0, 30)));
 		middlePanel.add(midUpperPanel);
 
 		add(middlePanel, BorderLayout.CENTER);
@@ -113,26 +112,26 @@ public class CourseGUI extends JPanel {
 		addBtn.addActionListener(new ButtonListener());
 
 		bottomPanel.add(backBtn);
-		bottomPanel.add(Box.createRigidArea(new Dimension(10,0)));
+		bottomPanel.add(Box.createRigidArea(new Dimension(10, 0)));
 		bottomPanel.add(removeBtn);
-		bottomPanel.add(Box.createRigidArea(new Dimension(10,0)));
+		bottomPanel.add(Box.createRigidArea(new Dimension(10, 0)));
 		bottomPanel.add(addBtn);
-		bottomPanel.add(Box.createRigidArea(new Dimension(0,75)));
+		bottomPanel.add(Box.createRigidArea(new Dimension(0, 75)));
 		add(bottomPanel, BorderLayout.SOUTH);
 	}
 
 	private class ButtonListener implements ActionListener {
 		public void actionPerformed(ActionEvent e) {
-			if(e.getSource() == removeBtn) {
-				sb.remove(course);
+			if (e.getSource() == removeBtn) {
+				Frame.sb.remove(course);
 				e.setSource(backBtn);
 			}
 
-			if(e.getSource() == addBtn) {
+			if (e.getSource() == addBtn) {
 				String code = mltextField[0].getText(),
 						title = mltextField[1].getText();
 				int credit = 1,
-					reqSec = 1;
+						reqSec = 1;
 
 				try {
 					credit = Integer.parseInt(mrtextField[0].getText().replaceAll("[^0-9 ]", ""));
@@ -140,18 +139,18 @@ public class CourseGUI extends JPanel {
 				} catch (Exception ignored) {
 				}
 
-				if(!(code.equals(""))){
+				if (!(code.equals(""))) {
 					course.setCode(code);
 					course.setCredit(credit);
 					course.setTitle(title);
 					course.setRequiredSections(reqSec);
 					//sb.fixCourseSections(course, reqSec);
-					sb.add(course);
+					Frame.sb.add(course);
 				}
 				e.setSource(backBtn);
 			}
 
-			if(e.getSource() == backBtn) {
+			if (e.getSource() == backBtn) {
 				CourseTableGUI c = new CourseTableGUI();
 				c.setFrame(frame);
 				frame.setContentPane(c);
@@ -164,7 +163,6 @@ public class CourseGUI extends JPanel {
 
 	public void setFrame(Frame frame) {
 		this.frame = frame;
-		sb = Frame.sb;
 
 		createTopPanel();
 		createMiddlePanel();

@@ -2,14 +2,13 @@ import courseschedule.*;
 import courseschedule.gui.*;
 import courseschedule.util.*;
 
+import javax.swing.*;
 import java.awt.*;
 import java.awt.event.*;
-import javax.swing.*;
 import java.util.*;
 
 public class CourseTableGUI extends JPanel {
 	// VARIABLES FOR GENERAL USE
-    public static ScheduleBuilder sb = null;
 	private Frame frame = new Frame();
 	private CustomFont font = new CustomFont();
 
@@ -24,16 +23,15 @@ public class CourseTableGUI extends JPanel {
 	private OffsetFinder of;
 
 	// // VARIABLES FOR HEADER
-	private String[] header = {"COURSE CODE","COURSE TITLE","CREDIT HOUR","REQUIRED SECTION"};
+	private String[] header = {"COURSE CODE", "COURSE TITLE", "CREDIT HOUR", "REQUIRED SECTION"};
 	private JPanel containerHeader = new JPanel();
 
 	// // VARIABLES FOR TABLE
 	private JPanel containerRow = new JPanel();
 	private JPanel row = new JPanel();
-	private String[][] label = {
-		{ "",  "",  "",  "" },
-		// { "CSC1102",  "Web Programming",  "3",  "1" },
-		// { "CSC1103",  "Object Oriented Programming",  "3",  "2" },
+	private String[][] label = {{"", "", "", ""},
+			// { "CSC1102",  "Web Programming",  "3",  "1" },
+			// { "CSC1103",  "Object Oriented Programming",  "3",  "2" },
 	};
 
 	// VARIABLES FOR BOTTOM PANEL
@@ -87,9 +85,8 @@ public class CourseTableGUI extends JPanel {
 
 		of = new OffsetFinder(label, containerHeader);
 
-		TableButton tb = new TableButton(header, of.getOffset());
-		tb.setPreferredSize(new Dimension(900,20));
-		tb.setForeground(CustomColour.silverclouds);
+		TableHeader tb = new TableHeader(header, of.getOffset());
+		tb.setPreferredSize(new Dimension(900, 20));
 		containerHeader.add(tb);
 	}
 
@@ -97,13 +94,13 @@ public class CourseTableGUI extends JPanel {
 		row.setLayout(new BoxLayout(row, BoxLayout.Y_AXIS));
 		scrollPanel = new JScrollPane(row);
 
-		for(int i=0; i<label.length; i++) {
+		for (int i = 0; i < label.length; i++) {
 			list.add(new TableButton(label[i], of.getOffset()));
 			list.get(i).addActionListener(new ButtonListener());
 			row.add(list.get(i));
 		}
 
-		scrollPanel.setPreferredSize(new Dimension(850,331));
+		scrollPanel.setPreferredSize(new Dimension(900, 331));
 		scrollPanel.setBorder(BorderFactory.createEmptyBorder());
 		scrollPanel.getVerticalScrollBar().setUI(new CustomScrollBarUI(1));
 		// scrollPanel.getHorizontalScrollBar().setUI(new CustomScrollBarUI(2));
@@ -129,28 +126,28 @@ public class CourseTableGUI extends JPanel {
 		addBtn.addActionListener(new ButtonListener());
 
 		bottomPanel.add(backBtn);
-		bottomPanel.add(Box.createRigidArea(new Dimension(10,0)));
+		bottomPanel.add(Box.createRigidArea(new Dimension(10, 0)));
 		bottomPanel.add(addBtn);
-		bottomPanel.add(Box.createRigidArea(new Dimension(0,75)));
+		bottomPanel.add(Box.createRigidArea(new Dimension(0, 75)));
 		add(bottomPanel, BorderLayout.SOUTH);
 	}
 
 	private class ButtonListener implements ActionListener {
 		public void actionPerformed(ActionEvent e) {
-			for(int i=0; i<list.size(); i++)
-				if(e.getSource() == list.get(i)) {
-					CourseGUI c = new CourseGUI(sb.courses.get(i));
+			for (int i = 0; i < list.size(); i++)
+				if (e.getSource() == list.get(i)) {
+					CourseGUI c = new CourseGUI(Frame.sb.courses.get(i));
 					c.setFrame(frame);
 					frame.setContentPane(c);
 				}
 
-			if(e.getSource() == backBtn) {
+			if (e.getSource() == backBtn) {
 				MainGUI m = new MainGUI();
 				m.setFrame(frame);
 				frame.setContentPane(m);
 			}
 
-			if(e.getSource() == addBtn) {
+			if (e.getSource() == addBtn) {
 				CourseGUI c = new CourseGUI(new Course(""));
 				c.setFrame(frame);
 				frame.setContentPane(c);
@@ -163,11 +160,10 @@ public class CourseTableGUI extends JPanel {
 
 	public void setFrame(Frame frame) {
 		this.frame = frame;
-		sb = Frame.sb;
 
 		createTopPanel();
-		if(!sb.courses.isEmpty()){
-			label = sb.getCourses();
+		if (!Frame.sb.courses.isEmpty()) {
+			label = Frame.sb.getCourses();
 			createMiddlePanel();
 		}
 		createBottomPanel();

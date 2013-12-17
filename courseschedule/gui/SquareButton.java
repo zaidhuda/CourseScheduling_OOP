@@ -1,15 +1,20 @@
 package courseschedule.gui;
 
+import javax.swing.*;
 import java.awt.*;
+import java.awt.event.*;
 
-public class SquareButton extends HoveringButton {
+public class SquareButton extends JComponent {
 
-	private String label1, label2;                      // The Button's text.
+	private ActionListener actionListener;
+	private String label1, label2;
 	private Font[] font = new Font[2];
 	private Color color;
+	private CustomColour custom = new CustomColour();
+	protected boolean hovered = false;
 
 	/*
-	constructors
+	Constructors
 	 */
 	public SquareButton() {
 		this("", "");
@@ -22,6 +27,8 @@ public class SquareButton extends HoveringButton {
 	public SquareButton(String label, String label2) {
 		label1 = label;
 		this.label2 = label2;
+		setCursor(new Cursor(Cursor.HAND_CURSOR));
+		enableEvents(AWTEvent.MOUSE_EVENT_MASK);
 	}
 
 	/*
@@ -36,6 +43,8 @@ public class SquareButton extends HoveringButton {
 			g.setColor(getCustomColor());
 
 		g.fillRect(0, 0, getWidth() - 1, getHeight() - 1);
+
+		// draw the perimeter of the button
 		g.drawRect(0, 0, getWidth() - 1, getHeight() - 1);
 
 		// draw the label according to design in the button
@@ -56,6 +65,9 @@ public class SquareButton extends HoveringButton {
 		}
 	}
 
+	/*
+	Setter methods
+	*/
 	public void setFontUpperLabel(Font font) {
 		this.font[0] = font;
 	}
@@ -68,6 +80,9 @@ public class SquareButton extends HoveringButton {
 		color = c;
 	}
 
+	/*
+	Getter methods
+	*/
 	public Font getFontUpperLabel() {
 		return font[0];
 	}
@@ -82,5 +97,60 @@ public class SquareButton extends HoveringButton {
 
 	public Dimension getPreferredSize() {
 		return new Dimension(170, 196);
+	}
+
+	public Dimension getMinimumSize() {
+		return getPreferredSize();
+	}
+
+	public Dimension getMaximumSize() {
+		return getPreferredSize();
+	}
+
+	public void addActionListener(ActionListener listener) {
+		actionListener = AWTEventMulticaster.add(actionListener, listener);
+		enableEvents(AWTEvent.MOUSE_EVENT_MASK);
+	}
+
+	public void removeActionListener(ActionListener listener) {
+		actionListener = AWTEventMulticaster.remove(actionListener, listener);
+	}
+
+	//@Override
+	//public boolean contains(int x, int y) {
+	//    int mx = getSize().width / 2;
+	//    int my = getSize().height / 2;
+	//    return (((mx - x) * (mx - x) + (my - y) * (my - y)) <= mx * mx);
+	//}
+
+	@Override
+	public void processMouseEvent(MouseEvent e) {
+		Graphics g;
+		switch (e.getID()) {
+			case MouseEvent.MOUSE_PRESSED:
+
+				break;
+
+			case MouseEvent.MOUSE_RELEASED:
+				if (actionListener != null) {
+					actionListener.actionPerformed(new ActionEvent(this, ActionEvent.ACTION_PERFORMED, label1));
+				}
+
+				break;
+
+			case MouseEvent.MOUSE_ENTERED:
+				hovered = true;
+
+				repaint();
+				break;
+
+			case MouseEvent.MOUSE_EXITED:
+				if (hovered) {
+					hovered = false;
+					repaint();
+				}
+				break;
+		}
+		super.processMouseEvent(e);
 	}
 }

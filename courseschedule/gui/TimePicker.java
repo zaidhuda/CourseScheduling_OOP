@@ -151,6 +151,7 @@ public class TimePicker extends JPanel {
 				break;
 			case 2:
 				btn.setBackground(Color.cyan);
+				btn.setText("NO");
 				break;
 			case 3:
 				btn.setBackground(CustomColour.silvergray);
