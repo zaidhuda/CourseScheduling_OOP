@@ -183,8 +183,8 @@ public class ScheduleFiling {
 		File file = new File("");
 		String htmlstart ="<html>\n" +
 				"<body>\n" +
-				"<table class=\"tg-table-plain\">\n" +
-				"  <tr>\n" +
+				"<table border=\"1\" cellspacing=\"1\" cellpadding=\"1\" class=\"tg-table-plain\">\n" +
+				"  <tr bgcolor=\"f5f5f5\">\n" +
 				"    <th>CODE</th>\n" +
 				"    <th>SECTION</th>\n" +
 				"    <th>TITLE</th>\n" +
@@ -208,7 +208,7 @@ public class ScheduleFiling {
 			fop.println(htmlstart);
 			for (String[] strs : sb.getSections()){
 				fop.println(
-						"<tr>\n" +
+						"<tr bgcolor=\"ddddf5\">\n" +
 						"    <td>" + strs[0] + "</td>\n" +
 						"    <td style='text-align: center;'>" + strs[1] + "</td>\n" +
 						"    <td>" + strs[2] + "</td>\n" +
