@@ -138,8 +138,11 @@ public class ScheduleGUI extends JPanel {
 				if (i == 1) {
 					switch (j) {
 						case 0:
+							int frameWidth = (int)frame.getPreferredSize().getWidth();
+							int offset = 605;
+
 							leftLabel[j] = new JLabel(section.detailsArray()[j + 1]);
-							leftLabel[j].setPreferredSize(new Dimension(146, 20));
+							leftLabel[j].setPreferredSize(new Dimension(((frameWidth-offset)/2)-140, 20));
 							leftLabel[j].setMaximumSize(leftLabel[j].getPreferredSize());
 							leftLabel[j].setMinimumSize(leftLabel[j].getPreferredSize());
 							leftLabel[j].setHorizontalAlignment(JLabel.CENTER);
@@ -150,13 +153,13 @@ public class ScheduleGUI extends JPanel {
 						case 1:
 							textLabel[j] = new CustomLabel(section.detailsArray()[j + 1]);
 							textLabel[j].setFont(font.getFontAbel(25, -0.05));
-							textLabel[j].setPreferredSize(new Dimension(600, 26));
+							textLabel[j].setPreferredSize(new Dimension(605, 26));
 							rowPane.add(textLabel[j]);
-							rowPane.add(Box.createRigidArea(new Dimension(30, 0)));
+							// rowPane.add(Box.createRigidArea(new Dimension(30, 0)));
 							break;
-						case 2:
-							rowPane.add(Box.createRigidArea(textLabel[j - 1].getPreferredSize()));
-							break;
+						// case 2:
+						// 	rowPane.add(Box.createRigidArea(textLabel[j - 1].getPreferredSize()));
+						// 	break;
 						case 3:
 							rowPane.add(Box.createRigidArea(leftLabel[j - 3].getPreferredSize()));
 							break;
