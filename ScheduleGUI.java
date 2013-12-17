@@ -231,6 +231,8 @@ public class ScheduleGUI extends JPanel {
 						VenueLister.setVisible(false);
 					} else {
 						LecturerLister.setVisible(true);
+						LecturerLister.setPreferredSize(Frame.frameHeight-300);
+						LecturerLister.setSize(getPreferredSize());
 						midLowerPanel.setVisible(false);
 						VenueLister.setVisible(false);
 					}
@@ -240,9 +242,11 @@ public class ScheduleGUI extends JPanel {
 						VenueLister.setVisible(false);
 						LecturerLister.setVisible(false);
 					} else {
+						VenueLister.setVisible(true);
+						VenueLister.setPreferredSize(Frame.frameHeight-300);
+						VenueLister.setSize(getPreferredSize());
 						midLowerPanel.setVisible(false);
 						LecturerLister.setVisible(false);
-						VenueLister.setVisible(true);
 					}
 				}
 				midLowerPanelContainer.revalidate();

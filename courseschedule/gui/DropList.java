@@ -26,6 +26,7 @@ public class DropList extends JPanel {
 	protected Lecturer lecturer;
 	protected Venue venue;
 	protected String name = "";
+	private JScrollPane scrollPanel;
 
 	public DropList(ScheduleBuilder sb, ArrayList<String> lCourses, int limit) {
 		this.sb = sb;
@@ -79,9 +80,9 @@ public class DropList extends JPanel {
 		add(middlePanel, BorderLayout.CENTER);
 
 		JPanel row = new JPanel();
-		JScrollPane scrollPanel = new JScrollPane(row);
-		scrollPanel.setPreferredSize(new Dimension(604, 300));
+		scrollPanel = new JScrollPane(row);
 		scrollPanel.setBorder(BorderFactory.createEmptyBorder());
+		scrollPanel.setPreferredSize(new Dimension(604, 250));
 		scrollPanel.getVerticalScrollBar().setUI(new CustomScrollBarUI(1));
 		scrollPanel.setHorizontalScrollBar(null);
 		scrollPanel.getVerticalScrollBar().setUnitIncrement(16);
@@ -103,6 +104,10 @@ public class DropList extends JPanel {
 
 		containerRow.add(scrollPanel);
 		add(containerRow, BorderLayout.NORTH);
+	}
+
+	public void setPreferredSize(int newHeight){
+		scrollPanel.setPreferredSize(new Dimension(604, newHeight));
 	}
 
 	public void setButton(FieldButton btn) {

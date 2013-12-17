@@ -147,6 +147,8 @@ public class VenueGUI extends JPanel {
 					midLowerPanel.setVisible(false);
 					coursesLister.setVisible(true);
 				}
+				coursesLister.setPreferredSize(Frame.frameHeight-300);
+				coursesLister.setSize(getPreferredSize());
 				midLowerPanelContainer.revalidate();
 				midLowerPanelContainer.repaint();
 			}

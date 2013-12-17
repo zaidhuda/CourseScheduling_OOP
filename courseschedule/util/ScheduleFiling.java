@@ -183,8 +183,11 @@ public class ScheduleFiling {
 		File file = new File("");
 		String htmlstart ="<html>\n" +
 				"<body>\n" +
-				"<table border=\"1\" cellspacing=\"1\" cellpadding=\"1\" class=\"tg-table-plain\">\n" +
-				"  <tr bgcolor=\"f5f5f5\">\n" +
+				"<style>" +
+				".odd{background:f9f9f9;}" +
+				"</style>" +
+				"<table style='font-family:sans-serif;font-size:14px;'>\n" +
+				"  <tr>\n" +
 				"    <th>CODE</th>\n" +
 				"    <th>SECTION</th>\n" +
 				"    <th>TITLE</th>\n" +
@@ -206,9 +209,10 @@ public class ScheduleFiling {
 		try (PrintStream fop = new PrintStream(file)) {
 
 			fop.println(htmlstart);
+			int count = 1;
 			for (String[] strs : sb.getSections()){
 				fop.println(
-						"<tr bgcolor=\"ddddf5\">\n" +
+						"<tr class=\"" + ((count % 2 == 0)? "even" : "odd") + "\">\n" +
 						"    <td>" + strs[0] + "</td>\n" +
 						"    <td style='text-align: center;'>" + strs[1] + "</td>\n" +
 						"    <td>" + strs[2] + "</td>\n" +
@@ -219,6 +223,7 @@ public class ScheduleFiling {
 						"    <td>" + strs[7] + "</td>\n" +
 						"</tr>"
 				);
+				count++;
 			}
 			fop.println(htmlend);
 			fop.close();

@@ -53,6 +53,9 @@ public class Frame extends JFrame {
 						case 1: System.exit(0);
 							frame.dispose();
 					}
+				} else {
+					System.exit(0);
+					frame.dispose();
 				}
 			}
 		});
