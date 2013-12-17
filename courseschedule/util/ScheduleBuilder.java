@@ -102,8 +102,13 @@ public class ScheduleBuilder {
 	public void remove(Course o) {
 		ArrayList<Section> tempSections = new ArrayList<>();
 		for (Section s : sections)
-			if (s.getCourse().equals(o))
+			if (s.getCourse().equals(o)){
 				tempSections.add(s);
+				int day = s.getDay();
+				int time = s.getTime();
+				s.getLecturer().setAvailabilityAt(day, time, true);
+				s.getVenue().setAvailabilityAt(day, time, true);
+			}
 		for (Lecturer l : lecturers)
 			if (l.getCourses().contains(o.getCode()))
 				l.removeCourse(o.getCode());

@@ -167,7 +167,6 @@ public class MainGUI extends JPanel {
 				}
 
 				if (e.getSource() == btn[1]) {
-					Frame.sb.fixCourseSections();
 					ScheduleTableGUI st = new ScheduleTableGUI();
 					st.setFrame(frame);
 					frame.setContentPane(st);
@@ -181,5 +180,6 @@ public class MainGUI extends JPanel {
 
 	public void setFrame(Frame frame) {
 		this.frame = frame;
+		Frame.sb.fixCourseSections();
 	}
 }
