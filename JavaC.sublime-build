@@ -1,0 +1,6 @@
+{
+	// delete *.class files before compiling 
+	"cmd": ["del", "/S", "*.class", "&&", "javac", "$file", "&&", "start", "cmd", "/k", "java", "-ea", "$file_base_name"],
+	"working_dir": "$file_path",
+	"shell": true
+}

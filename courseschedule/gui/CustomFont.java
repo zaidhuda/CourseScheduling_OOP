@@ -21,7 +21,7 @@ public class CustomFont {
 	}
 
 	public Font getFontAbel(int size, int style, double letterSpacing) {
-		Map<TextAttribute, Object> attributes = new HashMap<TextAttribute, Object>();
+		Map<TextAttribute, Object> attributes = new HashMap<>();
 		attributes.put(TextAttribute.TRACKING, letterSpacing);
 
 		try {
@@ -63,7 +63,7 @@ public class CustomFont {
 	}
 
 	public Font getFontSegoe(int size, int style, double letterSpacing) {
-		Map<TextAttribute, Object> attributes = new HashMap<TextAttribute, Object>();
+		Map<TextAttribute, Object> attributes = new HashMap<>();
 		attributes.put(TextAttribute.TRACKING, letterSpacing);
 
 		try {
@@ -105,7 +105,7 @@ public class CustomFont {
 	}
 
 	public Font getFontPTSans(int size, int style, double letterSpacing) {
-		Map<TextAttribute, Object> attributes = new HashMap<TextAttribute, Object>();
+		Map<TextAttribute, Object> attributes = new HashMap<>();
 		attributes.put(TextAttribute.TRACKING, letterSpacing);
 
 		try {

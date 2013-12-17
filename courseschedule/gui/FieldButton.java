@@ -19,12 +19,14 @@ public class FieldButton extends JButton {
 		setForeground(CustomColour.silverclouds);
 	}
 
-	public void setLabel(String label) {
+	@Override
+	public void setText(String label) {
 		this.label = label;
 		revalidate();
 		repaint();
 	}
 
+	@Override
 	public void paintComponent(Graphics g) {
 		// paint the interior of the button
 		g.setColor(CustomColour.silvergray);

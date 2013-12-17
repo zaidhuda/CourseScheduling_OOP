@@ -131,7 +131,7 @@ public class DropList extends JPanel {
 							list.get(i).setColor(CustomColour.silvergray);
 						}
 					Collections.sort(lCourses);
-					theInvoker.setLabel(lCourses.toString().replaceAll("[\\[\\]]", ""));
+					theInvoker.setText(lCourses.toString().replaceAll("[\\[\\]]", ""));
 				}
 		}
 	}
@@ -144,7 +144,7 @@ public class DropList extends JPanel {
 			TableButton btn = (TableButton) e.getSource();
 			btn.setColor(CustomColour.silvergray);
 			name = label[list.indexOf(btn)][0];
-			theInvoker.setLabel(name);
+			theInvoker.setText(name);
 		}
 	}
 }
