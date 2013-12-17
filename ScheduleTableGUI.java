@@ -147,7 +147,7 @@ public class ScheduleTableGUI extends JPanel implements ComponentListener, Actio
 
 		if (e.getSource() == regenBtn){
 			int option = JOptionPane.showConfirmDialog(null, "Regenerate all sections?", "Warning", JOptionPane.YES_NO_OPTION);
-			if (option == 1){
+			if (option == 0){
 				Frame.sb.generateSections(true);
 				e.setSource(backBtn);
 			}
