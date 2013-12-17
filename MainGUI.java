@@ -17,27 +17,30 @@ public class MainGUI extends JPanel {
 		Panel3 menuPanelBottom = new Panel3();
 		JPanel menuPanel = new JPanel();
 
-		menuPanel.setLayout(new BoxLayout(menuPanel, BoxLayout.Y_AXIS));
+		menuPanel.setLayout(new BoxLayout(menuPanel, BoxLayout.PAGE_AXIS));
+		menuPanel.setPreferredSize(new Dimension(1185,690));
+		menuPanel.setMaximumSize(menuPanel.getPreferredSize());
+		menuPanel.setMinimumSize(menuPanel.getPreferredSize());
+		menuPanel.add(headerPanel);
 		menuPanel.add(menuPanelTop);
 		menuPanel.add(Box.createRigidArea(new Dimension(0, 5)));
 		menuPanel.add(menuPanelBottom);
 
-		add(headerPanel, BorderLayout.NORTH);
 		add(menuPanel, BorderLayout.CENTER);
-		add(Box.createRigidArea(new Dimension(0, 25)), BorderLayout.SOUTH);
 	}
 
 	private class Panel1 extends JPanel {
 		private JLabel label;
 
 		public Panel1() {
-			setLayout(new BoxLayout(this, BoxLayout.X_AXIS));
+			setLayout(new BoxLayout(this, BoxLayout.LINE_AXIS));
+
 			label = new JLabel("Main Menu");
 			label.setFont(font.getFontSegoe(48));
 			label.setForeground(CustomColour.silver);
 
-			add(Box.createRigidArea(new Dimension(120, 120)));
 			add(label);
+			add(Box.createRigidArea(new Dimension(700, 120)));
 		}
 	}
 
@@ -46,7 +49,7 @@ public class MainGUI extends JPanel {
 		private JLabel[] imgLabel = new JLabel[4];
 
 		public Panel2() {
-			setLayout(new BoxLayout(this, BoxLayout.X_AXIS));
+			setLayout(new BoxLayout(this, BoxLayout.LINE_AXIS));
 			setBackground(CustomColour.silverclouds);
 			setButton();
 			setTile();
@@ -110,7 +113,7 @@ public class MainGUI extends JPanel {
 		private JLabel[] imgLabel = new JLabel[4];
 
 		public Panel3() {
-			setLayout(new BoxLayout(this, BoxLayout.X_AXIS));
+			setLayout(new BoxLayout(this, BoxLayout.LINE_AXIS));
 			setBackground(CustomColour.silverclouds);
 			setButton();
 			setTile();
