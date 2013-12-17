@@ -3,7 +3,6 @@
 *.iml
 *.fxml
 *.html
-*.png
 *.gif
 *.css
 .idea
