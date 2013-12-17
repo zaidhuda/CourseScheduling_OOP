@@ -13,20 +13,35 @@ import java.util.*;
 public class OffsetFinder {
 	private double[] max = null;
 	private int SIZE = -1;
+	int theContainerSize;
 	private double[] offset = null;
 	private JComponent theContainer;
 
 	public OffsetFinder(String[][] theTable, JComponent theContainer) {
+		theContainerSize = theContainer.getWidth();
+		if (theContainerSize == 0)
+			theContainerSize = (int) theContainer.getPreferredSize().getWidth();
 		this.theContainer = theContainer;
 		findWidth(theTable);
-		findOffset();
 	}
 
 	public OffsetFinder(String[] theStrings, JComponent theContainer) {
-		this.theContainer = theContainer;
+		theContainerSize = theContainer.getWidth();
+		if (theContainerSize == 0)
+			theContainerSize = (int) theContainer.getPreferredSize().getWidth();
 		String[][] theTable = new String[1][theStrings.length];
 		findWidth(theTable);
-		findOffset();
+	}
+
+	public OffsetFinder(String[][] theTable, int theContainerSize) {
+		this.theContainerSize = theContainerSize;
+		findWidth(theTable);
+	}
+
+	public OffsetFinder(String[] theStrings, int theContainerSize) {
+		this.theContainerSize = theContainerSize;
+		String[][] theTable = new String[1][theStrings.length];
+		findWidth(theTable);
 	}
 
 	private void findWidth(String[][] theTable) {
@@ -40,14 +55,12 @@ public class OffsetFinder {
 			}
 		}
 		SIZE = max.length;
+		findOffset();
 	}
 
 	public void findOffset() {
-		int theContainerSize = theContainer.getWidth();
-		if (theContainerSize == 0)
-			theContainerSize = (int) theContainer.getPreferredSize().getWidth();
 		int total = 0;
-		theContainerSize -= 20;
+		theContainerSize -= (theContainerSize*0.02);
 		offset = new double[SIZE];
 		for (double i : max)
 			total += i;
@@ -70,7 +83,7 @@ public class OffsetFinder {
 
 	public int getOffset(String str, int index, JComponent component) {
 		Font font = component.getFont();
-		FontMetrics fm = theContainer.getFontMetrics(font);
+		FontMetrics fm = component.getFontMetrics(font);
 		return (int) offset[index] - fm.stringWidth(str) / 2;
 	}
 }
