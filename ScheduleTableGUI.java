@@ -20,6 +20,7 @@ public class ScheduleTableGUI extends JPanel {
 	private ArrayList<TableButton> list = new ArrayList<>();
 	private JScrollPane scrollPanel;
 	private OffsetFinder of;
+	private TableHeader tb;
 
 	// // VARIABLES FOR HEADER
 	private String[] header = {"CODE", "SECTION", "COURSE TITLE", "CR HOUR", "DAY", "TIME", "LECTURER", "VENUE", "LIMIT"};
@@ -28,14 +29,7 @@ public class ScheduleTableGUI extends JPanel {
 	// // VARIABLES FOR TABLE
 	private JPanel containerRow = new JPanel();
 	private JPanel row = new JPanel();
-	private String[][] label = {{"CSC1100", "1", "Elements Of Programming", "3", "T-TH", "10.00 - 11.20am", "Dr Suriani", "LAB 6", "30"},
-			// { "CSC1100",  "Elements Of Programming",  "2",  "3",  "T-TH",  "10.00 - 11.20am",  "LAB 6",  "Dr Suriani",  "30"},
-			// { "CSC1100",  "Elements Of Programming",  "3",  "3",  "T-TH",  "10.00 - 11.20am",  "LAB 6",  "Dr Suriani",  "30"},
-			// { "CSC1100",  "Elements Of Programming",  "4",  "3",  "T-TH",  "10.00 - 11.20am",  "LAB 6",  "Dr Suriani",  "30"},
-			// { "CSC1102",  "Web Programming",  "1",  "3",  "T-TH",  "10.00 - 11.20am",  "LAB 6",  "Dr Rizal",  "30"},
-			// { "CSC1103",  "Object Oriented Programming",  "1",  "3",  "T-TH",  "10.00 - 11.20am",  "LAB 6",  "Dr Saremah",  "30"},
-			// { "CSC1103",  "Object Oriented Programming",  "2",  "3",  "T-TH",  "10.00 - 11.20am",  "LAB 6",  "Dr Azlin",  "30"},
-	};
+	private String[][] label;
 
 	// VARIABLES FOR BOTTOM PANEL
 	private JPanel bottomPanel;
@@ -43,6 +37,33 @@ public class ScheduleTableGUI extends JPanel {
 
 	public ScheduleTableGUI() {
 		setLayout(new BorderLayout());
+		addComponentListener(new ComponentListener() {
+			@Override
+			public void componentResized(ComponentEvent e) {
+				scrollPanel.setPreferredSize(new Dimension(Frame.frameWidth, Frame.frameHeight-230));
+				containerHeader.setSize(new Dimension(Frame.frameWidth, 20));
+				of = new OffsetFinder(label, Frame.frameWidth);
+				tb.setOffset(of);
+				tb.setPreferredSize(new Dimension(Frame.frameWidth, 20));
+				tb.repaint();
+				for (int i = 0; i < label.length; i++) {
+					list.get(i).setOffset(of);
+					list.get(i).setPreferredSize(new Dimension(Frame.frameWidth, 40));
+					list.get(i).repaint();
+				}
+				middlePanel.repaint();
+				repaint();
+			}
+
+			@Override
+			public void componentMoved(ComponentEvent e) {}
+
+			@Override
+			public void componentShown(ComponentEvent e) {}
+
+			@Override
+			public void componentHidden(ComponentEvent e) {}
+		});
 	}
 
 	public void createTopPanel() {
@@ -74,16 +95,17 @@ public class ScheduleTableGUI extends JPanel {
 	}
 
 	public void createHeaderPanel() {
-		containerHeader.setBackground(CustomColour.getDarkerBlue());
+		//containerHeader.setBackground(CustomColour.darkerblue);
 		containerHeader.setLayout(new BoxLayout(containerHeader, BoxLayout.X_AXIS));
-		containerHeader.setPreferredSize(new Dimension(1170, 20));
-		containerHeader.setMinimumSize(containerHeader.getPreferredSize());
-		containerHeader.setMaximumSize(containerHeader.getPreferredSize());
+		//containerHeader.setPreferredSize(new Dimension(1170, 20));
+		containerHeader.setPreferredSize(new Dimension(Frame.frameWidth, 20));
+		//containerHeader.setMinimumSize(containerHeader.getPreferredSize());
+		//containerHeader.setMaximumSize(containerHeader.getPreferredSize());
 
 		of = new OffsetFinder(label, containerHeader);
 
-		TableHeader tb = new TableHeader(header, of);
-		tb.setPreferredSize(new Dimension(1170, 20));
+		tb = new TableHeader(header, of);
+		tb.setPreferredSize(new Dimension(Frame.frameWidth, 20));
 		containerHeader.add(tb);
 	}
 
@@ -94,10 +116,12 @@ public class ScheduleTableGUI extends JPanel {
 		for (int i = 0; i < label.length; i++) {
 			list.add(new TableButton(label[i], of));
 			list.get(i).addActionListener(new ButtonListener());
+			list.get(i).setPreferredSize(new Dimension(Frame.frameWidth, 40));
 			row.add(list.get(i));
 		}
 
-		scrollPanel.setPreferredSize(new Dimension(1170, 431));
+		//scrollPanel.setPreferredSize(new Dimension(1170, 431));
+		scrollPanel.setPreferredSize(new Dimension(Frame.frameWidth, Frame.frameHeight-230));
 		scrollPanel.setMinimumSize(scrollPanel.getPreferredSize());
 		scrollPanel.setBorder(BorderFactory.createEmptyBorder());
 		scrollPanel.getVerticalScrollBar().setUI(new CustomScrollBarUI(1));

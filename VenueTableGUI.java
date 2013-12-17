@@ -18,9 +18,10 @@ public class VenueTableGUI extends JPanel {
 
 	// VARIABLES FOR MID PANELS
 	private JPanel middlePanel;
-	private ArrayList<TableButton> list = new ArrayList<TableButton>();
+	private ArrayList<TableButton> list = new ArrayList<>();
 	private JScrollPane scrollPanel;
 	private OffsetFinder of;
+	private TableHeader tb;
 
 	// // VARIABLES FOR HEADER
 	private String[] header = {"VENUE NAME", "COURSES"};
@@ -40,6 +41,33 @@ public class VenueTableGUI extends JPanel {
 
 	public VenueTableGUI() {
 		setLayout(new BorderLayout());
+		addComponentListener(new ComponentListener() {
+			@Override
+			public void componentResized(ComponentEvent e) {
+				scrollPanel.setPreferredSize(new Dimension(Frame.frameWidth, Frame.frameHeight-230));
+				containerHeader.setSize(new Dimension(Frame.frameWidth, 20));
+				of = new OffsetFinder(label, Frame.frameWidth);
+				tb.setOffset(of);
+				tb.setPreferredSize(new Dimension(Frame.frameWidth, 20));
+				tb.repaint();
+				for (int i = 0; i < label.length; i++) {
+					list.get(i).setOffset(of);
+					list.get(i).setPreferredSize(new Dimension(Frame.frameWidth, 40));
+					list.get(i).repaint();
+				}
+				middlePanel.repaint();
+				repaint();
+			}
+
+			@Override
+			public void componentMoved(ComponentEvent e) {}
+
+			@Override
+			public void componentShown(ComponentEvent e) {}
+
+			@Override
+			public void componentHidden(ComponentEvent e) {}
+		});
 	}
 
 	public void createTopPanel() {
@@ -71,16 +99,17 @@ public class VenueTableGUI extends JPanel {
 	}
 
 	public void createHeaderPanel() {
-		containerHeader.setBackground(CustomColour.getDarkerBlue());
+		//containerHeader.setBackground(CustomColour.darkerblue);
 		containerHeader.setLayout(new BoxLayout(containerHeader, BoxLayout.X_AXIS));
-		containerHeader.setPreferredSize(new Dimension(1170, 20));
-		containerHeader.setMinimumSize(containerHeader.getPreferredSize());
-		containerHeader.setMaximumSize(containerHeader.getPreferredSize());
+		//containerHeader.setPreferredSize(new Dimension(1170, 20));
+		containerHeader.setPreferredSize(new Dimension(Frame.frameWidth, 20));
+		//containerHeader.setMinimumSize(containerHeader.getPreferredSize());
+		//containerHeader.setMaximumSize(containerHeader.getPreferredSize());
 
 		of = new OffsetFinder(label, containerHeader);
 
-		TableHeader tb = new TableHeader(header, of);
-		tb.setPreferredSize(new Dimension(1170, 20));
+		tb = new TableHeader(header, of);
+		tb.setPreferredSize(new Dimension(Frame.frameWidth, 20));
 		containerHeader.add(tb);
 	}
 
@@ -91,10 +120,12 @@ public class VenueTableGUI extends JPanel {
 		for (int i = 0; i < label.length; i++) {
 			list.add(new TableButton(label[i], of));
 			list.get(i).addActionListener(new ButtonListener());
+			list.get(i).setPreferredSize(new Dimension(Frame.frameWidth, 40));
 			row.add(list.get(i));
 		}
 
-		scrollPanel.setPreferredSize(new Dimension(1170, 431));
+		//scrollPanel.setPreferredSize(new Dimension(1170, 431));
+		scrollPanel.setPreferredSize(new Dimension(Frame.frameWidth, Frame.frameHeight-230));
 		scrollPanel.setBorder(BorderFactory.createEmptyBorder());
 		scrollPanel.getVerticalScrollBar().setUI(new CustomScrollBarUI(1));
 		// scrollPanel.getHorizontalScrollBar().setUI(new CustomScrollBarUI(2));
@@ -142,7 +173,7 @@ public class VenueTableGUI extends JPanel {
 			}
 
 			if (e.getSource() == addBtn) {
-				VenueGUI v = new VenueGUI(new Venue());
+				VenueGUI v = new VenueGUI(new Venue(""));
 				v.setFrame(frame);
 				frame.setContentPane(v);
 			}

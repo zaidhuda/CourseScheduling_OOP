@@ -22,9 +22,11 @@ public class TableHeader extends JPanel {
 	}
 
 	public void paintComponent(Graphics g) {
-		g.setColor(CustomColour.darkerblue);
-		g.drawRect(0, 0, getWidth(), getHeight());
-		g.fillRect(0, 0, getWidth(), getHeight());
+		int newWidth = getPreferredSize().width;
+		int newHeight = getPreferredSize().height;
+		g.setColor(CustomColour.DarkBlue);
+		g.drawRect(0, 0, newWidth, newHeight);
+		g.fillRect(0, 0, newWidth, newHeight);
 		// draw the label according to design in the button
 		g.setColor(CustomColour.silverclouds);
 		Font f = getFont();
@@ -37,6 +39,10 @@ public class TableHeader extends JPanel {
 				g2d.drawString(label[i], of.getOffset(label[i], i, this), (getHeight() / 2) + 5);
 			}
 		}
+	}
+
+	public void setOffset(OffsetFinder of){
+		this.of = of;
 	}
 
 	public void setPreferredSize(Dimension dimension) {

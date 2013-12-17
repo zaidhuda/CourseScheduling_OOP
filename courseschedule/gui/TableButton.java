@@ -9,7 +9,6 @@ import java.awt.event.*;
 public class TableButton extends JButton implements MouseListener {
 
 	private String[] label;
-	private double[] columnWidth;
 	private Dimension dimension = new Dimension(1170, 40);
 	OffsetFinder of;
 	private CustomFont font = new CustomFont();
@@ -34,9 +33,11 @@ public class TableButton extends JButton implements MouseListener {
 	paints the TableButton
 	 */
 	public void paintComponent(Graphics g) {
+		int newWidth = getPreferredSize().width;
+		int newHeight = getPreferredSize().height;
 		g.setColor(bg);
-		g.drawRect(0, 0, getWidth(), getHeight());
-		g.fillRect(0, 0, getWidth(), getHeight());
+		g.drawRect(0, 0, newWidth, newHeight);
+		g.fillRect(0, 0, newWidth, newHeight);
 		// draw the label according to design in the button
 		g.setColor(getForeground());
 		Font f = getFont();
@@ -50,8 +51,13 @@ public class TableButton extends JButton implements MouseListener {
 			}
 		}
 	}
+
 	public void setColor(Color newColor) {
 		bg = newColor;
+	}
+
+	public void setOffset(OffsetFinder of){
+		this.of = of;
 	}
 
 	public void mouseEntered(MouseEvent event) {
