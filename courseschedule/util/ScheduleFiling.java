@@ -2,6 +2,7 @@ package courseschedule.util;
 
 import courseschedule.*;
 
+import javax.swing.*;
 import java.io.*;
 
 /**
@@ -170,6 +171,57 @@ public class ScheduleFiling {
 			if (newFile.exists())
 				newFile.delete();
 			file.renameTo(newFile);
+
+			System.out.println("Saved Successfully");
+		} catch (Exception e) {
+			System.out.println("Save Failed: " + e);
+		}
+	}
+
+	public void exportHTML(){
+		JFileChooser fc = new JFileChooser();
+		File file = new File("");
+		String htmlstart ="<html>\n" +
+				"<body>\n" +
+				"<table border=\"1\" cellspacing=\"1\" cellpadding=\"1\" class=\"tg-table-plain\">\n" +
+				"  <tr bgcolor=\"f5f5f5\">\n" +
+				"    <th>CODE</th>\n" +
+				"    <th>SECTION</th>\n" +
+				"    <th>TITLE</th>\n" +
+				"    <th>CREDIT</th>\n" +
+				"    <th>DAY</th>\n" +
+				"    <th>TIME</th>\n" +
+				"    <th>LECTURER</th>\n" +
+				"    <th>VENUE</th>\n" +
+				"  </tr>",
+				htmlend = "</body>\n" +
+						"</table>\n" +
+						"</html>\n";
+
+		int returnVal = fc.showDialog(null, "Save");
+		if (returnVal == JFileChooser.APPROVE_OPTION) {
+			file = fc.getSelectedFile();
+		}
+
+		try (PrintStream fop = new PrintStream(file)) {
+
+			fop.println(htmlstart);
+			for (String[] strs : sb.getSections()){
+				fop.println(
+						"<tr bgcolor=\"ddddf5\">\n" +
+								"    <td>" + strs[0] + "</td>\n" +
+								"    <td style='text-align: center;'>" + strs[1] + "</td>\n" +
+								"    <td>" + strs[2] + "</td>\n" +
+								"    <td style='text-align: center;'>" + strs[3] + "</td>\n" +
+								"    <td>" + strs[4] + "</td>\n" +
+								"    <td>" + strs[5] + "</td>\n" +
+								"    <td>" + strs[6] + "</td>\n" +
+								"    <td>" + strs[7] + "</td>\n" +
+								"</tr>"
+				);
+			}
+			fop.println(htmlend);
+			fop.close();
 
 			System.out.println("Saved Successfully");
 		} catch (Exception e) {

@@ -1,13 +1,13 @@
+import courseschedule.gui.*;
 import courseschedule.util.*;
 
+import javax.swing.*;
 import java.awt.*;
 import java.awt.event.*;
-import javax.swing.*;
 import java.util.*;
 
 public class ScheduleTableGUI extends JPanel {
 	// VARIABLES FOR GENERAL USE
-    public static ScheduleBuilder sb = null;
 	private Frame frame = new Frame();
 	private CustomFont font = new CustomFont();
 
@@ -22,20 +22,19 @@ public class ScheduleTableGUI extends JPanel {
 	private OffsetFinder of;
 
 	// // VARIABLES FOR HEADER
-	private String[] header = {"CODE","SECTION","COURSE TITLE", "CR HOUR","DAY","TIME","LECTURER","VENUE","LIMIT"};
+	private String[] header = {"CODE", "SECTION", "COURSE TITLE", "CR HOUR", "DAY", "TIME", "LECTURER", "VENUE", "LIMIT"};
 	private JPanel containerHeader = new JPanel();
 
 	// // VARIABLES FOR TABLE
 	private JPanel containerRow = new JPanel();
 	private JPanel row = new JPanel();
-	private String[][] label = {
-		{ "CSC1100",  "1",  "Elements Of Programming",  "3",  "T-TH",  "10.00 - 11.20am",  "Dr Suriani",  "LAB 6",  "30"},
-		// { "CSC1100",  "Elements Of Programming",  "2",  "3",  "T-TH",  "10.00 - 11.20am",  "LAB 6",  "Dr Suriani",  "30"},
-		// { "CSC1100",  "Elements Of Programming",  "3",  "3",  "T-TH",  "10.00 - 11.20am",  "LAB 6",  "Dr Suriani",  "30"},
-		// { "CSC1100",  "Elements Of Programming",  "4",  "3",  "T-TH",  "10.00 - 11.20am",  "LAB 6",  "Dr Suriani",  "30"},
-		// { "CSC1102",  "Web Programming",  "1",  "3",  "T-TH",  "10.00 - 11.20am",  "LAB 6",  "Dr Rizal",  "30"},
-		// { "CSC1103",  "Object Oriented Programming",  "1",  "3",  "T-TH",  "10.00 - 11.20am",  "LAB 6",  "Dr Saremah",  "30"},
-		// { "CSC1103",  "Object Oriented Programming",  "2",  "3",  "T-TH",  "10.00 - 11.20am",  "LAB 6",  "Dr Azlin",  "30"},
+	private String[][] label = {{"CSC1100", "1", "Elements Of Programming", "3", "T-TH", "10.00 - 11.20am", "Dr Suriani", "LAB 6", "30"},
+			// { "CSC1100",  "Elements Of Programming",  "2",  "3",  "T-TH",  "10.00 - 11.20am",  "LAB 6",  "Dr Suriani",  "30"},
+			// { "CSC1100",  "Elements Of Programming",  "3",  "3",  "T-TH",  "10.00 - 11.20am",  "LAB 6",  "Dr Suriani",  "30"},
+			// { "CSC1100",  "Elements Of Programming",  "4",  "3",  "T-TH",  "10.00 - 11.20am",  "LAB 6",  "Dr Suriani",  "30"},
+			// { "CSC1102",  "Web Programming",  "1",  "3",  "T-TH",  "10.00 - 11.20am",  "LAB 6",  "Dr Rizal",  "30"},
+			// { "CSC1103",  "Object Oriented Programming",  "1",  "3",  "T-TH",  "10.00 - 11.20am",  "LAB 6",  "Dr Saremah",  "30"},
+			// { "CSC1103",  "Object Oriented Programming",  "2",  "3",  "T-TH",  "10.00 - 11.20am",  "LAB 6",  "Dr Azlin",  "30"},
 	};
 
 	// VARIABLES FOR BOTTOM PANEL
@@ -85,10 +84,8 @@ public class ScheduleTableGUI extends JPanel {
 
 		of = new OffsetFinder(label, containerHeader);
 
-		TableButton tb = new TableButton(header, of.getOffset());
-		tb.setPreferredSize(new Dimension(900,20));
-		tb.setIsHeader(true);
-		tb.setForeground(CustomColour.getSilverClouds());
+		TableHeader tb = new TableHeader(header, of.getOffset());
+		tb.setPreferredSize(new Dimension(900, 20));
 		containerHeader.add(tb);
 	}
 
@@ -96,13 +93,13 @@ public class ScheduleTableGUI extends JPanel {
 		row.setLayout(new BoxLayout(row, BoxLayout.Y_AXIS));
 		scrollPanel = new JScrollPane(row);
 
-		for(int i=0; i<label.length; i++) {
+		for (int i = 0; i < label.length; i++) {
 			list.add(new TableButton(label[i], of.getOffset()));
 			list.get(i).addActionListener(new ButtonListener());
 			row.add(list.get(i));
 		}
 
-		scrollPanel.setPreferredSize(new Dimension(900,331));
+		scrollPanel.setPreferredSize(new Dimension(900, 331));
 		scrollPanel.setBorder(BorderFactory.createEmptyBorder());
 		scrollPanel.getVerticalScrollBar().setUI(new CustomScrollBarUI(1));
 		// scrollPanel.getHorizontalScrollBar().setUI(new CustomScrollBarUI(2));
@@ -119,7 +116,7 @@ public class ScheduleTableGUI extends JPanel {
 		bottomPanel.setBackground(CustomColour.getSilverClouds());
 
 		backBtn = new RoundedButton("BACK", 0);
-		printBtn = new RoundedButton("PRINT", 1);
+		printBtn = new RoundedButton("Export", 1);
 
 		backBtn.setFont(font.getFontPTSans(15, Font.BOLD, -0.07));
 		backBtn.addActionListener(new ButtonListener());
@@ -128,29 +125,29 @@ public class ScheduleTableGUI extends JPanel {
 		printBtn.addActionListener(new ButtonListener());
 
 		bottomPanel.add(backBtn);
-		bottomPanel.add(Box.createRigidArea(new Dimension(10,0)));
+		bottomPanel.add(Box.createRigidArea(new Dimension(10, 0)));
 		bottomPanel.add(printBtn);
-		bottomPanel.add(Box.createRigidArea(new Dimension(0,75)));
+		bottomPanel.add(Box.createRigidArea(new Dimension(0, 75)));
 		add(bottomPanel, BorderLayout.SOUTH);
 	}
 
 	private class ButtonListener implements ActionListener {
 		public void actionPerformed(ActionEvent e) {
-			for(int i=0; i<list.size(); i++)
-				if(e.getSource() == list.get(i)) {
-					ScheduleGUI s = new ScheduleGUI(sb.sections.get(i));
+			for (int i = 0; i < list.size(); i++)
+				if (e.getSource() == list.get(i)) {
+					ScheduleGUI s = new ScheduleGUI(Frame.sb.sections.get(i));
 					s.setFrame(frame);
 					frame.setContentPane(s);
 				}
 
-			if(e.getSource() == backBtn) {
+			if (e.getSource() == backBtn) {
 				MainGUI m = new MainGUI();
 				m.setFrame(frame);
 				frame.setContentPane(m);
 			}
 
-			if(e.getSource() == printBtn) {
-				// print schedule lists
+			if (e.getSource() == printBtn) {
+				Frame.sf.exportHTML();
 			}
 
 			frame.revalidate();
@@ -160,11 +157,10 @@ public class ScheduleTableGUI extends JPanel {
 
 	public void setFrame(Frame frame) {
 		this.frame = frame;
-		sb = Frame.sb;
 
 		createTopPanel();
-		if(!sb.sections.isEmpty()){
-			label = sb.getSections();
+		if (!Frame.sb.sections.isEmpty()) {
+			label = Frame.sb.getSections();
 			createMiddlePanel();
 		}
 		createBottomPanel();

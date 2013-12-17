@@ -1,3 +1,4 @@
+package courseschedule.gui;
 
 import javax.swing.*;
 import java.awt.*;

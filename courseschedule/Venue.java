@@ -29,7 +29,7 @@ import java.util.*;
 public class Venue extends Support {
 	private int studentLimit = 30;
 
-	public Venue(){
+	public Venue() {
 		super();
 	}
 

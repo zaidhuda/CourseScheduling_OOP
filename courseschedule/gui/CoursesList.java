@@ -1,3 +1,4 @@
+package courseschedule.gui;
 
 import courseschedule.*;
 import courseschedule.util.*;

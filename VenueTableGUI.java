@@ -1,14 +1,14 @@
 import courseschedule.*;
+import courseschedule.gui.*;
 import courseschedule.util.*;
 
+import javax.swing.*;
 import java.awt.*;
 import java.awt.event.*;
-import javax.swing.*;
 import java.util.*;
 
 public class VenueTableGUI extends JPanel {
 	// VARIABLES FOR GENERAL USE
-    public static ScheduleBuilder sb = null;
 	private Frame frame = new Frame();
 	private CustomFont font = new CustomFont();
 
@@ -29,16 +29,14 @@ public class VenueTableGUI extends JPanel {
 	// // VARIABLES FOR TABLE
 	private JPanel containerRow = new JPanel();
 	private JPanel row = new JPanel();
-	private String[][] label = {
-		{ "", "" },
-		// { "LAB 6" },
-		// { "LAB 6" },
+	private String[][] label = {{"", ""},
+			// { "LAB 6" },
+			// { "LAB 6" },
 	};
 
 	// VARIABLES FOR BOTTOM PANEL
 	private JPanel bottomPanel;
 	private RoundedButton backBtn, addBtn;
-
 
 	public VenueTableGUI() {
 		setLayout(new BorderLayout());
@@ -83,10 +81,8 @@ public class VenueTableGUI extends JPanel {
 
 		of = new OffsetFinder(label, containerHeader);
 
-		TableButton tb = new TableButton(header, of.getOffset());
-		tb.setPreferredSize(new Dimension(900,20));
-		tb.setIsHeader(true);
-		tb.setForeground(CustomColour.getSilverClouds());
+		TableHeader tb = new TableHeader(header, of.getOffset());
+		tb.setPreferredSize(new Dimension(900, 20));
 		containerHeader.add(tb);
 	}
 
@@ -94,13 +90,13 @@ public class VenueTableGUI extends JPanel {
 		row.setLayout(new BoxLayout(row, BoxLayout.Y_AXIS));
 		scrollPanel = new JScrollPane(row);
 
-		for(int i=0; i<label.length; i++) {
+		for (int i = 0; i < label.length; i++) {
 			list.add(new TableButton(label[i], of.getOffset()));
 			list.get(i).addActionListener(new ButtonListener());
 			row.add(list.get(i));
 		}
 
-		scrollPanel.setPreferredSize(new Dimension(900,331));
+		scrollPanel.setPreferredSize(new Dimension(900, 331));
 		scrollPanel.setBorder(BorderFactory.createEmptyBorder());
 		scrollPanel.getVerticalScrollBar().setUI(new CustomScrollBarUI(1));
 		// scrollPanel.getHorizontalScrollBar().setUI(new CustomScrollBarUI(2));
@@ -126,28 +122,28 @@ public class VenueTableGUI extends JPanel {
 		addBtn.addActionListener(new ButtonListener());
 
 		bottomPanel.add(backBtn);
-		bottomPanel.add(Box.createRigidArea(new Dimension(10,0)));
+		bottomPanel.add(Box.createRigidArea(new Dimension(10, 0)));
 		bottomPanel.add(addBtn);
-		bottomPanel.add(Box.createRigidArea(new Dimension(0,75)));
+		bottomPanel.add(Box.createRigidArea(new Dimension(0, 75)));
 		add(bottomPanel, BorderLayout.SOUTH);
 	}
 
 	private class ButtonListener implements ActionListener {
 		public void actionPerformed(ActionEvent e) {
-			for(int i=0; i<list.size(); i++)
-				if(e.getSource() == list.get(i)) {
-					VenueGUI v = new VenueGUI(sb.venues.get(i));
+			for (int i = 0; i < list.size(); i++)
+				if (e.getSource() == list.get(i)) {
+					VenueGUI v = new VenueGUI(Frame.sb.venues.get(i));
 					v.setFrame(frame);
 					frame.setContentPane(v);
 				}
 
-			if(e.getSource() == backBtn) {
+			if (e.getSource() == backBtn) {
 				MainGUI m = new MainGUI();
 				m.setFrame(frame);
 				frame.setContentPane(m);
 			}
 
-			if(e.getSource() == addBtn) {
+			if (e.getSource() == addBtn) {
 				VenueGUI v = new VenueGUI(new Venue());
 				v.setFrame(frame);
 				frame.setContentPane(v);
@@ -160,11 +156,10 @@ public class VenueTableGUI extends JPanel {
 
 	public void setFrame(Frame frame) {
 		this.frame = frame;
-		sb = Frame.sb;
 
 		createTopPanel();
-		if(!sb.venues.isEmpty()){
-			label = sb.getVenues();
+		if (!Frame.sb.venues.isEmpty()) {
+			label = Frame.sb.getVenues();
 			createMiddlePanel();
 		}
 		createBottomPanel();

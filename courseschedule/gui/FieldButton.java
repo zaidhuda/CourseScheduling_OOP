@@ -1,8 +1,9 @@
+package courseschedule.gui;
 
 import javax.swing.*;
 import java.awt.*;
 
-public class FieldButton extends HoveringButton {
+public class FieldButton extends JButton {
 	private CustomFont font = new CustomFont();
 
 	private String label;
@@ -25,22 +26,14 @@ public class FieldButton extends HoveringButton {
 	}
 
 	public void paintComponent(Graphics g) {
-		// super.paintComponent(g);
-
 		// paint the interior of the button
 		g.setColor(CustomColour.silvergray);
 		g.drawRect(0, 0, getWidth(), getHeight());
 		g.fillRect(0, 0, getWidth(), getHeight());
-
-		if (hovered) {
-			g.setColor(CustomColour.silver);
-		} else {
-			g.setColor(CustomColour.silverclouds);
-		}
 		// draw the label centered in the button
+		g.setColor(CustomColour.SilverClouds);
 		Font f = getFont();
 		if (f != null) {
-			FontMetrics fm = getFontMetrics(getFont());
 			Graphics2D g2d = (Graphics2D) g;
 			g2d.setRenderingHint(RenderingHints.KEY_TEXT_ANTIALIASING, RenderingHints.VALUE_TEXT_ANTIALIAS_LCD_HRGB);
 			g2d.drawString(label, 10, 34);

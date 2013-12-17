@@ -1,14 +1,14 @@
 import courseschedule.*;
+import courseschedule.gui.*;
 import courseschedule.util.*;
 
+import javax.swing.*;
 import java.awt.*;
 import java.awt.event.*;
 import java.util.*;
-import javax.swing.*;
 
 public class LecturerGUI extends JPanel {
 	// VARIABLES FOR GENERAL USE
-    public static ScheduleBuilder sb = null;
 	private CustomFont font = new CustomFont();
 	private Frame frame = new Frame();
 
@@ -66,58 +66,45 @@ public class LecturerGUI extends JPanel {
 
 		midLeftPanel.setBackground(CustomColour.silverclouds);
 		midLeftPanel.setLayout(new BoxLayout(midLeftPanel, BoxLayout.Y_AXIS));
-		
-		for(int i=0; i<1; i++) {
+
+		for (int i = 0; i < 1; i++) {
 			mltextField[i] = new CustomField();
 			mltextField[i].setText(lecturer.getName());
 			midLeftPanel.add(mltextLabel[i]);
 			midLeftPanel.add(mltextField[i]);
-			midLeftPanel.add(Box.createRigidArea(new Dimension(0,10)));
+			midLeftPanel.add(Box.createRigidArea(new Dimension(0, 10)));
 		}
 
 		midRightPanel.setBackground(CustomColour.silverclouds);
 		midRightPanel.setLayout(new BoxLayout(midRightPanel, BoxLayout.Y_AXIS));
-		
-		for(int i=0; i<1; i++) {
+
+		for (int i = 0; i < 1; i++) {
 			mrtextField[i] = new FieldButton(lecturer.detailsArray()[1]);
 			//mrtextField[i].setText(lecturer.detailsArray()[1]);
-			if (sb.getCourses().length > 0){
-				mrtextField[i].addActionListener(new ActionListener() {
-					@Override
-					public void actionPerformed(ActionEvent e) {
-						coursesLister.setButton(mrtextField[0]);
-						if (coursesLister.isVisible()) {
-							midLowerPanel.setVisible(true);
-							coursesLister.setVisible(false);
-						} else {
-							midLowerPanel.setVisible(false);
-							coursesLister.setVisible(true);
-						}
-						midLowerPanelContainer.revalidate();
-						midLowerPanelContainer.repaint();
-					}
-				});
+			if (Frame.sb.getCourses().length > 0) {
+				coursesLister.setButton(mrtextField[0]);
+				mrtextField[i].addActionListener(new ButtonListener());
 			}
 			midRightPanel.add(mrtextLabel[i]);
 			midRightPanel.add(mrtextField[i]);
-			midRightPanel.add(Box.createRigidArea(new Dimension(0,10)));
+			midRightPanel.add(Box.createRigidArea(new Dimension(0, 10)));
 		}
 
 		midUpperPanel.setBackground(CustomColour.silverclouds);
 		midUpperPanel.setLayout(new BoxLayout(midUpperPanel, BoxLayout.X_AXIS));
 		midUpperPanel.setAlignmentX(CENTER_ALIGNMENT);
 		midUpperPanel.add(midLeftPanel);
-		midUpperPanel.add(Box.createRigidArea(new Dimension(30,0)));
+		midUpperPanel.add(Box.createRigidArea(new Dimension(30, 0)));
 		midUpperPanel.add(midRightPanel);
 
 		midLowerPanel.setAlignmentX(CENTER_ALIGNMENT);
 
 		middlePanel.setLayout(new BoxLayout(middlePanel, BoxLayout.PAGE_AXIS));
-		middlePanel.add(Box.createRigidArea(new Dimension(0,10)));
+		middlePanel.add(Box.createRigidArea(new Dimension(0, 10)));
 		middlePanel.add(midUpperPanel);
 
 		midLowerPanelContainer.add(midLowerPanel);
-		if (coursesLister != null){
+		if (coursesLister != null) {
 			midLowerPanelContainer.add(coursesLister);
 			coursesLister.setVisible(false);
 		}
@@ -142,37 +129,50 @@ public class LecturerGUI extends JPanel {
 		addBtn.addActionListener(new ButtonListener());
 
 		bottomPanel.add(backBtn);
-		bottomPanel.add(Box.createRigidArea(new Dimension(10,0)));
+		bottomPanel.add(Box.createRigidArea(new Dimension(10, 0)));
 		bottomPanel.add(removeBtn);
-		bottomPanel.add(Box.createRigidArea(new Dimension(10,0)));
+		bottomPanel.add(Box.createRigidArea(new Dimension(10, 0)));
 		bottomPanel.add(addBtn);
-		bottomPanel.add(Box.createRigidArea(new Dimension(0,75)));
+		bottomPanel.add(Box.createRigidArea(new Dimension(0, 75)));
 		add(bottomPanel, BorderLayout.SOUTH);
 	}
 
 	private class ButtonListener implements ActionListener {
 		public void actionPerformed(ActionEvent e) {
-			if(e.getSource() == removeBtn) {
-				sb.remove(lecturer);
+			if (e.getSource() == mrtextField[0]){
+				if (coursesLister.isVisible()) {
+					midLowerPanel.setVisible(true);
+					coursesLister.setVisible(false);
+				} else {
+					midLowerPanel.setVisible(false);
+					coursesLister.setVisible(true);
+				}
+				midLowerPanelContainer.revalidate();
+				midLowerPanelContainer.repaint();
+			}
+
+			if (e.getSource() == removeBtn) {
+				Frame.sb.remove(lecturer);
 				e.setSource(backBtn);
 			}
 
-			if(e.getSource() == addBtn) {
+			if (e.getSource() == addBtn) {
 				String name = mltextField[0].getText();
 
-				if(!name.equals("")) {
+				if (!name.equals("")) {
 					boolean[][] availability = midLowerPanel.getAvailability();
 					boolean[][] conflicts = midLowerPanel.getConflict();
 					lecturer.setAvailability(availability);
-					sb.fixClash(lecturer, conflicts);
+					Frame.sb.fixClash(lecturer, conflicts);
 					lecturer.setName(name);
-					if (coursesLister != null) lecturer.setCourses(coursesLister.getCourses());
-					sb.add(lecturer);
+					if (coursesLister != null)
+						lecturer.setCourses(coursesLister.getCourses());
+					Frame.sb.add(lecturer);
 				}
 				e.setSource(backBtn);
 			}
-			
-			if(e.getSource() == backBtn) {
+
+			if (e.getSource() == backBtn) {
 				LecturerTableGUI l = new LecturerTableGUI();
 				l.setFrame(frame);
 				frame.setContentPane(l);
@@ -185,10 +185,10 @@ public class LecturerGUI extends JPanel {
 
 	public void setFrame(Frame frame) {
 		this.frame = frame;
-		sb = Frame.sb;
 
 		ArrayList<String> lCourses = new ArrayList<>(lecturer.getCourses());
-		if (sb.getCourses().length > 0) coursesLister = new CoursesList(sb, lCourses, 3);
+		if (Frame.sb.getCourses().length > 0)
+			coursesLister = new CoursesList(Frame.sb, lCourses, 3);
 
 		createTopPanel();
 		createMiddlePanel();

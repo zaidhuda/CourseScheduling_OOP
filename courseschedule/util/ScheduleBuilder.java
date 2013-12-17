@@ -18,6 +18,7 @@ public class ScheduleBuilder {
 	public ArrayList<Venue> venues = new ArrayList<>();
 	public ArrayList<Section> sections = new ArrayList<>();
 	public final CourseComparator courseComparator = new CourseComparator();
+	public final VenueComparator venueComparator = new VenueComparator();
 
 	public void generateSections(boolean generateSchedule) {
 
@@ -70,6 +71,12 @@ public class ScheduleBuilder {
 				return o1.getSectionNum().compareTo(o2.getSectionNum());
 			} else
 				return diff;
+		}
+	}
+
+	public static class VenueComparator implements Comparator<Venue>{
+		public  int compare(Venue v1, Venue v2){
+			return v1.getName().compareTo(v2.getName());
 		}
 	}
 
@@ -219,6 +226,7 @@ public class ScheduleBuilder {
 	}
 
 	public String[][] getVenues() {
+		Collections.sort(venues, venueComparator);
 		String[][] str = new String[venues.size()][];
 		for (int i = 0; i < venues.size(); i++) {
 			String[] arr = venues.get(i).detailsArray();
@@ -338,7 +346,7 @@ public class ScheduleBuilder {
 
 	public void fixCourseSections() {
 		Collections.sort(sections, courseComparator);
-		for (Course c : courses){
+		for (Course c : courses) {
 			fixCourseSections(c);
 		}
 	}

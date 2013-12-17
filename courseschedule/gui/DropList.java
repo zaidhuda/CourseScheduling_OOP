@@ -1,3 +1,4 @@
+package courseschedule.gui;
 
 import courseschedule.*;
 import courseschedule.util.*;
@@ -29,9 +30,10 @@ public class DropList extends JPanel {
 	public DropList(ScheduleBuilder sb, ArrayList<String> lCourses, int limit) {
 		this.sb = sb;
 		this.lCourses = lCourses;
-		this.limit = (limit != -1) ? limit : sb.courses.size()+1;
+		this.limit = (limit != -1) ? limit : sb.courses.size() + 1;
 		label = sb.getCodeandTitle();
-		if (label.length > 0) makeParts();
+		if (label.length > 0)
+			makeParts();
 	}
 
 	public DropList(ScheduleBuilder sb, Course course, Lecturer lecturer, int limit) {
@@ -46,7 +48,8 @@ public class DropList extends JPanel {
 			str[i] = arr;
 		}
 		label = str;
-		if (label.length > 0) makeParts();
+		if (label.length > 0)
+			makeParts();
 	}
 
 	public DropList(ScheduleBuilder sb, Course course, Venue venue, int limit) {
@@ -61,7 +64,8 @@ public class DropList extends JPanel {
 			str[i] = arr;
 		}
 		label = str;
-		if (label.length > 0) makeParts();
+		if (label.length > 0)
+			makeParts();
 	}
 
 	public void makeParts() {
@@ -88,7 +92,7 @@ public class DropList extends JPanel {
 		for (int i = 0; i < label.length; i++) {
 			list.add(new TableButton(label[i], of.getOffset()));
 			if (lCourses.contains(label[i][0]) || name.equals(label[i][0])) {
-				list.get(i).setBackground(CustomColour.silvergray);
+				list.get(i).setColor(CustomColour.silvergray);
 			}
 			if (limit != 1)
 				list.get(i).addActionListener(new ButtonListener());
@@ -120,11 +124,12 @@ public class DropList extends JPanel {
 					String code = label[i][0];
 					if (lCourses.contains(code)) {
 						lCourses.remove(code);
-						list.get(i).setBackground(CustomColour.silverclouds);
-					} else if (lCourses.size() < limit) {
-						lCourses.add(code);
-						list.get(i).setBackground(CustomColour.silvergray);
-					}
+						list.get(i).setColor(list.get(i).getBackground());
+					} else
+						if (lCourses.size() < limit) {
+							lCourses.add(code);
+							list.get(i).setColor(CustomColour.silvergray);
+						}
 					Collections.sort(lCourses);
 					theInvoker.setLabel(lCourses.toString().replaceAll("[\\[\\]]", ""));
 				}
@@ -134,10 +139,10 @@ public class DropList extends JPanel {
 	private class SingleButtonListener implements ActionListener {
 		public void actionPerformed(ActionEvent e) {
 			for (TableButton btn : list) {
-				btn.setBackground(CustomColour.silverclouds);
+				btn.setColor(CustomColour.silverclouds);
 			}
 			TableButton btn = (TableButton) e.getSource();
-			btn.setBackground(CustomColour.silvergray);
+			btn.setColor(CustomColour.silvergray);
 			name = label[list.indexOf(btn)][0];
 			theInvoker.setLabel(name);
 		}
