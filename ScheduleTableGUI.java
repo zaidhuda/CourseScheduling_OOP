@@ -33,7 +33,7 @@ public class ScheduleTableGUI extends JPanel implements ComponentListener, Actio
 
 	// VARIABLES FOR BOTTOM PANEL
 	private JPanel bottomPanel;
-	private RoundedButton backBtn, printBtn;
+	private RoundedButton backBtn, printBtn, regenBtn;
 
 	public ScheduleTableGUI() {
 		setLayout(new BorderLayout());
@@ -113,15 +113,21 @@ public class ScheduleTableGUI extends JPanel implements ComponentListener, Actio
 		bottomPanel.setBackground(CustomColour.getSilverClouds());
 
 		backBtn = new RoundedButton("BACK", 0);
+		regenBtn = new RoundedButton("REGENERATE", 1);
 		printBtn = new RoundedButton("EXPORT", 1);
 
 		backBtn.setFont(font.getFontPTSans(15, Font.BOLD, -0.07));
 		backBtn.addActionListener(this);
 
+		regenBtn.setFont(font.getFontPTSans(15, Font.BOLD, -0.07));
+		regenBtn.addActionListener(this);
+
 		printBtn.setFont(font.getFontPTSans(15, Font.BOLD, -0.07));
 		printBtn.addActionListener(this);
 
 		bottomPanel.add(backBtn);
+		bottomPanel.add(Box.createRigidArea(new Dimension(10, 0)));
+		bottomPanel.add(regenBtn);
 		bottomPanel.add(Box.createRigidArea(new Dimension(10, 0)));
 		bottomPanel.add(printBtn);
 		bottomPanel.add(Box.createRigidArea(new Dimension(0, 75)));
@@ -138,6 +144,14 @@ public class ScheduleTableGUI extends JPanel implements ComponentListener, Actio
 				s.setFrame(frame);
 				frame.setContentPane(s);
 			}
+
+		if (e.getSource() == regenBtn){
+			int option = JOptionPane.showConfirmDialog(null, "Regenerate all sections?", "Warning", JOptionPane.YES_NO_OPTION);
+			if (option == 1){
+				Frame.sb.generateSections(true);
+				e.setSource(backBtn);
+			}
+		}
 
 		if (e.getSource() == backBtn) {
 			MainGUI m = new MainGUI();
