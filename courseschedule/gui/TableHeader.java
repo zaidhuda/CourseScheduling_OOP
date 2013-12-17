@@ -34,7 +34,7 @@ public class TableHeader extends JPanel {
 
 			for (int i = 0; i < label.length; i++) {
 				g2d.setRenderingHint(RenderingHints.KEY_TEXT_ANTIALIASING, RenderingHints.VALUE_TEXT_ANTIALIAS_LCD_HRGB);
-				g2d.drawString(label[i], of.getOffset(label[i], i, this) + 5, (getHeight() / 2) + 5);
+				g2d.drawString(label[i], of.getOffset(label[i], i, this), (getHeight() / 2) + 5);
 			}
 		}
 	}

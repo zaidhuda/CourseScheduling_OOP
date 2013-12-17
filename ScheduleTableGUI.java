@@ -62,8 +62,7 @@ public class ScheduleTableGUI extends JPanel {
 
 	public void createMiddlePanel() {
 		middlePanel = new JPanel();
-		SpringLayout spring = new SpringLayout();
-		middlePanel.setLayout(spring);
+		middlePanel.setLayout(new BoxLayout(middlePanel, BoxLayout.PAGE_AXIS));
 
 		createHeaderPanel();
 		createTablePanel();
@@ -71,21 +70,20 @@ public class ScheduleTableGUI extends JPanel {
 		middlePanel.add(containerHeader);
 		middlePanel.add(containerRow);
 
-		spring.putConstraint(SpringLayout.NORTH, containerRow, 0, SpringLayout.SOUTH, containerHeader);
 		add(middlePanel, BorderLayout.CENTER);
 	}
 
 	public void createHeaderPanel() {
 		containerHeader.setBackground(CustomColour.getDarkerBlue());
 		containerHeader.setLayout(new BoxLayout(containerHeader, BoxLayout.X_AXIS));
-		containerHeader.setPreferredSize(new Dimension(900, 20));
-		containerHeader.setMinimumSize(getPreferredSize());
-		containerHeader.setMaximumSize(getPreferredSize());
+		containerHeader.setPreferredSize(new Dimension(1170, 20));
+		containerHeader.setMinimumSize(containerHeader.getPreferredSize());
+		containerHeader.setMaximumSize(containerHeader.getPreferredSize());
 
 		of = new OffsetFinder(label, containerHeader);
 
 		TableHeader tb = new TableHeader(header, of);
-		tb.setPreferredSize(new Dimension(900, 20));
+		tb.setPreferredSize(new Dimension(1170, 20));
 		containerHeader.add(tb);
 	}
 
@@ -99,7 +97,8 @@ public class ScheduleTableGUI extends JPanel {
 			row.add(list.get(i));
 		}
 
-		scrollPanel.setPreferredSize(new Dimension(900, 331));
+		scrollPanel.setPreferredSize(new Dimension(1170, 431));
+		scrollPanel.setMinimumSize(scrollPanel.getPreferredSize());
 		scrollPanel.setBorder(BorderFactory.createEmptyBorder());
 		scrollPanel.getVerticalScrollBar().setUI(new CustomScrollBarUI(1));
 		// scrollPanel.getHorizontalScrollBar().setUI(new CustomScrollBarUI(2));
@@ -116,7 +115,7 @@ public class ScheduleTableGUI extends JPanel {
 		bottomPanel.setBackground(CustomColour.getSilverClouds());
 
 		backBtn = new RoundedButton("BACK", 0);
-		printBtn = new RoundedButton("Export", 1);
+		printBtn = new RoundedButton("EXPORT", 1);
 
 		backBtn.setFont(font.getFontPTSans(15, Font.BOLD, -0.07));
 		backBtn.addActionListener(new ButtonListener());

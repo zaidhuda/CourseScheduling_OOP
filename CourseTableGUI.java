@@ -63,8 +63,7 @@ public class CourseTableGUI extends JPanel {
 
 	public void createMiddlePanel() {
 		middlePanel = new JPanel();
-		SpringLayout spring = new SpringLayout();
-		middlePanel.setLayout(spring);
+		middlePanel.setLayout(new BoxLayout(middlePanel, BoxLayout.PAGE_AXIS));
 
 		createHeaderPanel();
 		createTablePanel();
@@ -72,21 +71,20 @@ public class CourseTableGUI extends JPanel {
 		middlePanel.add(containerHeader);
 		middlePanel.add(containerRow);
 
-		spring.putConstraint(SpringLayout.NORTH, containerRow, 0, SpringLayout.SOUTH, containerHeader);
 		add(middlePanel, BorderLayout.CENTER);
 	}
 
 	public void createHeaderPanel() {
 		containerHeader.setBackground(CustomColour.darkerblue);
 		containerHeader.setLayout(new BoxLayout(containerHeader, BoxLayout.X_AXIS));
-		containerHeader.setPreferredSize(new Dimension(900, 20));
-		containerHeader.setMinimumSize(getPreferredSize());
-		containerHeader.setMaximumSize(getPreferredSize());
+		containerHeader.setPreferredSize(new Dimension(1170, 20));
+		containerHeader.setMinimumSize(containerHeader.getPreferredSize());
+		containerHeader.setMaximumSize(containerHeader.getPreferredSize());
 
 		of = new OffsetFinder(label, containerHeader);
 
 		TableHeader tb = new TableHeader(header, of);
-		tb.setPreferredSize(new Dimension(900, 20));
+		tb.setPreferredSize(new Dimension(1170, 20));
 		containerHeader.add(tb);
 	}
 
@@ -100,7 +98,7 @@ public class CourseTableGUI extends JPanel {
 			row.add(list.get(i));
 		}
 
-		scrollPanel.setPreferredSize(new Dimension(900, 331));
+		scrollPanel.setPreferredSize(new Dimension(1170, 431));
 		scrollPanel.setBorder(BorderFactory.createEmptyBorder());
 		scrollPanel.getVerticalScrollBar().setUI(new CustomScrollBarUI(1));
 		// scrollPanel.getHorizontalScrollBar().setUI(new CustomScrollBarUI(2));
