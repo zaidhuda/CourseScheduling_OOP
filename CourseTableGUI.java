@@ -7,7 +7,7 @@ import java.awt.*;
 import java.awt.event.*;
 import java.util.*;
 
-public class CourseTableGUI extends JPanel {
+public class CourseTableGUI extends JPanel implements ComponentListener, ActionListener {
 	// VARIABLES FOR GENERAL USE
 	private Frame frame = new Frame();
 	private CustomFont font = new CustomFont();
@@ -41,33 +41,7 @@ public class CourseTableGUI extends JPanel {
 
 	public CourseTableGUI() {
 		setLayout(new BorderLayout());
-		addComponentListener(new ComponentListener() {
-			@Override
-			public void componentResized(ComponentEvent e) {
-				scrollPanel.setPreferredSize(new Dimension(Frame.frameWidth, Frame.frameHeight-230));
-				containerHeader.setSize(new Dimension(Frame.frameWidth, 20));
-				of = new OffsetFinder(label, Frame.frameWidth);
-				tb.setOffset(of);
-				tb.setPreferredSize(new Dimension(Frame.frameWidth, 20));
-				tb.repaint();
-				for (int i = 0; i < label.length; i++) {
-					list.get(i).setOffset(of);
-					list.get(i).setPreferredSize(new Dimension(Frame.frameWidth, 40));
-					list.get(i).repaint();
-				}
-				middlePanel.repaint();
-				repaint();
-			}
-
-			@Override
-			public void componentMoved(ComponentEvent e) {}
-
-			@Override
-			public void componentShown(ComponentEvent e) {}
-
-			@Override
-			public void componentHidden(ComponentEvent e) {}
-		});
+		addComponentListener(this);
 
 		// createTopPanel();
 		// createMiddlePanel();
@@ -123,7 +97,7 @@ public class CourseTableGUI extends JPanel {
 
 		for (int i = 0; i < label.length; i++) {
 			list.add(new TableButton(label[i], of));
-			list.get(i).addActionListener(new ButtonListener());
+			list.get(i).addActionListener(this);
 			list.get(i).setPreferredSize(new Dimension(Frame.frameWidth, 40));
 			row.add(list.get(i));
 		}
@@ -149,10 +123,10 @@ public class CourseTableGUI extends JPanel {
 		addBtn = new RoundedButton("ADD", 1);
 
 		backBtn.setFont(font.getFontPTSans(15, Font.BOLD, -0.07));
-		backBtn.addActionListener(new ButtonListener());
+		backBtn.addActionListener(this);
 
 		addBtn.setFont(font.getFontPTSans(15, Font.BOLD, -0.07));
-		addBtn.addActionListener(new ButtonListener());
+		addBtn.addActionListener(this);
 
 		bottomPanel.add(backBtn);
 		bottomPanel.add(Box.createRigidArea(new Dimension(10, 0)));
@@ -161,31 +135,61 @@ public class CourseTableGUI extends JPanel {
 		add(bottomPanel, BorderLayout.SOUTH);
 	}
 
-	private class ButtonListener implements ActionListener {
-		public void actionPerformed(ActionEvent e) {
-			for (int i = 0; i < list.size(); i++)
-				if (e.getSource() == list.get(i)) {
-					CourseGUI c = new CourseGUI(Frame.sb.courses.get(i));
-					c.setFrame(frame);
-					frame.setContentPane(c);
-				}
-
-			if (e.getSource() == backBtn) {
-				MainGUI m = new MainGUI();
-				m.setFrame(frame);
-				frame.setContentPane(m);
-			}
-
-			if (e.getSource() == addBtn) {
-				CourseGUI c = new CourseGUI(new Course(""));
+	/*
+	Button Listeners
+	*/
+	public void actionPerformed(ActionEvent e) {
+		for (int i = 0; i < list.size(); i++)
+			if (e.getSource() == list.get(i)) {
+				CourseGUI c = new CourseGUI(Frame.sb.courses.get(i));
 				c.setFrame(frame);
 				frame.setContentPane(c);
 			}
 
-			frame.revalidate();
-			frame.repaint();
+		if (e.getSource() == backBtn) {
+			MainGUI m = new MainGUI();
+			m.setFrame(frame);
+			frame.setContentPane(m);
 		}
+
+		if (e.getSource() == addBtn) {
+			CourseGUI c = new CourseGUI(new Course(""));
+			c.setFrame(frame);
+			frame.setContentPane(c);
+		}
+
+		frame.revalidate();
+		frame.repaint();
 	}
+
+	/*
+	Component Listeners
+	*/
+	@Override
+	public void componentResized(ComponentEvent e) {
+		containerHeader.setSize(new Dimension(Frame.frameWidth, 20));
+		scrollPanel.setPreferredSize(new Dimension(Frame.frameWidth, Frame.frameHeight-230));
+		scrollPanel.revalidate();
+		of = new OffsetFinder(label, Frame.frameWidth);
+		tb.setOffset(of);
+		tb.setPreferredSize(new Dimension(Frame.frameWidth, 20));
+		tb.revalidate();
+		for (int i = 0; i < label.length; i++) {
+			list.get(i).setOffset(of);
+			list.get(i).setPreferredSize(new Dimension(Frame.frameWidth, 40));
+			list.get(i).revalidate();
+		}
+		middlePanel.revalidate();
+	}
+
+	@Override
+	public void componentMoved(ComponentEvent e) {}
+
+	@Override
+	public void componentShown(ComponentEvent e) {}
+
+	@Override
+	public void componentHidden(ComponentEvent e) {}
 
 	public void setFrame(Frame frame) {
 		this.frame = frame;

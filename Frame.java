@@ -23,11 +23,6 @@ public class Frame extends JFrame {
 		return new Dimension(1185, 690);
 	}
 
-	//@Override
-	//public Dimension getMinimumSize() {
-	//	return getPreferredSize();
-	//}
-
 	@Override
 	public Dimension getMaximumSize() {
 		return getPreferredSize();
