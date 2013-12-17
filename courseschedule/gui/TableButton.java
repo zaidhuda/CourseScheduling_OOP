@@ -8,7 +8,7 @@ public class TableButton extends JButton implements MouseListener {
 
 	private String[] label;
 	private double[] columnWidth;
-	private Dimension dimension = new Dimension(900, 40);
+	private Dimension dimension = new Dimension(1170, 40);
 	private CustomFont font = new CustomFont();
 	private Color bg = getBackground();
 

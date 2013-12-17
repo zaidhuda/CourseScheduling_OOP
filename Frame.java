@@ -22,7 +22,7 @@ public class Frame extends JFrame {
 
 	@Override
 	public Dimension getPreferredSize() {
-		return new Dimension(915, 590);
+		return new Dimension(1185, 690);
 	}
 
 	@Override
