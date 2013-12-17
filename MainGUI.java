@@ -36,7 +36,7 @@ public class MainGUI extends JPanel {
 			label.setFont(font.getFontSegoe(48));
 			label.setForeground(CustomColour.silver);
 
-			add(Box.createRigidArea(new Dimension(120, 150)));
+			add(Box.createRigidArea(new Dimension(120, 120)));
 			add(label);
 		}
 	}
