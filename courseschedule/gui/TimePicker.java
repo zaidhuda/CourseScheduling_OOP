@@ -107,6 +107,7 @@ public class TimePicker extends JPanel {
 			for (int j = 0; j < COL; ++j) {
 				int k = (i * COL) + j;
 				button[k] = new SButton();
+				button[k].setForeground(Color.black);
 				button[k].putClientProperty("index", k);
 				button[k].addActionListener(bl);
 
@@ -131,7 +132,7 @@ public class TimePicker extends JPanel {
 
 		if (!selectMany && (day != -1 && time != -1)) {
 			button[(day * COL) + time].putClientProperty("original", true);
-			button[(day * COL) + time].setBackground(Color.green);
+			button[(day * COL) + time].setBackground(CustomColour.LighterGreen);
 			button[(day * COL) + time].setEnabled(false);
 		}
 
@@ -146,11 +147,11 @@ public class TimePicker extends JPanel {
 				btn.setText("YES");
 				break;
 			case 1:
-				btn.setBackground(Color.orange);
+				btn.setBackground(CustomColour.LighterRed);
 				btn.setText("NO");
 				break;
 			case 2:
-				btn.setBackground(Color.cyan);
+				btn.setBackground(CustomColour.LighterBlue);
 				btn.setText("NO");
 				break;
 			case 3:
@@ -158,7 +159,7 @@ public class TimePicker extends JPanel {
 				btn.setText("CLASS");
 				break;
 		}
-		btn.setForeground(Color.GRAY.brighter());
+		//btn.setForeground(Color.black);
 		btn.putClientProperty("availability", i);
 	}
 
@@ -205,7 +206,7 @@ public class TimePicker extends JPanel {
 						setColor(currentButton, 3);
 					availability[day][time] = !availability[day][time];
 				} else
-					if (btnBack.equals(Color.orange)) {
+					if (btnBack.equals(CustomColour.LighterRed)) {
 						setColor(currentButton, 0);
 						availability[day][time] = !availability[day][time];
 					} else
@@ -218,13 +219,13 @@ public class TimePicker extends JPanel {
 				if (obeyConflict()) {
 					for (JButton btn : button) {
 						if ((boolean) btn.getClientProperty("original")) {
-							btn.setBackground(Color.darkGray);
+							btn.setBackground(CustomColour.NightBlue);
 							btn.setEnabled(true);
 						} else {
 							setColor(btn, (int) btn.getClientProperty("availability"));
 						}
 					}
-					currentButton.setBackground(Color.green);
+					currentButton.setBackground(CustomColour.LighterGreen);
 					currentButton.setEnabled(false);
 				}
 		}

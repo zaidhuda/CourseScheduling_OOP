@@ -2,10 +2,9 @@ package courseschedule;
 
 import java.util.*;
 
-abstract class Support {
+public class Support {
 	protected String name;
 	protected boolean[][] availability = new boolean[2][6];
-	//protected ArrayList<String> courses = new ArrayList<>();
 	protected ArrayList<Course> courses = new ArrayList<>();
 
 	public Support() {
@@ -118,6 +117,15 @@ abstract class Support {
 		for (Course c : courses)
 			tempList.add(c.getCode());
 		return tempList;
+	}
+
+	/**
+	 * Return courses as an array list.
+	 *
+	 * @return courses array list
+	 */
+	public ArrayList<Course> getCoursesList() {
+		return courses;
 	}
 
 	/**

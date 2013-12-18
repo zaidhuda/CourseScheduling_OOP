@@ -174,6 +174,9 @@ public class MainGUI extends JPanel {
 
 	public void setFrame(Frame frame) {
 		this.frame = frame;
-		Frame.sb.fixCourseSections();
+		if (Frame.sb.sections.isEmpty())
+			Frame.sb.generateSections(true);
+		else
+			Frame.sb.fixCourseSections();
 	}
 }

@@ -20,10 +20,18 @@ public class ScheduleBuilder {
 	public final CourseComparator courseComparator = new CourseComparator();
 	public final VenueComparator venueComparator = new VenueComparator();
 
+	/**
+	 * Generate a certain number of sections for every courses depending on their required sections.
+	 * If generateSchedule is true, this method will try to generate schedule of the sections, given
+	 * that there exist at least one venue and lecturer for the course or it will only generate the
+	 * time.
+	 *
+	 * @param generateSchedule boolean to determine to generate schedule or not.
+	 */
 	public void generateSections(boolean generateSchedule) {
 
 		for (Section s : sections) {
-			if (s.getDay() != -1 || s.getTime() != -1) {
+			if (s.getDay() != -1 && s.getTime() != -1) {
 				s.getVenue().setAvailabilityAt(s.getDay(), s.getTime(), true);
 				s.getLecturer().setAvailabilityAt(s.getDay(), s.getTime(), true);
 			}
@@ -48,8 +56,15 @@ public class ScheduleBuilder {
 
 	}
 
+	/**
+	 *
+	 * @param generateSchedule
+	 * @param course
+	 * @param required
+	 * @param count
+	 */
 	public void generateSection(boolean generateSchedule, Course course, int required, int count) {
-		for (int i = count; i < required + count; ++i) {
+		for (int i = count; i < required; ++i) {
 			sections.add(new Section(i + 1, course, new Lecturer(), new Venue()));
 		}
 
@@ -101,20 +116,19 @@ public class ScheduleBuilder {
 
 	public void remove(Course o) {
 		ArrayList<Section> tempSections = new ArrayList<>();
-		for (Section s : sections)
-			if (s.getCourse().equals(o)){
-				tempSections.add(s);
-				int day = s.getDay();
-				int time = s.getTime();
+		for (Section s : getSectionOf(o)){
+			tempSections.add(s);
+			int day = s.getDay();
+			int time = s.getTime();
+			if (day != -1 && time != -1){
 				s.getLecturer().setAvailabilityAt(day, time, true);
 				s.getVenue().setAvailabilityAt(day, time, true);
 			}
-		for (Lecturer l : lecturers)
-			if (l.getCourses().contains(o.getCode()))
-				l.removeCourse(o.getCode());
-		for (Venue v : venues)
-			if (v.getCourses().contains(o.getCode()))
-				v.removeCourse(o.getCode());
+		}
+		for (Lecturer l : getAssignedLecturers(o))
+			l.removeCourse(o.getCode());
+		for (Venue v : getAssignedVenues(o))
+			v.removeCourse(o.getCode());
 		sections.removeAll(tempSections);
 		courses.remove(o);
 	}
@@ -203,6 +217,10 @@ public class ScheduleBuilder {
 		return tempCourses;
 	}
 
+	/**
+	 * String arrays used to build data tables.
+	 * @return
+	 */
 	public String[][] getCourses() {
 		String[][] str = new String[courses.size()][];
 		for (int i = 0; i < courses.size(); i++) {
@@ -212,7 +230,7 @@ public class ScheduleBuilder {
 		return str;
 	}
 
-	public String[][] getCodeandTitle() {
+	public String[][] getCodeAndTitle() {
 		String[][] str = new String[courses.size()][];
 		for (int i = 0; i < courses.size(); i++) {
 			String[] arr = courses.get(i).getCodeandTitle();
@@ -250,9 +268,19 @@ public class ScheduleBuilder {
 		return str;
 	}
 
+	/**
+	 * Get the the available time slots of lecturer and venue
+	 * @param lecturer  lecturer to compare to venue
+	 * @param venue     venue to compare to lecturer
+	 * @return          return 2D int arrays representing availability of both using int
+	 */
 	public static int[][] getAvailableSlots(Lecturer lecturer, Venue venue) {
 		final int MAX_ROW = 2, MAX_COL = 6;
 		int[][] newAvailability = new int[MAX_ROW][MAX_COL];
+		if (lecturer == null)
+			lecturer = new Lecturer();
+		if (venue == null)
+			venue = new Venue();
 
 		for (int i = 0; i < MAX_ROW; ++i) {
 			for (int j = 0; j < MAX_COL; ++j) {
@@ -269,6 +297,13 @@ public class ScheduleBuilder {
 		return newAvailability;
 	}
 
+	/**
+	 * Get corresponding section at day and time by lecturer
+	 * @param day           the day
+	 * @param time          the time
+	 * @param theLecturer   the lecturer
+	 * @return              returns the section if found or null if such doesn't exist
+	 */
 	public Section getClassAt(int day, int time, Lecturer theLecturer) {
 		for (Section s : sections) {
 			boolean sameTime = (day == s.getDay() && time == s.getTime()),
@@ -280,6 +315,13 @@ public class ScheduleBuilder {
 		return null;
 	}
 
+	/**
+	 * Get corresponding section at day and time by venue
+	 * @param day           the day
+	 * @param time          the time
+	 * @param theVenue      the venue
+	 * @return              returns the section if found or null if such doesn't exist
+	 */
 	public Section getClassAt(int day, int time, Venue theVenue) {
 		for (Section s : sections) {
 			boolean sameTime = (day == s.getDay() && time == s.getTime()),
@@ -291,6 +333,14 @@ public class ScheduleBuilder {
 		return null;
 	}
 
+	/**
+	 * Get the section at day, time with the lecturer at the venue
+	 * @param day           the day
+	 * @param time          the time
+	 * @param theLecturer   the lecturer
+	 * @param theVenue      the venue
+	 * @return              returns the section if found or null if not found
+	 */
 	public Section findSection(int day, int time, Lecturer theLecturer, Venue theVenue) {
 		for (Section s : sections) {
 			if (s.getDay() == day && s.getTime() == time)
@@ -300,6 +350,11 @@ public class ScheduleBuilder {
 		return null;
 	}
 
+	/**
+	 * Fix clashes when lecturer changes free times.
+	 * @param lecturer  the lecturer
+	 * @param conflicts boolean representing time of conflict
+	 */
 	public void fixClash(Lecturer lecturer, boolean[][] conflicts) {
 		if (lecturers.contains(lecturer))
 			for (int i = 0; i < ROW; i++)
@@ -311,6 +366,11 @@ public class ScheduleBuilder {
 					}
 	}
 
+	/**
+	 * Fix clashes when venue changes free times.
+	 * @param venue  the lecturer
+	 * @param conflicts boolean representing time of conflict
+	 */
 	public void fixClash(Venue venue, boolean[][] conflicts) {
 		if (venues.contains(venue))
 			for (int i = 0; i < ROW; i++)
@@ -322,33 +382,36 @@ public class ScheduleBuilder {
 					}
 	}
 
+	/**
+	 * Fix number of sections of a course. If the required section is less than current
+	 * sections of the course, remove excessive sections in reverse order. Else, generate
+	 * required section to meet the demand.
+	 * @param course the respective course
+	 */
 	public void fixCourseSections(Course course) {
-		int index = 0, newRequired = course.getRequiredSections();
+		int newRequired = course.getRequiredSections();
 		ArrayList<Section> tempSections = getSectionOf(course);
 		int count = tempSections.size();
 		if (count != newRequired) {
-			for (Section s : tempSections)
-				s.setSectionNum(++index);
-			if (newRequired < tempSections.size()) {
-				sections.removeAll(tempSections);
-				for (int i = count; i > newRequired; i--) {
-					int newIndex = i - 1;
-					Section s = tempSections.get(newIndex);
+			if (newRequired < count) {
+				Collections.reverse(tempSections);
+				for (Section s : tempSections){
+					sections.remove(s);
 					int day = s.getDay(), time = s.getTime();
-					if (s.getLecturer() != null)
+					if (day != -1 && time != -1){
 						s.getLecturer().setAvailabilityAt(day, time, true);
-					if (s.getVenue() != null)
 						s.getVenue().setAvailabilityAt(day, time, true);
-					tempSections.remove(newIndex);
+					}
 				}
-				for (Section s : tempSections)
-					sections.add(s);
 			} else {
-				generateSection(true, course, newRequired - count, count);
+				generateSection(true, course, newRequired, count);
 			}
 		}
 	}
 
+	/**
+	 * Fix all number of sections of all courses.
+	 */
 	public void fixCourseSections() {
 		Collections.sort(sections, courseComparator);
 		for (Course c : courses) {
@@ -356,6 +419,22 @@ public class ScheduleBuilder {
 		}
 	}
 
+	public void fixCoursesChange(Support o, ArrayList<Course> courses){
+		o.getCoursesList().removeAll(courses);
+		for (Course c : o.getCoursesList())
+			for (Section s : getSectionOf(c)){
+				if (o.equals(s.getLecturer()) || o.equals(s.getVenue()))
+					o.setAvailabilityAt(s.getDay(), s.getTime(), true);
+			}
+		System.out.println(o.getCoursesList().toString());
+	}
+
+	/**
+	 * Don't know la
+	 * @param newDay
+	 * @param newTime
+	 * @param theSection
+	 */
 	public void forceReSchedule(int newDay, int newTime, Section theSection) {
 		Lecturer theLecturer = theSection.getLecturer();
 		Venue theVenue = theSection.getVenue();
@@ -377,6 +456,11 @@ public class ScheduleBuilder {
 		}
 	}
 
+	/**
+	 * Get all assigned lecturers of a course.
+	 * @param course    the respective course
+	 * @return          all assigned lecturers
+	 */
 	public ArrayList<Lecturer> getAssignedLecturers(Course course) {
 		String courseCode = course.getCode();
 		ArrayList<Lecturer> tempLecturers = new ArrayList<>();
@@ -386,6 +470,11 @@ public class ScheduleBuilder {
 		return tempLecturers;
 	}
 
+	/**
+	 * Get all assigned lecturers of a venue
+	 * @param course    guess what..
+	 * @return          the assigned venue
+	 */
 	public ArrayList<Venue> getAssignedVenues(Course course) {
 		String courseCode = course.getCode();
 		ArrayList<Venue> tempVenues = new ArrayList<>();
@@ -395,6 +484,11 @@ public class ScheduleBuilder {
 		return tempVenues;
 	}
 
+	/**
+	 * Get all sections of a course.
+	 * @param course    the respective course
+	 * @return          all the sections of that course
+	 */
 	public ArrayList<Section> getSectionOf(Course course) {
 		ArrayList<Section> tempSections = new ArrayList<>();
 		for (Section s : sections)

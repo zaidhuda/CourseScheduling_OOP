@@ -37,7 +37,7 @@ public class CourseTableGUI extends JPanel implements ComponentListener, ActionL
 
 	// VARIABLES FOR BOTTOM PANEL
 	private JPanel bottomPanel;
-	private RoundedButton backBtn, addBtn;
+	private RoundedButton backBtn, addBtn, clearBtn;
 
 	public CourseTableGUI() {
 		setLayout(new BorderLayout());
@@ -120,15 +120,21 @@ public class CourseTableGUI extends JPanel implements ComponentListener, ActionL
 		bottomPanel.setBackground(CustomColour.silverclouds);
 
 		backBtn = new RoundedButton("BACK", 0);
+		clearBtn = new RoundedButton("REMOVE ALL", 1);
 		addBtn = new RoundedButton("ADD", 1);
 
 		backBtn.setFont(font.getFontPTSans(15, Font.BOLD, -0.07));
 		backBtn.addActionListener(this);
 
+		clearBtn.setFont(font.getFontPTSans(15, Font.BOLD, -0.07));
+		clearBtn.addActionListener(this);
+
 		addBtn.setFont(font.getFontPTSans(15, Font.BOLD, -0.07));
 		addBtn.addActionListener(this);
 
 		bottomPanel.add(backBtn);
+		bottomPanel.add(Box.createRigidArea(new Dimension(10, 0)));
+		bottomPanel.add(clearBtn);
 		bottomPanel.add(Box.createRigidArea(new Dimension(10, 0)));
 		bottomPanel.add(addBtn);
 		bottomPanel.add(Box.createRigidArea(new Dimension(0, 75)));
@@ -145,6 +151,18 @@ public class CourseTableGUI extends JPanel implements ComponentListener, ActionL
 				c.setFrame(frame);
 				frame.setContentPane(c);
 			}
+
+		if (e.getSource() == clearBtn){
+			int option = 0;
+			if (!Frame.sb.courses.isEmpty()){
+				option = JOptionPane.showConfirmDialog(null, "Remove all Courses? Remember, time is precious.", "Warning!", JOptionPane.OK_CANCEL_OPTION);
+				if (option == 0){
+					for (int i = Frame.sb.courses.size()-1; i>=0; i--)
+						Frame.sb.remove(Frame.sb.courses.get(i));
+					remove(middlePanel);
+				}
+			}
+		}
 
 		if (e.getSource() == backBtn) {
 			MainGUI m = new MainGUI();

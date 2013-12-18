@@ -282,7 +282,7 @@ public class Section {
 
 			setUsing(day, time, true);
 
-			if (oldDay != -1 || oldTime != -1)
+			if (oldDay != -1 && oldTime != -1)
 				setUsing(oldDay, oldTime, false);
 
 			if (studentLimit > venue.getStudentLimit())

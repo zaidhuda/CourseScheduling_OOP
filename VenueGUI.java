@@ -167,8 +167,10 @@ public class VenueGUI extends JPanel {
 					venue.setAvailability(availability);
 					Frame.sb.fixClash(venue, conflicts);
 					venue.setName(name);
-					if (coursesLister != null)
+					if (coursesLister != null){
+						Frame.sb.fixCoursesChange(venue, coursesLister.getCourses());
 						venue.setCourses(coursesLister.getCourses());
+					}
 					Frame.sb.add(venue);
 				}
 				e.setSource(backBtn);

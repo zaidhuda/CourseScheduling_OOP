@@ -32,7 +32,7 @@ public class DropList extends JPanel {
 		this.sb = sb;
 		this.lCourses = lCourses;
 		this.limit = (limit != -1) ? limit : sb.courses.size() + 1;
-		label = sb.getCodeandTitle();
+		label = sb.getCodeAndTitle();
 		if (label.length > 0)
 			makeParts();
 	}

@@ -35,7 +35,7 @@ public class ScheduleGUI extends JPanel {
 
 	// VARIABLES FOR BOTTOM PANEL
 	private JPanel bottomPanel;
-	private RoundedButton backBtn, saveBtn;
+	private RoundedButton backBtn, saveBtn, regenBtn;
 
 	public ScheduleGUI(Section section) {
 		this.section = section;
@@ -203,15 +203,21 @@ public class ScheduleGUI extends JPanel {
 	public void createBottomPanel() {
 		bottomPanel = new JPanel();
 		backBtn = new RoundedButton("BACK", 0);
+		regenBtn = new RoundedButton("REGENERATE", 1);
 		saveBtn = new RoundedButton("SAVE", 1);
 
 		backBtn.setFont(font.getFontPTSans(15, Font.BOLD, -0.07));
 		backBtn.addActionListener(new ButtonListener());
 
+		regenBtn.setFont(font.getFontPTSans(15, Font.BOLD, -0.07));
+		regenBtn.addActionListener(new ButtonListener());
+
 		saveBtn.setFont(font.getFontPTSans(15, Font.BOLD, -0.07));
 		saveBtn.addActionListener(new ButtonListener());
 
 		bottomPanel.add(backBtn);
+		bottomPanel.add(Box.createRigidArea(new Dimension(10, 0)));
+		bottomPanel.add(regenBtn);
 		bottomPanel.add(Box.createRigidArea(new Dimension(10, 0)));
 		bottomPanel.add(saveBtn);
 		bottomPanel.add(Box.createRigidArea(new Dimension(0, 75)));
@@ -251,6 +257,16 @@ public class ScheduleGUI extends JPanel {
 				}
 				midLowerPanelContainer.revalidate();
 				midLowerPanelContainer.repaint();
+			}
+
+			if (e.getSource() == regenBtn) {
+				int day = section.getDay(), time = section.getTime();
+				section.getLecturer().setAvailabilityAt(day, time, true);
+				section.getVenue().setAvailabilityAt(day, time, true);
+				section.setLecturer(Frame.sb.lecturers, true);
+				section.setVenue(Frame.sb.venues, true);
+				section.generateSchedule(true);
+				e.setSource(backBtn);
 			}
 
 			if (e.getSource() == saveBtn) {

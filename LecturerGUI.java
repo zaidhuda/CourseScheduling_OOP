@@ -166,8 +166,10 @@ public class LecturerGUI extends JPanel {
 					lecturer.setAvailability(availability);
 					Frame.sb.fixClash(lecturer, conflicts);
 					lecturer.setName(name);
-					if (coursesLister != null)
+					if (coursesLister != null){
+						Frame.sb.fixCoursesChange(lecturer, coursesLister.getCourses());
 						lecturer.setCourses(coursesLister.getCourses());
+					}
 					Frame.sb.add(lecturer);
 				}
 				e.setSource(backBtn);
