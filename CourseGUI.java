@@ -144,7 +144,9 @@ public class CourseGUI extends JPanel {
 					course.setCredit(credit);
 					course.setTitle(title);
 					course.setRequiredSections(reqSec);
+					Frame.sb.fixCourseSections(course);
 					Frame.sb.add(course);
+					Frame.sb.fixCourseSections(course);
 				}
 				e.setSource(backBtn);
 			}

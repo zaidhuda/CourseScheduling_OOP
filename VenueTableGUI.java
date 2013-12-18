@@ -116,7 +116,7 @@ public class VenueTableGUI extends JPanel implements ComponentListener, ActionLi
 		bottomPanel.setBackground(CustomColour.silverclouds);
 
 		backBtn = new RoundedButton("BACK", 0);
-		clearBtn = new RoundedButton("REMOVE ALL", 1);
+		clearBtn = new RoundedButton("REMOVE ALL", 0);
 		addBtn = new RoundedButton("ADD", 1);
 
 		backBtn.setFont(font.getFontPTSans(15, Font.BOLD, -0.07));
